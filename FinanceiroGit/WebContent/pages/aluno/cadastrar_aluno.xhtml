@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="conteudo"> 
+		<h:form>
+		<p:panel header="Cadastro de Aluno">
+			<p:messages autoUpdate="true" closable="true" />
+			<h:panelGrid>
+				<h:outputLabel value="Nome:" />
+			    <p:inputText value="#{alunoBean.aluno.nome}" />
+			    <h:outputLabel value="Série:" />
+			    <p:selectOneMenu value="#{alunoBean.aluno.serie}">
+			    	  <f:selectItem itemLabel="::Selecione::" itemValue="#{null}" />
+			    	  <f:selectItems value="#{alunoBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
+			    </p:selectOneMenu>
+			    <p:commandButton value="Cadastrar" action="#{alunoBean.cadastrar()}" />
+		    </h:panelGrid>
+	    </p:panel>
+		</h:form>
+	</ui:define> 
+
+</ui:composition>
