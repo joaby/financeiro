@@ -8,6 +8,10 @@ public class ReceitaMensalidade extends Receita{
 	
 	@ManyToOne
 	private Aluno aluno;
+	
+	public ReceitaMensalidade(){
+		this.aluno = new Aluno();
+	}
 
 	public Aluno getAluno() {
 		return aluno;

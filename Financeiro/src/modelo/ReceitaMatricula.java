@@ -8,6 +8,10 @@ public class ReceitaMatricula extends Receita{
 	
 	@ManyToOne
 	private Aluno aluno;
+	
+	public ReceitaMatricula(){
+		this.aluno = new Aluno();
+	}
 
 	public Aluno getAluno() {
 		return aluno;
