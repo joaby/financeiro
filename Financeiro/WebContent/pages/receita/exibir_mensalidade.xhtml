@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+		<h:form id="formulario">
+			<p:panel header="Pesquise por data">
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Data inicial:" />
+					<p:calendar value="#{receitaMensalidadeBean.dataInicial}" pattern="yyyy/MM/dd" effect="fold" />
+					<h:outputLabel value="Data Final:" />
+					<p:calendar value="#{receitaMensalidadeBean.dataFinal}" pattern="yyyy/MM/dd" effect="fold" />
+					<p:commandButton value="Pesquisar" action="#{receitaMensalidadeBean.buscarPorMes}" />					
+				</p:panelGrid>
+			</p:panel>
+	    </h:form>	
+		
+		<p:dataTable id="tabela" var="mensalidade" value="#{receitaMensalidadeBean.receitas}">
+		    <p:column headerText="Nome">
+		        <h:outputText value="#{mensalidade.aluno.nome}" />
+		    </p:column>
+		    <p:column headerText="Série">
+		        <h:outputText value="#{mensalidade.aluno.serie.curso}"  />
+		    </p:column>
+		    <p:column headerText="Data">
+		        <h:outputText value="#{mensalidade.data}"  />	       
+		    </p:column>
+		    <p:column headerText="Descrição">
+		        <h:outputText value="#{mensalidade.descricao}"  />
+		    </p:column>
+		    <p:column headerText="Valor">
+		        <h:outputText value="#{mensalidade.valor}"  />
+		    </p:column>   
+	    </p:dataTable>
+	    
+	    <h:outputLabel value="Receita total:" />
+	    <h:outputText value="#{receitaMensalidadeBean.receitaTotal}" />
+	    
+	   
+	    
+    </ui:define>
+    
+</ui:composition>    
