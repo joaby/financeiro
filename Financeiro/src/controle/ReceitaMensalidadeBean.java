@@ -1,7 +1,7 @@
 package controle;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import dao.AlunoDAO;
@@ -9,32 +9,35 @@ import dao.AlunoJPADAO;
 import dao.ReceitaMensalidadeDAO;
 import dao.ReceitaMensalidadeJPADAO;
 import modelo.Aluno;
+import modelo.Mes;
 import modelo.ReceitaMensalidade;
 
 @ManagedBean
 public class ReceitaMensalidadeBean extends AbstractBean{
 	
-	private ReceitaMensalidade receitaMensalidade;
-	private List<ReceitaMensalidade> receitas;
+	private ReceitaMensalidade mensalidade;
+	private List<ReceitaMensalidade> mensalidades;
 	private float receitaTotal;
-	private Date dataInicial;
-	private Date dataFinal;
+	private Mes mes;
+	private int ano;
+	private List<Mes> meses;
 	
 	
 	public ReceitaMensalidadeBean(){
-		this.receitaMensalidade = new ReceitaMensalidade();
-		this.receitas = new ArrayList<ReceitaMensalidade>();
+		this.meses = Arrays.asList(Mes.values());
+		this.setMensalidade(new ReceitaMensalidade());
+		this.setMensalidades(new ArrayList<ReceitaMensalidade>());
 		buscarTodos();
 	}
 
 	public void cadastrar(){
 		AlunoDAO alunoDAO = new AlunoJPADAO();
-		Aluno a = alunoDAO.find(receitaMensalidade.getAluno().getNome());
+		Aluno a = alunoDAO.find(mensalidade.getAluno().getNome());
 		if(a != null){
 			ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
-			rmDAO.save(this.receitaMensalidade);
+			rmDAO.save(this.mensalidade);
 			displayInfoMessageToUser("Cadastrado com sucesso");
-			this.receitaMensalidade = new ReceitaMensalidade();
+			this.mensalidade = new ReceitaMensalidade();
 		}else{
 			displayErrorMessageToUser("Aluno não cadastrado! Cadastre o aluno e tente novamente.");
 		}	
@@ -42,31 +45,36 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 	
 	public void excluir(){
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
-		rmDAO.delete(this.receitaMensalidade);
+		rmDAO.delete(this.mensalidade);
 		displayInfoMessageToUser("Excluido com sucesso!");
 	}
 	
 	public void buscarTodos(){
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
-		this.receitas = rmDAO.find();
-		for(ReceitaMensalidade rm : receitas){
-			this.receitaTotal += rm.getValor();
+		this.mensalidades = rmDAO.find();
+		for(ReceitaMensalidade mensalidade : mensalidades){
+			this.receitaTotal += mensalidade.getValor();
 		}
 	}
 	
-	public String buscarPorData(){
+	public String buscarPorAno(){
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
-		this.receitas = rmDAO.buscarPorData(this.dataInicial, this.dataInicial);
-		System.out.println(" tamanho de receita:"+receitas.size());
+		this.mensalidades = rmDAO.buscarPorAno(this.ano);
 		return "mostrar_consulta";
 	}
 	
 	public String buscarPorMes(){
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
-		this.receitas = rmDAO.buscarPorMes(this.dataInicial, this.dataInicial);
-		System.out.println(" tamanho de receita:"+receitas.size());
+		this.mensalidades = rmDAO.buscarPorMes(this.mes);
 		return "mostrar_consulta";
 	}
+	
+	public String buscarPorMesAno(){
+		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
+		this.mensalidades = rmDAO.buscarPorMesAno(this.mes, this.ano);
+		return "mostrar_consulta";
+	}
+	
 	
 	public List<String> buscarTodosAlunos(String query){
 		AlunoDAO alunoDAO = new AlunoJPADAO();
@@ -79,22 +87,6 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 		}
 		return nomes;
 	}
-	
-	public ReceitaMensalidade getReceitaMensalidade() {
-		return receitaMensalidade;
-	}
-
-	public void setReceitaMensalidade(ReceitaMensalidade receitaMensalidade) {
-		this.receitaMensalidade = receitaMensalidade;
-	}
-
-	public List<ReceitaMensalidade> getReceitas() {
-		return receitas;
-	}
-
-	public void setReceitas(List<ReceitaMensalidade> receitas) {
-		this.receitas = receitas;
-	}
 
 	public float getReceitaTotal() {
 		return receitaTotal;
@@ -104,20 +96,44 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 		this.receitaTotal = receitaTotal;
 	}
 
-	public Date getDataInicial() {
-		return dataInicial;
+	public Mes getMes() {
+		return mes;
 	}
 
-	public void setDataInicial(Date dataInicial) {
-		this.dataInicial = dataInicial;
+	public void setMes(Mes mes) {
+		this.mes = mes;
 	}
 
-	public Date getDataFinal() {
-		return dataFinal;
+	public int getAno() {
+		return ano;
 	}
 
-	public void setDataFinal(Date dataFinal) {
-		this.dataFinal = dataFinal;
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+
+	public ReceitaMensalidade getMensalidade() {
+		return mensalidade;
+	}
+
+	public void setMensalidade(ReceitaMensalidade mensalidade) {
+		this.mensalidade = mensalidade;
+	}
+
+	public List<ReceitaMensalidade> getMensalidades() {
+		return mensalidades;
+	}
+
+	public void setMensalidades(List<ReceitaMensalidade> mensalidades) {
+		this.mensalidades = mensalidades;
+	}
+
+	public List<Mes> getMeses() {
+		return meses;
+	}
+
+	public void setMeses(List<Mes> meses) {
+		this.meses = meses;
 	}
 
 }

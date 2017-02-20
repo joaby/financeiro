@@ -7,9 +7,10 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="ReceitaMensalidade.buscarPorData", 
-			query="SELECT rm FROM ReceitaMensalidade rm WHERE rm.data >= :dataInicial AND rm.data <= :dataFinal"),
+	@NamedQuery(name="ReceitaMensalidade.buscarPorMesAno", 
+			query="SELECT rm FROM ReceitaMensalidade rm WHERE rm.mes = :mes AND rm.ano = :ano"),
 })
+
 public class ReceitaMensalidade extends Receita{
 	
 	@ManyToOne

@@ -14,16 +14,21 @@
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Nome do aluno:" />
 				<p:row>
-				    <p:autoComplete id="nome" value="#{receitaMensalidadeBean.receitaMensalidade.aluno.nome}" 
+				    <p:autoComplete id="nome" value="#{receitaMensalidadeBean.mensalidade.aluno.nome}" 
 				    completeMethod="#{receitaMensalidadeBean.buscarTodosAlunos}" title="Digite o nome e escolha uma opção!" />
 				    <p:tooltip for="nome" showEvent="focus" hideEvent="blur" />
 			    </p:row>
 			    <h:outputLabel value="Valor:" />
-			    <p:inputText value="#{receitaMensalidadeBean.receitaMensalidade.valor}" />
-			    <h:outputLabel value="Data:" />
-			    <p:calendar value="#{receitaMensalidadeBean.receitaMensalidade.data}" pattern="dd/MM/yyyy" effect="fold" />
+			    <p:inputText value="#{receitaMensalidadeBean.mensalidade.valor}" />
+			    <h:outputLabel value="Mês:" />
+			    <p:selectOneMenu value="#{receitaMensalidadeBean.mensalidade.mes}">
+			    	  <f:selectItem itemLabel="::Selecione::" itemValue="#{null}" />
+			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			    </p:selectOneMenu>
+			    <h:outputLabel value="Ano:" />
+			    <p:inputText value="#{receitaMensalidadeBean.mensalidade.ano}" />
 			    <h:outputLabel value="Descrição:" />
-			    <p:inputTextarea value="#{receitaMensalidadeBean.receitaMensalidade.descricao}" />
+			    <p:inputTextarea value="#{receitaMensalidadeBean.mensalidade.descricao}" />
 			    <p:commandButton value="Cadastrar" action="#{receitaMensalidadeBean.cadastrar}" />
 		    </h:panelGrid>
 	    </p:panel>

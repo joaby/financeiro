@@ -1,20 +1,13 @@
 package dao;
 
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.Query;
-import javax.persistence.TemporalType;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
+import modelo.Mes;
 import modelo.ReceitaMensalidade;
+
 
 public class ReceitaMensalidadeJPADAO extends GenericJPADAO<ReceitaMensalidade> implements ReceitaMensalidadeDAO{
 	
@@ -25,30 +18,23 @@ public class ReceitaMensalidadeJPADAO extends GenericJPADAO<ReceitaMensalidade> 
 	}
 
 	@Override
-	public List<ReceitaMensalidade> buscarPorData(Date inicio, Date fim) {
-		Query query = getEm().createNamedQuery("ReceitaMensalidade.buscarPorData");
-		query.setParameter("dataInicial", inicio, TemporalType.DATE);
-		query.setParameter("dataFinal", fim, TemporalType.DATE);
-		return query.getResultList();
-		
+	public List<ReceitaMensalidade> buscarPorMes(Mes mes) {
+		return null;	
 	}
 
 	@Override
-	public List<ReceitaMensalidade> buscarPorMes(Date inicio, Date fim) {
-		CriteriaBuilder cb = getEm().getCriteriaBuilder();
-		CriteriaQuery<ReceitaMensalidade> c = cb.createQuery(ReceitaMensalidade.class);
-		Root<ReceitaMensalidade> rm = c.from(ReceitaMensalidade.class);
-		c.select(rm);
-		
-		Predicate p = cb.between(rm.<Date>get("data"), inicio, fim);
-		c.where(p);
-		
-		TypedQuery<ReceitaMensalidade> query = getEm().createQuery(c);
-		List<ReceitaMensalidade> m = query.getResultList();
-		return m;
+	public List<ReceitaMensalidade> buscarPorAno(int ano) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	
 
+	@Override
+	public List<ReceitaMensalidade> buscarPorMesAno(Mes mes, int ano) {
+		Query query = getEm().createNamedQuery ("ReceitaMensalidade.buscarPorMesAno");
+		query.setParameter ("mes", mes) ;
+		query.setParameter("ano", ano);
+		List<ReceitaMensalidade> mensalidades = query.getResultList();
+		return mensalidades;
+	}
 
 }
