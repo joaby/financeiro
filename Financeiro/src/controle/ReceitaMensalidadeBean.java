@@ -11,22 +11,27 @@ import dao.ReceitaMensalidadeJPADAO;
 import modelo.Aluno;
 import modelo.Mes;
 import modelo.ReceitaMensalidade;
+import modelo.Serie;
 
 @ManagedBean
 public class ReceitaMensalidadeBean extends AbstractBean{
 	
 	private ReceitaMensalidade mensalidade;
 	private List<ReceitaMensalidade> mensalidades;
+	private List<Aluno> alunos;
 	private float receitaTotal;
+	private Serie serie;
 	private Mes mes;
 	private int ano;
 	private List<Mes> meses;
-	
+	private List<Serie> series;
 	
 	public ReceitaMensalidadeBean(){
 		this.meses = Arrays.asList(Mes.values());
+		this.series = Arrays.asList(Serie.values());
 		this.setMensalidade(new ReceitaMensalidade());
 		this.setMensalidades(new ArrayList<ReceitaMensalidade>());
+		this.setAlunos(new ArrayList<Aluno>());
 		buscarTodos();
 	}
 
@@ -63,18 +68,23 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 		return "mostrar_consulta";
 	}
 	
-	public String buscarPorMes(){
-		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
-		this.mensalidades = rmDAO.buscarPorMes(this.mes);
-		return "mostrar_consulta";
-	}
-	
 	public String buscarPorMesAno(){
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 		this.mensalidades = rmDAO.buscarPorMesAno(this.mes, this.ano);
 		return "mostrar_consulta";
 	}
 	
+	public String buscarPorSerie(){
+		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
+		this.mensalidades = rmDAO.buscarPorSerie(this.serie, this.mes, this.ano);
+		return "mostrar_consulta";
+	}
+	
+	public String buscarPorNaoPagante(){
+		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
+		this.alunos = rmDAO.buscarPorNaoPagante(this.mes, this.ano);
+		return "exibir_inadiplente";
+	}
 	
 	public List<String> buscarTodosAlunos(String query){
 		AlunoDAO alunoDAO = new AlunoJPADAO();
@@ -134,6 +144,30 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 
 	public void setMeses(List<Mes> meses) {
 		this.meses = meses;
+	}
+	
+	public Serie getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Serie serie) {
+		this.serie = serie;
+	}
+
+	public List<Serie> getSeries() {
+		return series;
+	}
+
+	public void setSeries(List<Serie> series) {
+		this.series = series;
+	}
+
+	public List<Aluno> getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
 	}
 
 }

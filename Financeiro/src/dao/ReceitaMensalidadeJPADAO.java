@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import modelo.Aluno;
 import modelo.Mes;
 import modelo.ReceitaMensalidade;
+import modelo.Serie;
 
 
 public class ReceitaMensalidadeJPADAO extends GenericJPADAO<ReceitaMensalidade> implements ReceitaMensalidadeDAO{
@@ -18,14 +20,11 @@ public class ReceitaMensalidadeJPADAO extends GenericJPADAO<ReceitaMensalidade> 
 	}
 
 	@Override
-	public List<ReceitaMensalidade> buscarPorMes(Mes mes) {
-		return null;	
-	}
-
-	@Override
 	public List<ReceitaMensalidade> buscarPorAno(int ano) {
-		// TODO Auto-generated method stub
-		return null;
+		Query query = getEm().createNamedQuery ("ReceitaMensalidade.buscarPorAno");
+		query.setParameter("ano", ano);
+		List<ReceitaMensalidade> mensalidades = query.getResultList();
+		return mensalidades;
 	}
 
 	@Override
@@ -35,6 +34,25 @@ public class ReceitaMensalidadeJPADAO extends GenericJPADAO<ReceitaMensalidade> 
 		query.setParameter("ano", ano);
 		List<ReceitaMensalidade> mensalidades = query.getResultList();
 		return mensalidades;
+	}
+
+	@Override
+	public List<ReceitaMensalidade> buscarPorSerie(Serie serie, Mes mes, int ano) {
+		Query query = getEm().createNamedQuery ("ReceitaMensalidade.buscarPorSerie");
+		query.setParameter ("serie", serie) ;
+		query.setParameter ("mes", mes) ;
+		query.setParameter("ano", ano);
+		List<ReceitaMensalidade> mensalidades = query.getResultList();
+		return mensalidades;
+	}
+
+	@Override
+	public List<Aluno> buscarPorNaoPagante(Mes mes, int ano) {
+		Query query = getEm().createNamedQuery ("ReceitaMensalidade.buscarPorNaoPagante");
+		query.setParameter ("mes", mes) ;
+		query.setParameter("ano", ano);
+		List<Aluno> alunos = query.getResultList();
+		return alunos;
 	}
 
 }

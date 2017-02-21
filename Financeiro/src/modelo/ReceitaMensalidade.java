@@ -9,6 +9,10 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
 	@NamedQuery(name="ReceitaMensalidade.buscarPorMesAno", 
 			query="SELECT rm FROM ReceitaMensalidade rm WHERE rm.mes = :mes AND rm.ano = :ano"),
+	@NamedQuery(name="ReceitaMensalidade.buscarPorAno", 
+			query="SELECT rm FROM ReceitaMensalidade rm WHERE rm.ano = :ano"),
+	@NamedQuery(name="ReceitaMensalidade.buscarPorNaoPagante", 
+			query="SELECT a FROM Aluno a WHERE a NOT IN (SELECT rm.aluno FROM ReceitaMensalidade rm WHERE rm.mes = :mes AND rm.ano = :ano)")
 })
 
 public class ReceitaMensalidade extends Receita{
