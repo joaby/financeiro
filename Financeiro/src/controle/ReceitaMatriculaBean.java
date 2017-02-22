@@ -1,6 +1,7 @@
 package controle;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,7 +11,10 @@ import dao.AlunoJPADAO;
 import dao.ReceitaMatriculaDAO;
 import dao.ReceitaMatriculaJPADAO;
 import modelo.Aluno;
+import modelo.Mes;
 import modelo.ReceitaMatricula;
+import modelo.ReceitaMensalidade;
+import modelo.Serie;
 
 @ManagedBean
 public class ReceitaMatriculaBean extends AbstractBean{
@@ -18,10 +22,18 @@ public class ReceitaMatriculaBean extends AbstractBean{
 	private ReceitaMatricula matricula;
 	private List<ReceitaMatricula> matriculas;
 	private float receitaTotal;
-	
+	private List<Mes> meses;
+	private int ano;
+	private Serie serie;
+	private List<Serie> series;
+	private Aluno aluno;
+
 	public ReceitaMatriculaBean(){
 		this.matricula = new ReceitaMatricula();
+		this.aluno = new Aluno();
 		this.matriculas = new ArrayList<ReceitaMatricula>();
+		this.setMeses(Arrays.asList(Mes.values()));
+		this.setSeries(Arrays.asList(Serie.values()));
 		buscarTodos();
 	}
 	
@@ -48,9 +60,24 @@ public class ReceitaMatriculaBean extends AbstractBean{
 	public void buscarTodos(){
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		this.matriculas = rmDAO.find();
-		for(ReceitaMatricula rm : this.matriculas){
-			this.setReceitaTotal(this.getReceitaTotal() + rm.getValor());
-		}
+		this.receitaTotal = somaReceitaTotal(this.matriculas);
+	}
+	
+	public void buscarPorAno(){
+		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
+		this.matriculas = rmDAO.buscarPorAno(this.ano);
+		this.receitaTotal = somaReceitaTotal(this.matriculas);
+	}
+	
+	public void buscarPorSerie(){
+		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
+		this.matriculas = rmDAO.buscarPorSerie(this.serie, this.ano);
+		this.receitaTotal = somaReceitaTotal(this.matriculas);
+	}
+	
+	public ReceitaMatricula buscarPorAluno(){
+		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
+		return rmDAO.buscarPorAluno(this.aluno, this.ano);
 	}
 	
 	public List<String> buscarTodosAlunos(String query){
@@ -63,6 +90,14 @@ public class ReceitaMatriculaBean extends AbstractBean{
 			}	
 		}
 		return nomes;
+	}
+	
+	public float somaReceitaTotal(List<ReceitaMatricula> matriculas){
+		float total = 0;
+		for(ReceitaMatricula matricula : matriculas){
+			total += matricula.getValor();
+		}
+		return total;
 	}
 	
 	public ReceitaMatricula getMatricula() {
@@ -87,6 +122,46 @@ public class ReceitaMatriculaBean extends AbstractBean{
 
 	public void setReceitaTotal(float receitaTotal) {
 		this.receitaTotal = receitaTotal;
+	}
+
+	public List<Mes> getMeses() {
+		return meses;
+	}
+
+	public void setMeses(List<Mes> meses) {
+		this.meses = meses;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+
+	public List<Serie> getSeries() {
+		return series;
+	}
+
+	public void setSeries(List<Serie> series) {
+		this.series = series;
+	}
+	
+	public Serie getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Serie serie) {
+		this.serie = serie;
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
 	}
 
 }

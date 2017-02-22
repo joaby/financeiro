@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+	
+	    <h:form id="form_ano">
+			<p:panel header="Pesquise por ano">
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMatriculaBean.ano}" />
+					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaMatriculaBean.buscarPorAno}" />					
+				</p:panelGrid>
+			</p:panel>
+	    </h:form>	
+	    
+	     <h:form id="form_serie">
+			<p:panel header="Pesquise por série">
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Série:" />
+					<p:selectOneMenu value="#{receitaMatriculaBean.serie}">
+			    	  <f:selectItems value="#{receitaMatriculaBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMatriculaBean.ano}" />
+					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaMatriculaBean.buscarPorSerie}" />					
+				</p:panelGrid>
+			</p:panel>
+	    </h:form>
+	    
+		
+		<p:dataTable id="tabela" var="matricula" value="#{receitaMatriculaBean.matriculas}">
+		    <p:column headerText="Nome">
+		        <h:outputText value="#{matricula.aluno.nome}" />
+		    </p:column>
+		    <p:column headerText="Série">
+		        <h:outputText value="#{matricula.serie.curso}"  />
+		    </p:column>
+		    <p:column headerText="Mês">
+		        <h:outputText value="#{matricula.mes.descricao}"  />	       
+		    </p:column>
+		    <p:column headerText="Ano">
+		        <h:outputText value="#{matricula.ano}"  />	       
+		    </p:column>
+		    <p:column headerText="Descrição">
+		        <h:outputText value="#{matricula.descricao}"  />
+		    </p:column>
+		    <p:column headerText="Valor">
+		        <h:outputText value="#{matricula.valor}"  />
+		    </p:column>  
+	    </p:dataTable>
+	    
+	    <h:outputLabel value="Receita total:" />
+	    <h:outputText id="total" value="#{receitaMatriculaBean.receitaTotal}" />
+	    
+	   
+	    
+    </ui:define>
+    
+</ui:composition>    

@@ -14,11 +14,6 @@
 			<h:panelGrid>
 				<h:outputLabel value="Nome:" />
 			    <p:inputText value="#{alunoBean.aluno.nome}" />
-			    <h:outputLabel value="Série:" />
-			    <p:selectOneMenu value="#{alunoBean.aluno.serie}">
-			    	  <f:selectItem itemLabel="::Selecione::" itemValue="#{null}" />
-			    	  <f:selectItems value="#{alunoBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
-			    </p:selectOneMenu>
 			    <p:commandButton value="Cadastrar" action="#{alunoBean.cadastrar()}" />
 		    </h:panelGrid>
 	    </p:panel>

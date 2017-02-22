@@ -9,11 +9,8 @@
 
 	<ui:define name="conteudo">
 		<p:dataTable var="aluno" value="#{alunoBean.alunos}">
-		    <p:column headerText="Nome:">
+		    <p:column headerText="Nome">
 		        <h:outputText value="#{aluno.nome}" />
-		    </p:column>
-		    <p:column headerText="Série:">
-		        <h:outputText value="#{aluno.serie.curso}"  />
 		    </p:column>
 	    </p:dataTable>
     </ui:define>

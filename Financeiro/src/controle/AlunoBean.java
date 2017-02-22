@@ -17,12 +17,10 @@ import modelo.Serie;
 public class AlunoBean extends AbstractBean{
 	
 	private Aluno aluno;
-	private List<Serie> series;
 	private List<Aluno> alunos;
 	
 	public AlunoBean(){
 		this.aluno = new Aluno();
-		this.series = Arrays.asList(Serie.values());
 		this.alunos = new ArrayList<Aluno>();
 		buscarTodos();
 	}
@@ -66,14 +64,6 @@ public class AlunoBean extends AbstractBean{
 
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
-	}
-
-	public List<Serie> getSeries() {
-		return series;
-	}
-
-	public void setSeries(List<Serie> series) {
-		this.series = series;
 	}
 
 	public List<Aluno> getAlunos() {
