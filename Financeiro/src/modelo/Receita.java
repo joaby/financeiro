@@ -8,9 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@NamedQueries({
+	@NamedQuery(name="Receita.buscarPorAno", 
+			query="SELECT r FROM Receita r WHERE r.ano = :ano"),
+	@NamedQuery(name="Receita.buscarPorMesAno", 
+			query="SELECT r FROM Receita r WHERE r.mes = :mes AND r.ano = :ano")
+})
 public class Receita {
 	
 	@Id 

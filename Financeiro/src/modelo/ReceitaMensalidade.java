@@ -14,7 +14,9 @@ import javax.persistence.NamedQuery;
 	@NamedQuery(name="ReceitaMensalidade.buscarPorNaoPagante", 
 			query="SELECT a FROM Aluno a WHERE a NOT IN (SELECT rm.aluno FROM ReceitaMensalidade rm WHERE rm.mes = :mes AND rm.ano = :ano)"),
 	@NamedQuery(name="ReceitaMensalidade.buscarPorSerie", 
-			query="SELECT rm FROM ReceitaMensalidade rm WHERE rm.matricula.serie = :serie AND rm.mes = :mes AND rm.ano = :ano")
+			query="SELECT rm FROM ReceitaMensalidade rm WHERE rm.matricula.serie = :serie AND rm.mes = :mes AND rm.ano = :ano"),
+	@NamedQuery(name="ReceitaMensalidade.soma", 
+			query="SELECT SUM(rm.valor) FROM ReceitaMensalidade rm")
 })
 
 public class ReceitaMensalidade extends Receita{

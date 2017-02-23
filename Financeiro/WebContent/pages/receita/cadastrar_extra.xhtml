@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+		<h:form>
+		<p:panel header="Cadastro de extra">
+			<p:messages autoUpdate="true" closable="true" />
+			<h:panelGrid columns="2">
+			    <h:outputLabel value="Valor:" />
+			    <p:inputText value="#{receitaExtraBean.extra.valor}" />
+			    <h:outputLabel value="Mês:" />
+			    <p:selectOneMenu value="#{receitaExtraBean.extra.mes}">
+			    	  <f:selectItems noSelectionValue="Selecione" value="#{receitaExtraBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			    </p:selectOneMenu>
+			    <h:outputLabel value="Ano:" />
+			    <p:inputText value="#{receitaExtraBean.extra.ano}" />
+			    <h:outputLabel value="Descrição:" />
+			    <p:inputTextarea value="#{receitaExtraBean.extra.descricao}" />
+			    <p:commandButton value="Cadastrar" action="#{receitaExtraBean.cadastrar}" />
+			    <p:commandButton value="Limpar" type="reset" />
+		    </h:panelGrid>
+	    </p:panel>
+		</h:form>
+    </ui:define>
+    
+</ui:composition>  

@@ -3,9 +3,7 @@ package controle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
-
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
 import dao.ReceitaMatriculaDAO;
@@ -13,7 +11,6 @@ import dao.ReceitaMatriculaJPADAO;
 import modelo.Aluno;
 import modelo.Mes;
 import modelo.ReceitaMatricula;
-import modelo.ReceitaMensalidade;
 import modelo.Serie;
 
 @ManagedBean

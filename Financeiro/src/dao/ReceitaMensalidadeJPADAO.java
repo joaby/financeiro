@@ -55,4 +55,13 @@ public class ReceitaMensalidadeJPADAO extends GenericJPADAO<ReceitaMensalidade> 
 		return alunos;
 	}
 
+	@Override
+	public float soma(Mes mes, int ano) {
+		Query query = getEm().createNamedQuery ("ReceitaMensalidade.soma");
+		query.setParameter ("mes", mes) ;
+		query.setParameter("ano", ano);
+		float soma = (Float) query.getSingleResult();
+		return soma;
+	}
+
 }

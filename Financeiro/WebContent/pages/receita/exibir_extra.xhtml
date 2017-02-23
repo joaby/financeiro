@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+	
+	    <h:form id="form_ano">
+			<p:panel header="Pesquise por ano">
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaExtraBean.ano}" />
+					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaExtraBean.buscarPorAno}" />					
+				</p:panelGrid>
+			</p:panel>
+	    </h:form>	
+	    
+	    <h:form id="form_mes">
+			<p:panel header="Pesquise por mês e ano">
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaExtraBean.mes}">
+			    	  <f:selectItems value="#{receitaExtraBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaExtraBean.ano}" />
+					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaExtraBean.buscarPorMesAno}" />					
+				</p:panelGrid>
+			</p:panel>
+	    </h:form>
+	    
+		
+		<p:dataTable id="tabela" var="extra" value="#{receitaExtraBean.extras}">
+		    <p:column headerText="Mês">
+		        <h:outputText value="#{extra.mes.descricao}"  />	       
+		    </p:column>
+		    <p:column headerText="Ano">
+		        <h:outputText value="#{extra.ano}"  />	       
+		    </p:column>
+		    <p:column headerText="Descrição">
+		        <h:outputText value="#{extra.descricao}"  />
+		    </p:column>
+		    <p:column headerText="Valor">
+		        <h:outputText value="#{extra.valor}"  />
+		    </p:column>  
+	    </p:dataTable>
+	    
+	    <h:outputLabel value="Receita total:" />
+	    <h:outputText id="total" value="#{receitaExtraBean.receitaTotal}" />
+	    
+	   
+	    
+    </ui:define>
+    
+</ui:composition>   
