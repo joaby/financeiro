@@ -9,6 +9,9 @@
 
 	<ui:define name="conteudo">
 		<p:dataTable var="aluno" value="#{receitaMensalidadeBean.alunos}">
+			<f:facet name="header">
+            	Aluno
+        	</f:facet>
 		    <p:column headerText="Nome:">
 		        <h:outputText value="#{aluno.nome}" />
 		    </p:column>

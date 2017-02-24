@@ -35,6 +35,9 @@
 	    
 		
 		<p:dataTable id="tabela" var="receita" value="#{receitaBean.receitas}">
+			<f:facet name="header">
+            	Receita total
+        	</f:facet>
 		    <p:column headerText="Mês">
 		        <h:outputText value="#{receita.mes.descricao}" />	       
 		    </p:column>

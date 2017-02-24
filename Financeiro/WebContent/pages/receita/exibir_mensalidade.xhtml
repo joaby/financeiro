@@ -10,7 +10,7 @@
 	<ui:define name="conteudo">
 		<h:form id="form_mes">
 			<p:panel header="Pesquise por mês e ano">
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
 					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
 			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
@@ -24,7 +24,7 @@
 	    
 	    <h:form id="form_ano">
 			<p:panel header="Pesquise por ano">
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="3">
 					<h:outputLabel value="Ano:" />
 					<p:inputText value="#{receitaMensalidadeBean.ano}" />
 					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaMensalidadeBean.buscarPorAno}" />					
@@ -34,7 +34,7 @@
 	    
 	     <h:form id="form_serie">
 			<p:panel header="Pesquise por série">
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="6">
 					<h:outputLabel value="Série:" />
 					<p:selectOneMenu value="#{receitaMensalidadeBean.serie}">
 			    	  <f:selectItems value="#{receitaMensalidadeBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
@@ -52,7 +52,7 @@
 	    
 	    <h:form id="form_inadiplente">
 			<p:panel header="Pesquise os inadiplentes">
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
 					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
 			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
@@ -65,6 +65,9 @@
 	    </h:form>	
 		
 		<p:dataTable id="tabela" var="mensalidade" value="#{receitaMensalidadeBean.mensalidades}">
+			<f:facet name="header">
+            	Mensalidades
+        	</f:facet>
 		    <p:column headerText="Nome">
 		        <h:outputText value="#{mensalidade.aluno.nome}" />
 		    </p:column>

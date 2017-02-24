@@ -35,6 +35,9 @@
 	    
 		
 		<p:dataTable id="tabela" var="matricula" value="#{receitaMatriculaBean.matriculas}">
+			<f:facet name="header">
+            	Matriculas
+        	</f:facet>
 		    <p:column headerText="Nome">
 		        <h:outputText value="#{matricula.aluno.nome}" />
 		    </p:column>
