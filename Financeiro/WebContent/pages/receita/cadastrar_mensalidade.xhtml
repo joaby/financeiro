@@ -9,9 +9,9 @@
 
 	<ui:define name="conteudo">
 		<h:form>
-		<p:panel header="Cadastro de Mensalidade">
+		<p:panel header="Cadastro de Mensalidade" style="margin-bottom:10px; text-align: center;">
 			<p:messages autoUpdate="true" closable="true" />
-			<h:panelGrid columns="2">
+			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 				<h:outputLabel value="Nome do aluno:" />
 				<p:row>
 				    <p:autoComplete id="nome" value="#{receitaMensalidadeBean.mensalidade.aluno.nome}" 
@@ -22,7 +22,7 @@
 			    <p:inputText value="#{receitaMensalidadeBean.mensalidade.valor}" />
 			    <h:outputLabel value="Mês:" />
 			    <p:selectOneMenu value="#{receitaMensalidadeBean.mensalidade.mes}">
-			    	  <f:selectItem itemLabel="::Selecione::" itemValue="#{null}" />
+			    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 			    </p:selectOneMenu>
 			    <h:outputLabel value="Ano:" />
@@ -30,7 +30,8 @@
 			    <h:outputLabel value="Descrição:" />
 			    <p:inputTextarea value="#{receitaMensalidadeBean.mensalidade.descricao}" />
 			    <p:commandButton value="Cadastrar" action="#{receitaMensalidadeBean.cadastrar}" />
-		    </h:panelGrid>
+			    <p:commandButton value="Limpar" type="reset" />
+		    </p:panelGrid>
 	    </p:panel>
 		</h:form>
     </ui:define>

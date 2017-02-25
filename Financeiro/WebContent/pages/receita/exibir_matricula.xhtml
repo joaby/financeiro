@@ -42,17 +42,18 @@
 		    <p:column headerText="Valor">
 		        <h:outputText value="#{matricula.valor}"  />
 		    </p:column>  
+		    <f:facet name="footer">
+		    	Receita total:
+		    	<h:outputText value="#{receitaMatriculaBean.receitaTotal}" />
+		    </f:facet>
 	    </p:dataTable>
-	    
-	    <h:outputLabel value="Receita total:" />
-	    <h:outputText id="total" value="#{receitaMatriculaBean.receitaTotal}" />
 	    
 	    <p:dialog widgetVar="dlgAno" showEffect="fade" header="Pesquisa por ano">
 	    	 <h:form>
 				<p:panelGrid columns="3">
 					<h:outputLabel value="Ano:" />
 					<p:inputText value="#{receitaMatriculaBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Buscar" action="#{receitaMatriculaBean.buscarPorAno}" />					
+					<p:commandButton update=":tabela" value="Buscar" action="#{receitaMatriculaBean.buscarPorAno}" />					
 				</p:panelGrid>
 	   		 </h:form>	 
 	    </p:dialog>
@@ -66,7 +67,7 @@
 			   		</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
 					<p:inputText value="#{receitaMatriculaBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Buscar" action="#{receitaMatriculaBean.buscarPorSerie}" />					
+					<p:commandButton update=":tabela" value="Buscar" action="#{receitaMatriculaBean.buscarPorSerie}" />					
 				</p:panelGrid>
 	   		 </h:form>
 	   </p:dialog>

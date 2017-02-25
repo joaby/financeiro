@@ -33,18 +33,19 @@
 		    </p:column>
 		    <p:column headerText="Valor">
 		        <h:outputText value="#{extra.valor}"  />
-		    </p:column>  
+		    </p:column> 
+		    <f:facet name="footer">
+		    	Receita total:
+		    	<h:outputText value="#{receitaExtraBean.receitaTotal}" />
+		    </f:facet> 
 	    </p:dataTable>
-	    
-	    <h:outputLabel value="Receita total:" />
-	    <h:outputText id="total" value="#{receitaExtraBean.receitaTotal}" />
 	    
 	    <p:dialog widgetVar="dlgAno" header="Pesquisa por ano" showEffect="fade">
 	    	<h:form>
 					<p:panelGrid columns="3">
 						<h:outputLabel value="Ano:" />
 						<p:inputText value="#{receitaExtraBean.ano}" />
-						<p:commandButton update=":tabela :total" value="Buscar" action="#{receitaExtraBean.buscarPorAno}" />					
+						<p:commandButton update=":tabela" value="Buscar" action="#{receitaExtraBean.buscarPorAno}" />					
 					</p:panelGrid>
 	    	</h:form>
 	    </p:dialog>
@@ -59,7 +60,7 @@
 				   		</p:selectOneMenu>
 						<h:outputLabel value="Ano:" />
 						<p:inputText value="#{receitaExtraBean.ano}" />
-						<p:commandButton update=":tabela :total" value="Buscar" action="#{receitaExtraBean.buscarPorMesAno}" />					
+						<p:commandButton update=":tabela" value="Buscar" action="#{receitaExtraBean.buscarPorMesAno}" />					
 					</p:panelGrid>
 	   		 </h:form>
 	    </p:dialog>

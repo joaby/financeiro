@@ -8,61 +8,22 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<h:form id="form_mes">
-			<p:panel header="Pesquise por mês e ano">
-				<p:panelGrid columns="5">
-					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
-			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-			   		</p:selectOneMenu>
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMensalidadeBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaMensalidadeBean.buscarPorMesAno}" />					
-				</p:panelGrid>
-			</p:panel>
-	    </h:form>
-	    
-	    <h:form id="form_ano">
-			<p:panel header="Pesquise por ano">
-				<p:panelGrid columns="3">
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMensalidadeBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaMensalidadeBean.buscarPorAno}" />					
-				</p:panelGrid>
-			</p:panel>
-	    </h:form>	
-	    
-	     <h:form id="form_serie">
-			<p:panel header="Pesquise por série">
-				<p:panelGrid columns="6">
-					<h:outputLabel value="Série:" />
-					<p:selectOneMenu value="#{receitaMensalidadeBean.serie}">
-			    	  <f:selectItems value="#{receitaMensalidadeBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
-			   		</p:selectOneMenu>
-					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
-			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-			   		</p:selectOneMenu>
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMensalidadeBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaMensalidadeBean.buscarPorSerie}" />					
-				</p:panelGrid>
-			</p:panel>
-	    </h:form>
-	    
-	    <h:form id="form_inadiplente">
-			<p:panel header="Pesquise os inadiplentes">
-				<p:panelGrid columns="5">
-					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
-			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-			   		</p:selectOneMenu>
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMensalidadeBean.ano}" />
-					<p:commandButton value="Pesquisar" action="#{receitaMensalidadeBean.buscarPorNaoPagante}" />					
-				</p:panelGrid>
-			</p:panel>
-	    </h:form>	
+			
+	    <p:panelGrid columns="5">
+			<h:outputLabel value="Pesquise:" />
+			<h:form>
+	    	<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()"/>
+		    </h:form>
+		    <h:form>
+	    	<p:commandButton value="Por mês e ano" type="button" onclick="PF('dlgMes').show()"/>
+		    </h:form>
+		    <h:form>
+		    	<p:commandButton value="Por série" type="button" onclick="PF('dlgSerie').show()"/>
+		    </h:form>
+		    <h:form>
+	    	<p:commandButton value="Por inadiplentes" type="button" onclick="PF('dlgIna').show()"/>
+		    </h:form>  
+		</p:panelGrid>	
 		
 		<p:dataTable id="tabela" var="mensalidade" value="#{receitaMensalidadeBean.mensalidades}">
 			<f:facet name="header">
@@ -86,12 +47,67 @@
 		    <p:column headerText="Valor">
 		        <h:outputText value="#{mensalidade.valor}"  />
 		    </p:column>  
+		    <f:facet name="footer">
+		    	Receita total:
+		    	<h:outputText value="#{receitaMensalidadeBean.receitaTotal}" />
+		    </f:facet>
 	    </p:dataTable>
 	    
-	    <h:outputLabel value="Receita total:" />
-	    <h:outputText id="total" value="#{receitaMensalidadeBean.receitaTotal}" />
+	    <p:dialog widgetVar="dlgMes" showEffect="fade" header="Pesquisa por mês e ano">
+	    	<h:form>
+				<p:panelGrid columns="5">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
+			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMensalidadeBean.ano}" />
+					<p:commandButton update=":tabela" value="Buscar" action="#{receitaMensalidadeBean.buscarPorMesAno}" />					
+				</p:panelGrid>
+	   		 </h:form>
+	    </p:dialog>
 	    
-	   
+	    <p:dialog widgetVar="dlgAno" showEffect="fade" header="Pesquisa por ano">
+	    	<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMensalidadeBean.ano}" />
+					<p:commandButton update=":tabela" value="Buscar" action="#{receitaMensalidadeBean.buscarPorAno}" />					
+				</p:panelGrid>
+	    	</h:form>
+	    </p:dialog>
+	    
+	    <p:dialog widgetVar="dlgSerie" showEffect="fade" header="Pesquisa por série">
+	    	<h:form>
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Série:" />
+					<p:selectOneMenu value="#{receitaMensalidadeBean.serie}">
+			    	  <f:selectItems value="#{receitaMensalidadeBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
+			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMensalidadeBean.ano}" />
+					<p:commandButton update=":tabela" value="Buscar" action="#{receitaMensalidadeBean.buscarPorSerie}" />					
+				</p:panelGrid>
+	    	</h:form>
+	    </p:dialog>
+	    
+	    <p:dialog widgetVar="dlgIna" showEffect="fade" header="Pesquisa por inadiplentes">
+	    	<h:form>
+				<p:panelGrid columns="5">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
+			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMensalidadeBean.ano}" />
+					<p:commandButton value="Buscar" action="#{receitaMensalidadeBean.buscarPorNaoPagante}" />					
+				</p:panelGrid>
+	   		 </h:form>
+	    </p:dialog>  
 	    
     </ui:define>
     

@@ -7,31 +7,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="conteudo">
-	
-	    <h:form id="form_ano">
-			<p:panel header="Pesquise por ano">
-				<p:panelGrid columns="2">
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaLivroBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaLivroBean.buscarPorAno}" />					
-				</p:panelGrid>
-			</p:panel>
-	    </h:form>	
+	<ui:define name="conteudo">	
 	    
-	    <h:form id="form_mes">
-			<p:panel header="Pesquise por mês e ano">
-				<p:panelGrid columns="2">
-					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{receitaLivroBean.mes}">
-			    	  <f:selectItems value="#{receitaLivroBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-			   		</p:selectOneMenu>
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaLivroBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaLivroBean.buscarPorMesAno}" />					
-				</p:panelGrid>
-			</p:panel>
-	    </h:form>
+		<p:panelGrid columns="3">
+			<h:outputLabel value="Pesquise:" />
+			<h:form>
+	    	<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()"/>
+		    </h:form>
+		    <h:form>
+		    	<p:commandButton value="Por mês e ano" type="button" onclick="PF('dlgMes').show()"/>
+		    </h:form>  
+		</p:panelGrid>  
 	    
 		
 		<p:dataTable id="tabela" var="livro" value="#{receitaLivroBean.receitaLivros}">
@@ -50,11 +36,35 @@
 		    <p:column headerText="Valor">
 		        <h:outputText value="#{livro.valor}"  />
 		    </p:column>  
+		    <f:facet name="footer">
+		    	Receita total:
+		    	<h:outputText value="#{receitaLivroBean.receitaTotal}" />
+		    </f:facet>
 	    </p:dataTable>
 	    
-	    <h:outputLabel value="Receita total:" />
-	    <h:outputText id="total" value="#{receitaLivroBean.receitaTotal}" />
+	    <p:dialog header="Pesquisa por ano" widgetVar="dlgAno" showEffect="fade">
+	    	<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaLivroBean.ano}" />
+					<p:commandButton update=":tabela" value="Buscar" action="#{receitaLivroBean.buscarPorAno}" />					
+				</p:panelGrid>
+	    	</h:form> 
+	    </p:dialog>
 	    
+	    <p:dialog header="Pesquisa por mês e ano" widgetVar="dlgMes" showEffect="fade">
+	    	<h:form>
+				<p:panelGrid columns="5">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaLivroBean.mes}">
+			    	  <f:selectItems value="#{receitaLivroBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaLivroBean.ano}" />
+					<p:commandButton update=":tabela" value="Buscar" action="#{receitaLivroBean.buscarPorMesAno}" />					
+				</p:panelGrid>
+	    	</h:form> 
+	    </p:dialog>
 	   
 	    
     </ui:define>
