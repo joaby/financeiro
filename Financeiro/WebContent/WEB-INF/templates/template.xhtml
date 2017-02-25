@@ -9,17 +9,18 @@
 	<title>Sistema Financeiro</title>
 	<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
 </h:head>
-<h:body>
+<h:body style="background-color:#b03060;">
 	<f:view locale="pt_BR">
-		<div id="pagina">
+		<div id="pagina" style="width: 1000px; margin: 0 auto">
 			<div id="cabecalho">
 				<h:panelGrid width="100%" style="text-align:center; background-color:#b03060">
-					<h1 style="color:white; font-size: 38px; font-style: oblique; font-variant: small-caps; ">Escola Sonho Colorido</h1>
+					<h1 style="color:white; font-size: 38px; border-top: 1px solid white; border-bottom: 1px solid white; font-style: oblique; font-variant: small-caps;">Sistema Financeiro</h1>
+					<h1 style="color:white; font-size: 20px; font-style: oblique; font-variant: small-caps;">Escola Sonho Colorido</h1>
 				</h:panelGrid> 
 			
 			</div>
 			
-			<div id="menu">
+			<div id="menu" style="margin-top: 10px;">
 				<h:form>
 					<p:growl id="messages" />
 					<p:menubar>
@@ -51,12 +52,13 @@
 				</h:form>
 			</div>
 			
-			<div id="conteudo">
+			<div id="conteudo" style="min-height: 500px; margin-top: 10px; background-color: #fafaf4; -webkit-border-radius: 5px;">
 				<ui:insert name="conteudo">Conteudo</ui:insert>
 			</div>
 			
 			<div id="rodape" style="heigth:50px">
 				<h:panelGrid  width="100%" style="text-align:center; background-color:#b03060; height:50px">
+					<h1 style="color:white; font-size: 15px; font-variant: small-caps;">&copy; Copyright. Escola sonho Colorido. Todos os direitos reservados.</h1>
 				</h:panelGrid>
 			</div>
 		</div>

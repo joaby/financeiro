@@ -3,14 +3,11 @@ package controle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
-
 import dao.ReceitaExtraDAO;
 import dao.ReceitaExtraJPADAO;
 import modelo.Mes;
 import modelo.ReceitaExtra;
-import modelo.ReceitaLivro;
 
 @ManagedBean
 public class ReceitaExtraBean extends AbstractBean{
@@ -49,7 +46,7 @@ public class ReceitaExtraBean extends AbstractBean{
 	public void buscarPorAno(){
 		ReceitaExtraDAO reDAO = new ReceitaExtraJPADAO();
 		this.extras = reDAO.buscarPorAno(this.ano);
-		this.receitaTotal = somaReceitaTotal(this.extras);
+		this.receitaTotal = somaReceitaTotal(this.extras);	
 	}
 	
 	public void buscarPorMesAno(){

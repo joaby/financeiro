@@ -1,7 +1,7 @@
-@CHARSET "ISO-8859-1";
+@CHARSET "UTF-8";
 
 body {
-	
+
 }
 
 a {
@@ -11,7 +11,7 @@ a {
 
 #pagina {
 	margin-top: 2px;
-	width: 800px;
+	width: 1000px;
 	margin: 0 auto;
 }
 

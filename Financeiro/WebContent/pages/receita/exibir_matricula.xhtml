@@ -8,30 +8,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-	
-	    <h:form id="form_ano">
-			<p:panel header="Pesquise por ano">
-				<p:panelGrid columns="2">
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMatriculaBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaMatriculaBean.buscarPorAno}" />					
-				</p:panelGrid>
-			</p:panel>
-	    </h:form>	
-	    
-	     <h:form id="form_serie">
-			<p:panel header="Pesquise por série">
-				<p:panelGrid columns="2">
-					<h:outputLabel value="Série:" />
-					<p:selectOneMenu value="#{receitaMatriculaBean.serie}">
-			    	  <f:selectItems value="#{receitaMatriculaBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
-			   		</p:selectOneMenu>
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMatriculaBean.ano}" />
-					<p:commandButton update=":tabela :total" value="Pesquisar" action="#{receitaMatriculaBean.buscarPorSerie}" />					
-				</p:panelGrid>
-			</p:panel>
-	    </h:form>
+		
+		<p:panelGrid columns="3">
+			<h:outputLabel value="Pesquise:" />
+			<h:form>
+	    	<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()"/>
+		    </h:form>
+		    <h:form>
+		    	<p:commandButton value="Por série" type="button" onclick="PF('dlgSerie').show()"/>
+		    </h:form>  
+		</p:panelGrid>
 	    
 		
 		<p:dataTable id="tabela" var="matricula" value="#{receitaMatriculaBean.matriculas}">
@@ -61,7 +47,29 @@
 	    <h:outputLabel value="Receita total:" />
 	    <h:outputText id="total" value="#{receitaMatriculaBean.receitaTotal}" />
 	    
-	   
+	    <p:dialog widgetVar="dlgAno" showEffect="fade" header="Pesquisa por ano">
+	    	 <h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMatriculaBean.ano}" />
+					<p:commandButton update=":tabela :total" value="Buscar" action="#{receitaMatriculaBean.buscarPorAno}" />					
+				</p:panelGrid>
+	   		 </h:form>	 
+	    </p:dialog>
+	    
+	   <p:dialog widgetVar="dlgSerie" showEffect="fade" header="Pesquisa por série">
+	   		<h:form>
+				<p:panelGrid columns="5">
+					<h:outputLabel value="Série:" />
+					<p:selectOneMenu value="#{receitaMatriculaBean.serie}">
+			    	  <f:selectItems value="#{receitaMatriculaBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMatriculaBean.ano}" />
+					<p:commandButton update=":tabela :total" value="Buscar" action="#{receitaMatriculaBean.buscarPorSerie}" />					
+				</p:panelGrid>
+	   		 </h:form>
+	   </p:dialog>
 	    
     </ui:define>
     

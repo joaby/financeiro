@@ -9,14 +9,15 @@
 
 	<ui:define name="conteudo">
 		<h:form>
-		<p:panel header="Cadastro de extra">
+		<p:panel header="Cadastro de extra" style="margin-bottom:10px; text-align: center;">
 			<p:messages autoUpdate="true" closable="true" />
-			<h:panelGrid columns="2">
+			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 			    <h:outputLabel value="Valor:" />
 			    <p:inputText value="#{receitaExtraBean.extra.valor}" />
 			    <h:outputLabel value="Mês:" />
 			    <p:selectOneMenu value="#{receitaExtraBean.extra.mes}">
-			    	  <f:selectItems noSelectionValue="Selecione" value="#{receitaExtraBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+			    	  <f:selectItems value="#{receitaExtraBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 			    </p:selectOneMenu>
 			    <h:outputLabel value="Ano:" />
 			    <p:inputText value="#{receitaExtraBean.extra.ano}" />
@@ -24,7 +25,7 @@
 			    <p:inputTextarea value="#{receitaExtraBean.extra.descricao}" />
 			    <p:commandButton value="Cadastrar" action="#{receitaExtraBean.cadastrar}" />
 			    <p:commandButton value="Limpar" type="reset" />
-		    </h:panelGrid>
+		    </p:panelGrid>
 	    </p:panel>
 		</h:form>
     </ui:define>
