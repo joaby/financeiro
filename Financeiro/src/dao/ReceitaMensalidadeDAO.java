@@ -13,6 +13,6 @@ public interface ReceitaMensalidadeDAO extends GenericDAO<ReceitaMensalidade>{
 	public List<ReceitaMensalidade> buscarPorMesAno(Mes mes, int ano);
 	public List<ReceitaMensalidade> buscarPorSerie(Serie serie, Mes mes, int ano);
 	public List<Aluno> buscarPorNaoPagante(Mes mes, int ano);
-	public float soma(Mes mes, int ano);
+	public Double soma(Mes mes, int ano);
 
 }

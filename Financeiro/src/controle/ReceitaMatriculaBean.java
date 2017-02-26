@@ -24,6 +24,7 @@ public class ReceitaMatriculaBean extends AbstractBean{
 	private Serie serie;
 	private List<Serie> series;
 	private Aluno aluno;
+	private Mes mes;
 
 	public ReceitaMatriculaBean(){
 		this.matricula = new ReceitaMatricula();
@@ -31,7 +32,6 @@ public class ReceitaMatriculaBean extends AbstractBean{
 		this.matriculas = new ArrayList<ReceitaMatricula>();
 		this.setMeses(Arrays.asList(Mes.values()));
 		this.setSeries(Arrays.asList(Serie.values()));
-		buscarTodos();
 	}
 	
 	public void cadastrar(){
@@ -159,6 +159,14 @@ public class ReceitaMatriculaBean extends AbstractBean{
 
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
+	}
+
+	public Mes getMes() {
+		return mes;
+	}
+
+	public void setMes(Mes mes) {
+		this.mes = mes;
 	}
 
 }

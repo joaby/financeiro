@@ -35,7 +35,6 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 		this.setMensalidade(new ReceitaMensalidade());
 		this.setMensalidades(new ArrayList<ReceitaMensalidade>());
 		this.setAlunos(new ArrayList<Aluno>());
-		buscarTodos();
 	}
 
 	public void cadastrar(){

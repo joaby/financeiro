@@ -35,11 +35,12 @@
 		    </p:column>
 		    <p:column headerText="Valor">
 		        <h:outputText value="#{livro.valor}"  />
+		        <f:facet name="footer">
+			    	Total:
+			    	<h:outputText value="#{receitaLivroBean.receitaTotal}" />
+		    	</f:facet>
 		    </p:column>  
-		    <f:facet name="footer">
-		    	Receita total:
-		    	<h:outputText value="#{receitaLivroBean.receitaTotal}" />
-		    </f:facet>
+		    
 	    </p:dataTable>
 	    
 	    <p:dialog header="Pesquisa por ano" widgetVar="dlgAno" showEffect="fade">

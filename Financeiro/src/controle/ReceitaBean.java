@@ -3,66 +3,98 @@ package controle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-
 import dao.ReceitaDAO;
+import dao.ReceitaExtraDAO;
+import dao.ReceitaExtraJPADAO;
 import dao.ReceitaJPADAO;
+import dao.ReceitaLivroDAO;
+import dao.ReceitaLivroJPADAO;
+import dao.ReceitaMatriculaDAO;
+import dao.ReceitaMatriculaJPADAO;
+import dao.ReceitaMensalidadeDAO;
+import dao.ReceitaMensalidadeJPADAO;
 import modelo.Mes;
 import modelo.Receita;
-import modelo.ReceitaExtra;
-import modelo.ReceitaLivro;
-import modelo.ReceitaMatricula;
-import modelo.ReceitaMensalidade;
+import modelo.ReceitaUnica;
 
 @ManagedBean
 public class ReceitaBean extends AbstractBean{
 	
 	private List<Receita> receitas;
-	private List<ReceitaExtra> receitaExtras;
-	private List<ReceitaLivro> receitaLivros;
-	private List<ReceitaMatricula> receitaMatriculas;
-	private List<ReceitaMensalidade> receitaMensalidades;
+	private List<ReceitaUnica> receitaUnica;
 	private List<Mes> meses;
 	private int ano;
 	private Mes mes;
-	private float receitaTotal;
+	private double receitaTotal;
 	
 	
 	
 	public ReceitaBean(){
 		this.receitas = new ArrayList<Receita>();
-		this.receitaExtras = new ArrayList<ReceitaExtra>();
-		this.receitaLivros = new ArrayList<ReceitaLivro>();
-		this.receitaMatriculas = new ArrayList<ReceitaMatricula>();
-		this.receitaMensalidades = new ArrayList<ReceitaMensalidade>();
+		this.setReceitaUnica(new ArrayList<ReceitaUnica>());
 		this.meses = Arrays.asList(Mes.values());
 	}
 	
 	public void buscarTodos(){
 		ReceitaDAO rDAO = new ReceitaJPADAO();
 		this.receitas = rDAO.find();
-		this.receitaTotal = somaReceitaTotal(this.receitas);
+		
  	}
 	
 	public void buscarPorAno(){
 		ReceitaDAO rDAO = new ReceitaJPADAO();
 		this.receitas = rDAO.buscarPorAno(this.ano);
-		this.receitaTotal = somaReceitaTotal(this.receitas);
+		
 	}
 	
 	public void buscarPorMesAno(){
 		ReceitaDAO rDAO = new ReceitaJPADAO();
 		this.receitas = rDAO.buscarPorMesAno(this.mes, this.ano);
-		this.receitaTotal = somaReceitaTotal(this.receitas);
+		
 	}
 	
-	public float somaReceitaTotal(List<Receita> r){
-		float total = 0;
-		for(Receita re : r){
-			total += re.getValor();
+	public void somaReceita(){
+		ReceitaUnica ru = new ReceitaUnica();
+		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
+		Double somaMensa = rmDAO.soma(this.mes, this.ano);
+		if(somaMensa == null){somaMensa = new Double(0);}
+		ru.setTotal(somaMensa);
+		ru.setNome("Mensalidade");
+		this.receitaUnica.add(ru);
+		ru = new ReceitaUnica();
+		
+		ReceitaMatriculaDAO rmatDAO = new ReceitaMatriculaJPADAO();
+		Double somaMatri = rmatDAO.soma(this.mes, this.ano);
+		if(somaMatri == null){somaMatri = new Double(0);}
+		ru.setTotal(somaMatri);
+		ru.setNome("Matricula");
+		this.receitaUnica.add(ru);
+		ru = new ReceitaUnica();
+		
+		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
+		Double somaLivro = rlDAO.soma(this.mes, this.ano);
+		if(somaLivro == null){somaLivro = new Double(0);}
+		ru.setTotal(somaLivro);
+		ru.setNome("Livro");
+		this.receitaUnica.add(ru);
+		ru = new ReceitaUnica();
+		
+		ReceitaExtraDAO reDAO = new ReceitaExtraJPADAO();
+		Double somaExtra = reDAO.soma(this.mes, this.ano);
+		if(somaExtra == null){somaExtra = new Double(0);}
+		ru.setTotal(somaExtra);
+		ru.setNome("Extra");
+		this.receitaUnica.add(ru);
+		ru = new ReceitaUnica();
+		
+		this.receitaTotal = somaMatri.doubleValue() + somaExtra.doubleValue() + somaLivro.doubleValue() + somaMensa.doubleValue();
+	}
+	
+	public double somaReceitaTotal(List<ReceitaUnica> r){
+		double total = 0;
+		for(ReceitaUnica re : r){
+			total = total + re.getTotal().doubleValue();
 		}
 		return total;
 	}
@@ -73,38 +105,6 @@ public class ReceitaBean extends AbstractBean{
 	
 	public void setReceitas(List<Receita> receitas) {
 		this.receitas = receitas;
-	}
-	
-	public List<ReceitaExtra> getReceitaExtras() {
-		return receitaExtras;
-	}
-	
-	public void setReceitaExtras(List<ReceitaExtra> receitaExtras) {
-		this.receitaExtras = receitaExtras;
-	}
-	
-	public List<ReceitaLivro> getReceitaLivros() {
-		return receitaLivros;
-	}
-	
-	public void setReceitaLivros(List<ReceitaLivro> receitaLivros) {
-		this.receitaLivros = receitaLivros;
-	}
-	
-	public List<ReceitaMatricula> getReceitaMatriculas() {
-		return receitaMatriculas;
-	}
-	
-	public void setReceitaMatriculas(List<ReceitaMatricula> receitaMatriculas) {
-		this.receitaMatriculas = receitaMatriculas;
-	}
-	
-	public List<ReceitaMensalidade> getReceitaMensalidades() {
-		return receitaMensalidades;
-	}
-	
-	public void setReceitaMensalidades(List<ReceitaMensalidade> receitaMensalidades) {
-		this.receitaMensalidades = receitaMensalidades;
 	}
 
 	public List<Mes> getMeses() {
@@ -131,12 +131,20 @@ public class ReceitaBean extends AbstractBean{
 		this.mes = mes;
 	}
 
-	public float getReceitaTotal() {
+	public double getReceitaTotal() {
 		return receitaTotal;
 	}
 
-	public void setReceitaTotal(float receitaTotal) {
+	public void setReceitaTotal(double receitaTotal) {
 		this.receitaTotal = receitaTotal;
+	}
+
+	public List<ReceitaUnica> getReceitaUnica() {
+		return receitaUnica;
+	}
+
+	public void setReceitaUnica(List<ReceitaUnica> receitaUnica) {
+		this.receitaUnica = receitaUnica;
 	}
 	
 	

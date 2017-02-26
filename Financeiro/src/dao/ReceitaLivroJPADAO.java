@@ -30,4 +30,13 @@ public class ReceitaLivroJPADAO extends GenericJPADAO<ReceitaLivro> implements R
 		return query.getResultList();
 	}
 
+	@Override
+	public Double soma(Mes mes, int ano) {
+		Query query = getEm().createNamedQuery ("ReceitaLivro.soma");
+		query.setParameter ("mes", mes) ;
+		query.setParameter("ano", ano);
+		Double soma = (Double) query.getSingleResult();
+		return soma;
+	}
+
 }

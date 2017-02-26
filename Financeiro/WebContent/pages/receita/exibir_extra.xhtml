@@ -33,11 +33,12 @@
 		    </p:column>
 		    <p:column headerText="Valor">
 		        <h:outputText value="#{extra.valor}"  />
-		    </p:column> 
-		    <f:facet name="footer">
-		    	Receita total:
-		    	<h:outputText value="#{receitaExtraBean.receitaTotal}" />
-		    </f:facet> 
+		        <f:facet name="footer">
+			    	Total:
+			    	<h:outputText value="#{receitaExtraBean.receitaTotal}" />
+		   		</f:facet>
+		     </p:column> 
+		    
 	    </p:dataTable>
 	    
 	    <p:dialog widgetVar="dlgAno" header="Pesquisa por ano" showEffect="fade">

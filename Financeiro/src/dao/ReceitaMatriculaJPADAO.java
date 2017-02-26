@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 import modelo.Aluno;
+import modelo.Mes;
 import modelo.ReceitaMatricula;
 import modelo.Serie;
 
@@ -36,6 +37,15 @@ public class ReceitaMatriculaJPADAO extends GenericJPADAO<ReceitaMatricula> impl
 		query.setParameter("aluno", aluno);
 		query.setParameter("ano", ano);
 		return (ReceitaMatricula) query.getSingleResult();
+	}
+
+	@Override
+	public Double soma(Mes mes, int ano) {
+		Query query = getEm().createNamedQuery ("ReceitaMatricula.soma");
+		query.setParameter ("mes", mes) ;
+		query.setParameter("ano", ano);
+		Double soma = (Double) query.getSingleResult();
+		return soma;
 	}
 
 }

@@ -2,36 +2,25 @@ package modelo;
 
 public class ReceitaUnica {
 	
-	private float totalMensalidade;
-	private float totalMatricula;
-	private float totalExtra;
-	private float totalLivro;
+	private String nome;
+	private Double total;
 	
+	public ReceitaUnica(){
+		
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public Double getTotal() {
+		return total;
+	}
+	public void setTotal(Double total) {
+		this.total = total;
+	}
 	
-	public float getTotalMensalidade() {
-		return totalMensalidade;
-	}
-	public void setTotalMensalidade(float totalMensalidade) {
-		this.totalMensalidade = totalMensalidade;
-	}
-	public float getTotalMatricula() {
-		return totalMatricula;
-	}
-	public void setTotalMatricula(float totalMatricula) {
-		this.totalMatricula = totalMatricula;
-	}
-	public float getTotalExtra() {
-		return totalExtra;
-	}
-	public void setTotalExtra(float totalExtra) {
-		this.totalExtra = totalExtra;
-	}
-	public float getTotalLivro() {
-		return totalLivro;
-	}
-	public void setTotalLivro(float totalLivro) {
-		this.totalLivro = totalLivro;
-	}
 	
 	
 
