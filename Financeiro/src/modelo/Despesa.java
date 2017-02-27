@@ -1,7 +1,9 @@
 package modelo;
 
-import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,36 +16,10 @@ public class Despesa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	private String descricao;
 	private float valor;
-	private Date data;
-	
-	public Despesa() {
-
-	}
-
-	public Despesa(String descricao, float valor, Date data) {
-		super();
-		this.descricao = descricao;
-		this.valor = valor;
-		this.data = data;
-	}
-	
-	public Despesa(long id, String descricao, float valor, Date data) {
-		super();
-		this.id = id;
-		this.descricao = descricao;
-		this.valor = valor;
-		this.data = data;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-	
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+	@Enumerated(EnumType.STRING)
+	private Mes mes;
+	private int ano;
 	
 	public float getValor() {
 		return valor;
@@ -52,14 +28,6 @@ public class Despesa {
 	public void setValor(float valor) {
 		this.valor = valor;
 	}
-	
-	public Date getData() {
-		return data;
-	}
-	
-	public void setData(Date data) {
-		this.data = data;
-	}
 
 	public long getId() {
 		return id;
@@ -67,6 +35,22 @@ public class Despesa {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Mes getMes() {
+		return mes;
+	}
+
+	public void setMes(Mes mes) {
+		this.mes = mes;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
 	}
 
 }

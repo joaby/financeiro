@@ -7,7 +7,6 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Sistema Financeiro</title>
-	<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
 </h:head>
 <h:body style="background-color:#b03060;">
 	<f:view locale="pt_BR">
@@ -42,10 +41,12 @@
 							
 						</p:submenu>
 						<p:submenu label="Aluno">
-							<p:menuitem value="Cadastrar aluno" url="/pages/aluno/cadastrar_aluno.xhtml" />
-							<p:menuitem value="Exibir aluno" url="/pages/aluno/exibir_alunos.xhtml" />
+							<p:menuitem value="Cadastrar" url="/pages/aluno/cadastrar_aluno.xhtml" />
+							<p:menuitem value="Exibir" url="/pages/aluno/exibir_aluno.xhtml" />
 						</p:submenu>
 						<p:submenu label="Funcionário">
+							<p:menuitem value="Cadastrar" url="/pages/funcionario/cadastrar_funcionario.xhtml" />
+							<p:menuitem value="Exibir" url="/pages/funcionario/exibir_funcionario.xhtml" />
 						</p:submenu>
 					</p:menubar>
 				</h:form>

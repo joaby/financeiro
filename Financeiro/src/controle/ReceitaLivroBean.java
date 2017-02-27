@@ -1,5 +1,6 @@
 package controle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,8 +15,9 @@ import modelo.ReceitaLivro;
 
 @ManagedBean
 @ViewScoped
-public class ReceitaLivroBean extends AbstractBean{
+public class ReceitaLivroBean extends AbstractBean implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private ReceitaLivro receitaLivro;
 	private List<ReceitaLivro> receitaLivros;
 	private List<Mes> meses;

@@ -1,5 +1,6 @@
 package controle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +18,9 @@ import modelo.Serie;
 
 @ManagedBean
 @ViewScoped
-public class AlunoBean extends AbstractBean{
+public class AlunoBean extends AbstractBean implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private Aluno aluno;
 	private List<Aluno> alunos;
 	private Mes mes;
@@ -29,7 +31,6 @@ public class AlunoBean extends AbstractBean{
 		this.meses = Arrays.asList(Mes.values());
 		this.aluno = new Aluno();
 		this.alunos = new ArrayList<Aluno>();
-		buscarTodos();
 	}
 	
 	public void buscarTodos(){

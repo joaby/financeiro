@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">	
+	    
+		<p:panelGrid columns="3">
+			<h:outputLabel value="Pesquise:" />
+				<h:form>
+		    		<p:commandButton update=":tabela" value="Todos" action="#{funcionarioBean.buscarTodos}" />
+			    </h:form> 
+			    <h:form>
+		    		<p:commandButton value="Por tipo" type="button" onclick="PF('dlgTipo').show()"/>
+			    </h:form>
+		</p:panelGrid>  
+	    
+		
+		<p:dataTable id="tabela" var="funcionario" value="#{funcionarioBean.funcionarios}" 
+		paginator="true" rows="10" emptyMessage="Nenhum funcionário encontrado!">
+			<f:facet name="header">
+            	Funcionários
+        	</f:facet>
+		    <p:column headerText="Cpf">
+		        <h:outputText value="#{funcionario.cpf}"  />	       
+		    </p:column>
+		    <p:column headerText="Nome">
+		        <h:outputText value="#{funcionario.nome}"  />	       
+		    </p:column>
+		    <p:column headerText="Tipo">
+		        <h:outputText value="#{funcionario.tipo.descricao}"  />
+		    </p:column>
+		    <p:column headerText="Salário">
+		        <h:outputText value="#{funcionario.salario}"  />
+		        <f:facet name="footer">
+		        	Total:
+		        	<h:outputText value="#{funcionarioBean.salarioTotal}" />
+		        </f:facet>
+		    </p:column>  	    
+	    </p:dataTable>
+	    
+	    <p:dialog header="Pesquisa por tipo" widgetVar="dlgTipo" showEffect="fade">
+	    	<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Tipo:" />
+					<p:selectOneMenu value="#{funcionarioBean.tipo}">
+			    	  <f:selectItems value="#{funcionarioBean.tipos}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+			   		</p:selectOneMenu>
+					<p:commandButton update=":tabela" value="Buscar" action="#{funcionarioBean.buscarPorTipo}" />					
+				</p:panelGrid>
+	    	</h:form> 
+	    	
+	    </p:dialog>
+	    
+    </ui:define>
+    
+</ui:composition>  

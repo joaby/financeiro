@@ -8,12 +8,19 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
+		<p:panelGrid columns="2">
+			<h:outputLabel value="Pesquise:" />
+			<h:form>
+		    	<p:commandButton update=":tabela" value="Todos" action="#{alunoBean.buscarTodos}" />
+			</h:form> 
+		</p:panelGrid>  
 		<p:messages autoUpdate="true" closable="true" />
-		<p:dataTable id="tabela" var="aluno" value="#{alunoBean.alunos}">
-		    <p:column headerText="Nome">
+		<p:dataTable id="tabela" var="aluno" value="#{alunoBean.alunos}" paginator="true" rows="10"
+					emptyMessage="Nenhum aluno encontrado!">
+		    <p:column headerText="Nome" sortBy="#{aluno.nome}" sortFunction="#{alunoBean.sortByNome}">
 		        <h:outputText value="#{aluno.nome}" />
 		    </p:column>
 	    </p:dataTable>
-    </ui:define>
+    	</ui:define>
     
 </ui:composition>    
