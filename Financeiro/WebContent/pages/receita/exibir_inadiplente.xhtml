@@ -8,14 +8,36 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:dataTable var="aluno" value="#{receitaMensalidadeBean.alunos}">
+	
+		<p:panelGrid columns="5">
+			<h:outputLabel value="Pesquise:" />
+		    <h:form>
+	    	<p:commandButton value="Por inadiplentes" type="button" onclick="PF('dlgIna').show()"/>
+		    </h:form>  
+		</p:panelGrid>
+		
+		<p:dataTable id="tab" var="aluno" value="#{alunoBean.alunos}" paginator="true" rows="10">
 			<f:facet name="header">
             	Aluno
         	</f:facet>
-		    <p:column headerText="Nome:">
+		    <p:column headerText="Nome" sortBy="#{aluno.nome}" sortFunction="#{alunoBean.sortByNome}">
 		        <h:outputText value="#{aluno.nome}" />
 		    </p:column>
 	    </p:dataTable>
+	    
+	     <p:dialog widgetVar="dlgIna" showEffect="fade" header="Pesquisa por inadiplentes">
+	    	<h:form>
+				<p:panelGrid columns="5">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{alunoBean.mes}">
+			    	  <f:selectItems value="#{alunoBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+			   		</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{alunoBean.ano}" />
+					<p:commandButton update=":tab" value="Buscar" action="#{alunoBean.buscarPorNaoPagante}" />					
+				</p:panelGrid>
+	   		 </h:form>
+	    </p:dialog> 
     </ui:define>
     
 </ui:composition>   

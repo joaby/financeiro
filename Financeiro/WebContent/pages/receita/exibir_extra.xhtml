@@ -18,35 +18,36 @@
 		    </h:form>  
 		</p:panelGrid>  
 		
-		<p:dataTable id="tabela" var="extra" value="#{receitaExtraBean.extras}">
-			<f:facet name="header">
-            	Extra
-        	</f:facet>
-		    <p:column headerText="Mês">
-		        <h:outputText value="#{extra.mes.descricao}"  />	       
-		    </p:column>
-		    <p:column headerText="Ano">
-		        <h:outputText value="#{extra.ano}"  />	       
-		    </p:column>
-		    <p:column headerText="Descrição">
-		        <h:outputText value="#{extra.descricao}"  />
-		    </p:column>
-		    <p:column headerText="Valor">
-		        <h:outputText value="#{extra.valor}"  />
-		        <f:facet name="footer">
-			    	Total:
-			    	<h:outputText value="#{receitaExtraBean.receitaTotal}" />
-		   		</f:facet>
-		     </p:column> 
-		    
-	    </p:dataTable>
+		<h:form id="formulario">
+			<p:dataTable id="tabela" var="extra" value="#{receitaExtraBean.extras}" paginator="true" rows="10" style="margin-bottom:20px">
+				<f:facet name="header">
+	            	Extra
+	        	</f:facet>
+			    <p:column headerText="Mês">
+			        <h:outputText value="#{extra.mes.descricao}"  />	       
+			    </p:column>
+			    <p:column headerText="Ano">
+			        <h:outputText value="#{extra.ano}"  />	       
+			    </p:column>
+			    <p:column headerText="Descrição">
+			        <h:outputText value="#{extra.descricao}"  />
+			    </p:column>
+			    <p:column headerText="Valor">
+			        <h:outputText value="#{extra.valor}"  />
+			        <f:facet name="footer">
+				    	Total:
+				    	<h:outputText value="#{receitaExtraBean.receitaTotal}" />
+			   		</f:facet>
+			     </p:column> 	    
+		    </p:dataTable>
+	    </h:form>
 	    
 	    <p:dialog widgetVar="dlgAno" header="Pesquisa por ano" showEffect="fade">
 	    	<h:form>
 					<p:panelGrid columns="3">
 						<h:outputLabel value="Ano:" />
 						<p:inputText value="#{receitaExtraBean.ano}" />
-						<p:commandButton update=":tabela" value="Buscar" action="#{receitaExtraBean.buscarPorAno}" />					
+						<p:commandButton update=":formulario:tabela" value="Buscar" action="#{receitaExtraBean.buscarPorAno}" />					
 					</p:panelGrid>
 	    	</h:form>
 	    </p:dialog>
@@ -61,7 +62,7 @@
 				   		</p:selectOneMenu>
 						<h:outputLabel value="Ano:" />
 						<p:inputText value="#{receitaExtraBean.ano}" />
-						<p:commandButton update=":tabela" value="Buscar" action="#{receitaExtraBean.buscarPorMesAno}" />					
+						<p:commandButton update=":formulario:tabela" value="Buscar" action="#{receitaExtraBean.buscarPorMesAno}" />					
 					</p:panelGrid>
 	   		 </h:form>
 	    </p:dialog>

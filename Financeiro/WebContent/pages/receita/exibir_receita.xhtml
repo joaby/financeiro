@@ -30,6 +30,13 @@
 			    	<h:outputText value="#{receitaBean.receitaTotal}" />
 		    	</f:facet>        
 		    </p:column>
+		    
+		    <f:facet name="footer">
+		    	Mês:
+		    	<h:outputText value="#{receitaBean.mes.descricao}" />
+		    	/ Ano:
+		    	<h:outputText value="#{receitaBean.ano}" />
+		    </f:facet>
 		     
 	    </p:dataTable>
 	   

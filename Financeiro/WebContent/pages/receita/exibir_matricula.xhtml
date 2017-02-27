@@ -20,14 +20,14 @@
 		</p:panelGrid>
 	    
 		
-		<p:dataTable id="tabela" var="matricula" value="#{receitaMatriculaBean.matriculas}">
+		<p:dataTable id="tabela" var="matricula" value="#{receitaMatriculaBean.matriculas}" paginator="true" rows="10" sortMode="multiple">
 			<f:facet name="header">
             	Matriculas
         	</f:facet>
-		    <p:column headerText="Nome">
+		    <p:column headerText="Nome" sortBy="#{matricula.aluno.nome}" sortFunction="#{receitaMatriculaBean.sortByNome}">
 		        <h:outputText value="#{matricula.aluno.nome}" />
 		    </p:column>
-		    <p:column headerText="Série">
+		    <p:column headerText="Série" sortBy="#{matricula.serie}" sortFunction="#{receitaMatriculaBean.sortBySerie}">
 		        <h:outputText value="#{matricula.serie.curso}"  />
 		    </p:column>
 		    <p:column headerText="Mês">

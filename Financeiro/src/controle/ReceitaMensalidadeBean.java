@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
 import dao.ReceitaMatriculaDAO;
@@ -17,6 +19,7 @@ import modelo.ReceitaMensalidade;
 import modelo.Serie;
 
 @ManagedBean
+@ViewScoped
 public class ReceitaMensalidadeBean extends AbstractBean{
 	
 	private ReceitaMensalidade mensalidade;
@@ -51,9 +54,11 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 				this.mensalidade = new ReceitaMensalidade();
 			} catch (Exception e) {
 				displayErrorMessageToUser("Aluno ainda não matriculado nesse ano");
+				this.mensalidade = new ReceitaMensalidade();
 			}
 		}else{
 			displayErrorMessageToUser("Aluno não cadastrado! Cadastre o aluno e tente novamente.");
+			this.mensalidade = new ReceitaMensalidade();
 		}	
 	}
 	
@@ -64,33 +69,37 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 	}
 	
 	public void buscarTodos(){
+		this.mensalidades = new ArrayList<ReceitaMensalidade>();
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 		this.mensalidades = rmDAO.find();
 		this.receitaTotal = somaReceitaTotal(this.mensalidades);
 	}
 	
 	public void buscarPorAno(){
+		this.mensalidades = new ArrayList<ReceitaMensalidade>();
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 		this.mensalidades = rmDAO.buscarPorAno(this.ano);
 		this.receitaTotal = somaReceitaTotal(this.mensalidades);
 	}
 	
 	public void buscarPorMesAno(){
+		this.mensalidades = new ArrayList<ReceitaMensalidade>();
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 		this.mensalidades = rmDAO.buscarPorMesAno(this.mes, this.ano);
 		this.receitaTotal = somaReceitaTotal(this.mensalidades);
 	}
 	
 	public void buscarPorSerie(){
+		this.mensalidades = new ArrayList<ReceitaMensalidade>();
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 		this.mensalidades = rmDAO.buscarPorSerie(this.serie, this.mes, this.ano);
 		this.receitaTotal = somaReceitaTotal(this.mensalidades);
 	}
 	
-	public String buscarPorNaoPagante(){
+	public void buscarPorNaoPagante(){
+		this.alunos = new ArrayList<Aluno>();
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 		this.alunos = rmDAO.buscarPorNaoPagante(this.mes, this.ano);
-		return "exibir_inadiplente";
 	}
 	
 	public List<String> buscarTodosAlunos(String query){
@@ -103,6 +112,14 @@ public class ReceitaMensalidadeBean extends AbstractBean{
 			}	
 		}
 		return nomes;
+	}
+	
+	public int sortBySerie(Serie a, Serie b){
+		return a.compareTo(b);
+	}
+	
+	public int sortByNome(String n1, String n2){
+		return n1.compareTo(n2);
 	}
 	
 	public float somaReceitaTotal(List<ReceitaMensalidade> mensalidades){

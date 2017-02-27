@@ -8,7 +8,8 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:dataTable var="aluno" value="#{alunoBean.alunos}">
+		<p:messages autoUpdate="true" closable="true" />
+		<p:dataTable id="tabela" var="aluno" value="#{alunoBean.alunos}">
 		    <p:column headerText="Nome">
 		        <h:outputText value="#{aluno.nome}" />
 		    </p:column>

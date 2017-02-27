@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
 import dao.ReceitaMatriculaDAO;
@@ -14,6 +16,7 @@ import modelo.ReceitaMatricula;
 import modelo.Serie;
 
 @ManagedBean
+@ViewScoped
 public class ReceitaMatriculaBean extends AbstractBean{
 	
 	private ReceitaMatricula matricula;
@@ -44,6 +47,7 @@ public class ReceitaMatriculaBean extends AbstractBean{
 			this.matricula = new ReceitaMatricula();
 		}else{
 			displayErrorMessageToUser("Aluno não cadastrado! Cadastre o aluno e tente novamente.");
+			this.matricula = new ReceitaMatricula();
 		}	
 		
 	}
@@ -55,18 +59,21 @@ public class ReceitaMatriculaBean extends AbstractBean{
 	}
 	
 	public void buscarTodos(){
+		this.matriculas = new ArrayList<ReceitaMatricula>();
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		this.matriculas = rmDAO.find();
 		this.receitaTotal = somaReceitaTotal(this.matriculas);
 	}
 	
 	public void buscarPorAno(){
+		this.matriculas = new ArrayList<ReceitaMatricula>();
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		this.matriculas = rmDAO.buscarPorAno(this.ano);
 		this.receitaTotal = somaReceitaTotal(this.matriculas);
 	}
 	
 	public void buscarPorSerie(){
+		this.matriculas = new ArrayList<ReceitaMatricula>();
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		this.matriculas = rmDAO.buscarPorSerie(this.serie, this.ano);
 		this.receitaTotal = somaReceitaTotal(this.matriculas);
@@ -75,6 +82,14 @@ public class ReceitaMatriculaBean extends AbstractBean{
 	public ReceitaMatricula buscarPorAluno(){
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		return rmDAO.buscarPorAluno(this.aluno, this.ano);
+	}
+	
+	public int sortBySerie(Serie a, Serie b){
+		return a.compareTo(b);
+	}
+	
+	public int sortByNome(String n1, String n2){
+		return n1.compareTo(n2);
 	}
 	
 	public List<String> buscarTodosAlunos(String query){

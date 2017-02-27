@@ -20,7 +20,7 @@
 		</p:panelGrid>  
 	    
 		
-		<p:dataTable id="tabela" var="livro" value="#{receitaLivroBean.receitaLivros}">
+		<p:dataTable id="tabela" var="livro" value="#{receitaLivroBean.receitaLivros}" paginator="true" rows="10">
 			<f:facet name="header">
             	Livros
         	</f:facet>

@@ -21,18 +21,18 @@
 		    	<p:commandButton value="Por série" type="button" onclick="PF('dlgSerie').show()"/>
 		    </h:form>
 		    <h:form>
-	    	<p:commandButton value="Por inadiplentes" type="button" onclick="PF('dlgIna').show()"/>
+	    	<p:commandButton value="Por inadiplentes" action="exibir_inadiplente"/>
 		    </h:form>  
 		</p:panelGrid>	
 		
-		<p:dataTable id="tabela" var="mensalidade" value="#{receitaMensalidadeBean.mensalidades}">
+		<p:dataTable id="tabela" var="mensalidade" value="#{receitaMensalidadeBean.mensalidades}" paginator="true" rows="10" sortMode="multiple">
 			<f:facet name="header">
             	Mensalidades
         	</f:facet>
-		    <p:column headerText="Nome">
+		    <p:column headerText="Nome" sortBy="#{mensalidade.aluno.nome}" sortFunction="#{receitaMensalidadeBean.sortByNome}">
 		        <h:outputText value="#{mensalidade.aluno.nome}" />
 		    </p:column>
-		    <p:column headerText="Série">
+		    <p:column headerText="Série" sortBy="#{mensalidade.matricula.serie}" sortFunction="#{receitaMensalidadeBean.sortBySerie}">
 		        <h:outputText value="#{mensalidade.matricula.serie.curso}"  />
 		    </p:column>
 		    <p:column headerText="Mês">
@@ -100,12 +100,12 @@
 	    	<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{receitaMensalidadeBean.mes}">
-			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					<p:selectOneMenu value="#{alunoBean.mes}">
+			    	  <f:selectItems value="#{alunoBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 			   		</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMensalidadeBean.ano}" />
-					<p:commandButton value="Buscar" action="#{receitaMensalidadeBean.buscarPorNaoPagante}" />					
+					<p:inputText value="#{alunoBean.ano}" />
+					<p:commandButton value="Buscar" action="#{alunoBean.buscarPorNaoPagante}" />					
 				</p:panelGrid>
 	   		 </h:form>
 	    </p:dialog>  

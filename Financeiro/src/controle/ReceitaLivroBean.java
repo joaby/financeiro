@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import dao.ReceitaLivroDAO;
 import dao.ReceitaLivroJPADAO;
@@ -12,6 +13,7 @@ import modelo.Mes;
 import modelo.ReceitaLivro;
 
 @ManagedBean
+@ViewScoped
 public class ReceitaLivroBean extends AbstractBean{
 	
 	private ReceitaLivro receitaLivro;
@@ -32,27 +34,31 @@ public class ReceitaLivroBean extends AbstractBean{
 		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
 		rlDAO.save(this.receitaLivro);
 		displayInfoMessageToUser("Cadastrado com sucesso!");
+		this.receitaLivro = new ReceitaLivro();
 	}
 	
 	public void excluir(){
 		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
-		rlDAO.delete(this.receitaLivro);;
+		rlDAO.delete(this.receitaLivro);
 		displayInfoMessageToUser("Excluido com sucesso!");
 	}
 	
 	public void buscarTodos(){
+		this.receitaLivros = new ArrayList<ReceitaLivro>();
 		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
 		this.receitaLivros = rlDAO.find();
 		this.receitaTotal = somaReceitaTotal(this.receitaLivros);
 	}
 	
 	public void buscarPorAno(){
+		this.receitaLivros = new ArrayList<ReceitaLivro>();
 		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
 		this.receitaLivros = rlDAO.buscarPorAno(this.ano);
 		this.receitaTotal = somaReceitaTotal(this.receitaLivros);
 	}
 	
 	public void buscarPorMesAno(){
+		this.receitaLivros = new ArrayList<ReceitaLivro>();
 		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
 		this.receitaLivros = rlDAO.buscarPorMesAno(this.mes, this.ano);
 		this.receitaTotal = somaReceitaTotal(this.receitaLivros);

@@ -15,7 +15,8 @@
 				<h:outputLabel value="Nome do aluno:" />
 				<p:row>
 				    <p:autoComplete id="nome" value="#{receitaMatriculaBean.matricula.aluno.nome}" 
-				    completeMethod="#{receitaMatriculaBean.buscarTodosAlunos}" title="Digite o nome e escolha uma opção!" />
+				    completeMethod="#{receitaMatriculaBean.buscarTodosAlunos}" title="Digite o nome e escolha uma opção!"
+				    minQueryLength="3" scrollHeight="200" />
 				    <p:tooltip for="nome" showEvent="focus" hideEvent="blur" />
 			    </p:row>
 			    <h:outputLabel value="Série:" />
