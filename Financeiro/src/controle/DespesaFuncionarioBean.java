@@ -1,31 +1,57 @@
 package controle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-
+import javax.faces.bean.ViewScoped;
 import dao.DespesaFuncionarioDAO;
 import dao.DespesaFuncionarioJPADAO;
+import dao.FuncionarioDAO;
+import dao.FuncionarioJPADAO;
 import modelo.DespesaFuncionario;
+import modelo.Funcionario;
+import modelo.Mes;
+import modelo.TipoFuncionario;
 
 @ManagedBean
-public class DespesaFuncionarioBean extends AbstractBean{
+@ViewScoped
+public class DespesaFuncionarioBean extends AbstractBean implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private DespesaFuncionario despesaFuncionario;
 	private List<DespesaFuncionario> despesaFuncionarios;
-	private int despesaTotal;
+	private List<Funcionario> funcionarios;
+	private List<Funcionario> funcSelecionados;
+	private List<TipoFuncionario> tiposFuncionarios;
+	private TipoFuncionario tipoFuncionario;
+	private List<Mes> meses;
+	private float despesaTotal;
 	
 	public DespesaFuncionarioBean(){
+		this.tiposFuncionarios = Arrays.asList(TipoFuncionario.values());
+		this.meses = Arrays.asList(Mes.values());
+		this.funcSelecionados = new ArrayList<Funcionario>();
+		this.funcionarios = new ArrayList<Funcionario>();
 		this.despesaFuncionario = new DespesaFuncionario();
 		this.despesaFuncionarios = new ArrayList<DespesaFuncionario>();
 	}
 	
 	public void cadastrar(){
-		DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
-		dDAO.save(this.despesaFuncionario);
+		int ano = this.despesaFuncionario.getAno();
+		Mes mes = this.despesaFuncionario.getMes();
+		for(int i = 0; i < this.funcSelecionados.size(); i++){
+			DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
+			this.despesaFuncionario.setValor(this.funcSelecionados.get(i).getSalario());
+			this.despesaFuncionario.setFuncionario(this.funcSelecionados.get(i));
+			dDAO.save(this.despesaFuncionario);
+			this.despesaFuncionario = new DespesaFuncionario();
+			this.despesaFuncionario.setAno(ano);
+			this.despesaFuncionario.setMes(mes);
+		}
 		displayInfoMessageToUser("Cadastrado com sucesso!");
-		this.despesaFuncionario = new DespesaFuncionario();
 	}
 	
 	public void excluir(){
@@ -39,6 +65,27 @@ public class DespesaFuncionarioBean extends AbstractBean{
 		this.despesaFuncionarios = new ArrayList<DespesaFuncionario>();
 		DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
 		this.despesaFuncionarios = dDAO.find();
+		this.despesaTotal = somaDespesaTotal(this.despesaFuncionarios);
+	}
+	
+	public void buscarTodosFuncionarios(){
+		this.funcionarios = new ArrayList<Funcionario>();
+		FuncionarioDAO fDAO = new FuncionarioJPADAO();
+		this.funcionarios = fDAO.find();
+	}
+	
+	public void buscarFuncionariosPorTipo(){
+		this.funcionarios = new ArrayList<Funcionario>();
+		FuncionarioDAO fDAO = new FuncionarioJPADAO();
+		this.funcionarios = fDAO.buscarPorTipo(this.tipoFuncionario);
+	}
+	
+	public float somaDespesaTotal(List<DespesaFuncionario> d){
+		float total = 0;
+		for(int i = 0; i < d.size(); i++){
+			total += d.get(i).getValor();
+		}
+		return total;
 	}
 	
 	public DespesaFuncionario getDespesaFuncionario() {
@@ -53,13 +100,51 @@ public class DespesaFuncionarioBean extends AbstractBean{
 	public void setDespesaFuncionarios(List<DespesaFuncionario> despesaFuncionarios) {
 		this.despesaFuncionarios = despesaFuncionarios;
 	}
-	public int getDespesaTotal() {
+	public float getDespesaTotal() {
 		return despesaTotal;
 	}
-	public void setDespesaTotal(int despesaTotal) {
+	public void setDespesaTotal(float despesaTotal) {
 		this.despesaTotal = despesaTotal;
 	}
-	
-	
 
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
+	public List<Funcionario> getFuncSelecionados() {
+		return funcSelecionados;
+	}
+
+	public void setFuncSelecionados(List<Funcionario> funcSelecionados) {
+		this.funcSelecionados = funcSelecionados;
+	}
+
+	public List<Mes> getMeses() {
+		return meses;
+	}
+
+	public void setMeses(List<Mes> meses) {
+		this.meses = meses;
+	}
+
+	public List<TipoFuncionario> getTiposFuncionarios() {
+		return tiposFuncionarios;
+	}
+
+	public void setTiposFuncionarios(List<TipoFuncionario> tiposFuncionarios) {
+		this.tiposFuncionarios = tiposFuncionarios;
+	}
+
+	public TipoFuncionario getTipoFuncionario() {
+		return tipoFuncionario;
+	}
+
+	public void setTipoFuncionario(TipoFuncionario tipoFuncionario) {
+		this.tipoFuncionario = tipoFuncionario;
+	}
+	
 }

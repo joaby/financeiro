@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+		<p:panelGrid columns="5">
+			<h:outputLabel value="Pesquise:" />
+			<h:form>
+	    	<p:commandButton value="Todos" update=":tabela" action="#{despesaFuncionarioBean.buscarTodos}"/>
+		    </h:form>     
+		</p:panelGrid>	
+		
+		
+			<p:dataTable id="tabela" var="despFuncionario" value="#{despesaFuncionarioBean.despesaFuncionarios}"
+						  paginator="true" rows="10">
+				<f:facet name="header">
+	            	Funcionários
+	        	</f:facet>
+			    <p:column headerText="Cpf">
+			        <h:outputText value="#{despFuncionario.funcionario.cpf}" />	       
+			    </p:column>
+			    <p:column headerText="Nome">
+			        <h:outputText value="#{despFuncionario.funcionario.nome}" />	       
+			    </p:column>
+			    <p:column headerText="Tipo">
+			        <h:outputText value="#{despFuncionario.funcionario.tipo}" />
+			    </p:column>   
+			    <p:column headerText="Mês">
+			        <h:outputText value="#{despFuncionario.mes}" />
+			    </p:column> 
+			    <p:column headerText="ano">
+			        <h:outputText value="#{despFuncionario.ano}" />
+			    </p:column> 
+			    <p:column headerText="Valor">
+			        <h:outputText value="#{despFuncionario.valor}" />
+			        <f:facet name="footer">
+			        Total:
+			        	<h:outputText value="#{despesaFuncionarioBean.despesaTotal}" />
+			        </f:facet>
+			    </p:column> 
+		    </p:dataTable>
+	 
+    </ui:define>
+    
+</ui:composition> 
