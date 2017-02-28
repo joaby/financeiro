@@ -2,8 +2,14 @@ package modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="DespesaFuncionario.buscarPorMesAno", 
+			query="SELECT df FROM DespesaFuncionario df WHERE df.mes = :mes AND df.ano = :ano")
+})
 public class DespesaFuncionario extends Despesa{
 	
 	@ManyToOne

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+		<p:panelGrid columns="3">
+			<h:outputLabel value="Pesquise:" />
+			<h:form>
+	    	<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()"/>
+		    </h:form>
+		    <h:form>
+		    	<p:commandButton value="Por mês" type="button" onclick="PF('dlgMes').show()"/>
+		    </h:form>  
+		</p:panelGrid>  
+		
+			<p:dataTable id="tabela" var="agua" value="#{despesaAguaBean.despesasAguas}" paginator="true" rows="10" style="margin-bottom:20px">
+				<f:facet name="header">
+	            	Água
+	        	</f:facet>
+			    <p:column headerText="Mês">
+			        <h:outputText value="#{agua.mes.descricao}"  />	       
+			    </p:column>
+			    <p:column headerText="Ano">
+			        <h:outputText value="#{agua.ano}"  />	       
+			    </p:column>
+			    <p:column headerText="Valor">
+			        <h:outputText value="#{agua.valor}"  />
+			        <f:facet name="footer">
+				    	Total:
+				    	<h:outputText value="#{despesaAguaBean.despesaTotal}" />
+			   		</f:facet>
+			     </p:column> 	    
+		    </p:dataTable>
+	    
+	    <p:dialog widgetVar="dlgAno" header="Pesquisa por ano" showEffect="fade">
+	    	<h:form>
+					<p:panelGrid columns="3">
+						<h:outputLabel value="Ano:" />
+						<p:inputText value="#{despesaAguaBean.ano}" />
+						<p:commandButton update=":tabela" value="Buscar" action="#{despesaAguaBean.buscarPorAno}" />					
+					</p:panelGrid>
+	    	</h:form>
+	    </p:dialog>
+	    
+	    <p:dialog widgetVar="dlgMes" header="Pesquisa por mês e ano" showEffect="fade">
+	    	 <h:form>
+					<p:panelGrid columns="5">
+						<h:outputLabel value="Mês:" />
+						<p:selectOneMenu value="#{despesaAguaBean.mes}">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+				    	  <f:selectItems value="#{despesaAguaBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+				   		</p:selectOneMenu>
+						<h:outputLabel value="Ano:" />
+						<p:inputText value="#{despesaAguaBean.ano}" />
+						<p:commandButton update=":tabela" value="Buscar" action="#{despesaAguaBean.buscarPorMesAno}" />					
+					</p:panelGrid>
+	   		 </h:form>
+	    </p:dialog>
+	    	    
+    </ui:define>
+    
+</ui:composition>   

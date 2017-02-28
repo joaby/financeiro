@@ -1,10 +1,21 @@
 package dao;
 
+import java.util.List;
+import javax.persistence.Query;
 import modelo.DespesaFuncionario;
+import modelo.Mes;
 
 public class DespesaFuncionarioJPADAO extends GenericJPADAO<DespesaFuncionario> implements DespesaFuncionarioDAO{
 	
 	public DespesaFuncionarioJPADAO(){
 		this.persistentClass = DespesaFuncionario.class;
+	}
+
+	@Override
+	public List<DespesaFuncionario> buscarPorMesAno(Mes mes, int ano) {
+		Query query = getEm().createNamedQuery("DespesaFuncionario.buscarPorMesAno");
+		query.setParameter("mes", mes);
+		query.setParameter("ano", ano);
+		return query.getResultList();
 	}
 }

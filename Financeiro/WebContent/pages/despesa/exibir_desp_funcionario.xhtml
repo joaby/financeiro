@@ -8,11 +8,14 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="5">
+		<p:panelGrid columns="3">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
-	    	<p:commandButton value="Todos" update=":tabela" action="#{despesaFuncionarioBean.buscarTodos}"/>
-		    </h:form>     
+	    		<p:commandButton value="Todos" update=":tabela" action="#{despesaFuncionarioBean.buscarTodos}"/>
+		    </h:form>   
+		    <h:form>
+		    	<p:commandButton value="Por mês e ano" type="button" onclick="PF('dlgMes').show()"/>
+		    </h:form>  
 		</p:panelGrid>	
 		
 		
@@ -28,10 +31,10 @@
 			        <h:outputText value="#{despFuncionario.funcionario.nome}" />	       
 			    </p:column>
 			    <p:column headerText="Tipo">
-			        <h:outputText value="#{despFuncionario.funcionario.tipo}" />
+			        <h:outputText value="#{despFuncionario.funcionario.tipo.descricao}" />
 			    </p:column>   
 			    <p:column headerText="Mês">
-			        <h:outputText value="#{despFuncionario.mes}" />
+			        <h:outputText value="#{despFuncionario.mes.descricao}" />
 			    </p:column> 
 			    <p:column headerText="ano">
 			        <h:outputText value="#{despFuncionario.ano}" />
@@ -39,11 +42,25 @@
 			    <p:column headerText="Valor">
 			        <h:outputText value="#{despFuncionario.valor}" />
 			        <f:facet name="footer">
-			        Total:
+			        	Total:
 			        	<h:outputText value="#{despesaFuncionarioBean.despesaTotal}" />
 			        </f:facet>
 			    </p:column> 
 		    </p:dataTable>
+		    
+		    <p:dialog header="Pesquisa por mês e ano" widgetVar="dlgMes" showEffect="fade">
+		    	<h:form>
+					<p:panelGrid columns="5">
+						<h:outputLabel value="Mês:" />
+						<p:selectOneMenu value="#{despesaFuncionarioBean.mes}">
+				    	  <f:selectItems value="#{despesaFuncionarioBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+				   		</p:selectOneMenu>
+						<h:outputLabel value="Ano:" />
+						<p:inputText value="#{despesaFuncionarioBean.ano}" />
+						<p:commandButton update=":tabela" value="Buscar" action="#{despesaFuncionarioBean.buscarPorMesAno}" />					
+					</p:panelGrid>
+		    	</h:form> 
+	    	</p:dialog>
 	 
     </ui:define>
     

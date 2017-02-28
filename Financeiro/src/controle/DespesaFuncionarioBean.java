@@ -29,6 +29,8 @@ public class DespesaFuncionarioBean extends AbstractBean implements Serializable
 	private TipoFuncionario tipoFuncionario;
 	private List<Mes> meses;
 	private float despesaTotal;
+	private Mes mes;
+	private int ano;
 	
 	public DespesaFuncionarioBean(){
 		this.tiposFuncionarios = Arrays.asList(TipoFuncionario.values());
@@ -65,6 +67,13 @@ public class DespesaFuncionarioBean extends AbstractBean implements Serializable
 		this.despesaFuncionarios = new ArrayList<DespesaFuncionario>();
 		DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
 		this.despesaFuncionarios = dDAO.find();
+		this.despesaTotal = somaDespesaTotal(this.despesaFuncionarios);
+	}
+	
+	public void buscarPorMesAno(){
+		this.despesaFuncionarios = new ArrayList<DespesaFuncionario>();
+		DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
+		this.despesaFuncionarios = dDAO.buscarPorMesAno(this.mes, this.ano);
 		this.despesaTotal = somaDespesaTotal(this.despesaFuncionarios);
 	}
 	
@@ -146,5 +155,23 @@ public class DespesaFuncionarioBean extends AbstractBean implements Serializable
 	public void setTipoFuncionario(TipoFuncionario tipoFuncionario) {
 		this.tipoFuncionario = tipoFuncionario;
 	}
+
+	public Mes getMes() {
+		return mes;
+	}
+
+	public void setMes(Mes mes) {
+		this.mes = mes;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+	
+	
 	
 }
