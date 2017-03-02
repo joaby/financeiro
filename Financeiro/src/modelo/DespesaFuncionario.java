@@ -8,7 +8,9 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="DespesaFuncionario.buscarPorMesAno", 
-			query="SELECT df FROM DespesaFuncionario df WHERE df.mes = :mes AND df.ano = :ano")
+			query="SELECT df FROM DespesaFuncionario df WHERE df.mes = :mes AND df.ano = :ano"),
+	@NamedQuery(name="DespesaFuncionario.soma", 
+			query="SELECT SUM(df.valor) FROM DespesaFuncionario df WHERE df.mes = :mes AND df.ano = :ano")
 })
 public class DespesaFuncionario extends Despesa{
 	

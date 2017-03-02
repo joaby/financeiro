@@ -18,4 +18,12 @@ public class DespesaFuncionarioJPADAO extends GenericJPADAO<DespesaFuncionario> 
 		query.setParameter("ano", ano);
 		return query.getResultList();
 	}
+
+	@Override
+	public Double soma(Mes mes, int ano) {
+		Query query = getEm().createNamedQuery("DespesaFuncionario.soma");
+		query.setParameter("mes", mes);
+		query.setParameter("ano", ano);
+		return (Double) query.getSingleResult();
+	}
 }
