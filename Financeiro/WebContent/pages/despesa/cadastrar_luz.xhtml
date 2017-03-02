@@ -10,19 +10,19 @@
 	<ui:define name="conteudo">	
 		
 		<h:form id="formulario">
-			<p:panel header="Cadastro de água" style="margin-bottom:10px; text-align: center;">
+			<p:panel header="Cadastro de luz" style="margin-bottom:10px; text-align: center;">
 				<p:messages autoUpdate="true" closable="true" />
 			    <p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 			    	<h:outputLabel value="Mês:" />
-			    	<p:selectOneMenu value="#{despesaAguaBean.despesaAgua.mes}">
+			    	<p:selectOneMenu value="#{despesaLuzBean.despesaLuz.mes}">
 				    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-				    	  <f:selectItems value="#{despesaAguaBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+				    	  <f:selectItems value="#{despesaLuzBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 				    </p:selectOneMenu>
 				    <h:outputLabel value="Ano:" />
-				    <p:inputText value="#{despesaAguaBean.despesaAgua.ano}" />
+				    <p:inputText value="#{despesaLuzBean.despesaLuz.ano}" />
 				    <h:outputLabel value="Valor:" />
-				    <p:inputText value="#{despesaAguaBean.despesaAgua.valor}" />
-				    <p:commandButton update="formulario" value="Cadastrar" action="#{despesaAguaBean.cadastrar}" />
+				    <p:inputText value="#{despesaLuzBean.despesaLuz.valor}" />
+				    <p:commandButton update="formulario" value="Cadastrar" action="#{despesaLuzBean.cadastrar}" />
 				     <p:commandButton value="Limpar" type="reset" />
 			    </p:panelGrid>
 		    </p:panel>	    
