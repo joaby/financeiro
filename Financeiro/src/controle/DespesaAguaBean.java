@@ -39,6 +39,17 @@ public class DespesaAguaBean extends AbstractBean implements Serializable{
 		
 	}
 	
+	public void atualizar(){
+		
+	}
+	
+	public void excluir(DespesaAgua a){
+		DespesaAguaDAO dDAO = new DespesaAguaJPADAO();
+		dDAO.delete(a);
+		displayInfoMessageToUser("Excluido com sucesso!");
+		this.despesasAguas.remove(a);
+	}
+	
 	public void buscarPorAno(){
 		this.despesasAguas = new ArrayList<DespesaAgua>();
 		DespesaAguaDAO dDAO = new DespesaAguaJPADAO();
