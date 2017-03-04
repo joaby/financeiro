@@ -79,7 +79,7 @@
 					<h:outputLabel value="Valor:" />
 					<p:inputText value="#{despesaAguaBean.despesaAgua.valor}" />
 					<p:commandButton value="Atualizar"
-						action="#{despesaAguaBean.atualizar}" update=":dlgEdit" />
+						action="#{despesaAguaBean.atualizar}" update=":dlgEdit :formulario:tabela"  />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

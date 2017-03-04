@@ -58,6 +58,13 @@ public class AlunoBean extends AbstractBean implements Serializable{
 		}
 	}
 	
+	public void atualizar(){
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		alunoDAO.save(this.aluno);
+		displayInfoMessageToUser("Atualizado com sucesso!");
+		this.aluno = new Aluno();
+	}
+	
 	public void excluir(){
 		try {
 			AlunoDAO alunoDAO = new AlunoJPADAO();

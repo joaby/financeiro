@@ -4,13 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
+import org.primefaces.context.RequestContext;
 import dao.DespesaCartaoDAO;
 import dao.DespesaCartaoJPADAO;
-import modelo.DespesaAgua;
 import modelo.DespesaCartao;
 import modelo.Mes;
 
@@ -39,11 +37,23 @@ public class DespesaCartaoBean extends AbstractBean implements Serializable{
 		this.despesaCartao = new DespesaCartao();
 	}
 	
-	public void excluir(){
+	public void selecionarParaAtualizar(DespesaCartao d){
+		this.despesaCartao = d;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+	
+	public void atualizar(){
 		DespesaCartaoDAO dDAO = new DespesaCartaoJPADAO();
-		dDAO.delete(this.despesaCartao);
-		displayInfoMessageToUser("Excluido com sucesso!");
+		dDAO.save(this.despesaCartao);
+		displayInfoMessageToUser("Atualizado com sucesso!");
 		this.despesaCartao = new DespesaCartao();
+	}
+	
+	public void excluir(DespesaCartao dc){
+		DespesaCartaoDAO dDAO = new DespesaCartaoJPADAO();
+		dDAO.delete(dc);
+		displayInfoMessageToUser("Excluido com sucesso!");
+		this.despesasCartoes.remove(dc);
 	}
 	
 	public void buscarPorAno(){

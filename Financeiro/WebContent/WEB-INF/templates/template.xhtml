@@ -22,37 +22,55 @@
 					<p:growl id="messages" />
 					<p:menubar>
 						<p:submenu label="Receita" icon="ui-icon-plus">
-							<p:menuitem value="Cadastrar matricula" url="/pages/receita/cadastrar_matricula.xhtml" />
-							<p:menuitem value="Exibir matricula" url="/pages/receita/exibir_matricula.xhtml" />
+							<p:submenu label="Matrícula">
+								<p:menuitem value="Cadastrar" url="/pages/receita/cadastrar_matricula.xhtml" />
+								<p:menuitem value="Exibir" url="/pages/receita/exibir_matricula.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Cadastrar mensalidade" url="/pages/receita/cadastrar_mensalidade.xhtml" />
-							<p:menuitem value="Exibir mensalidade" url="/pages/receita/exibir_mensalidade.xhtml" />
+							<p:submenu label="Mensalidade">
+								<p:menuitem value="Cadastrar" url="/pages/receita/cadastrar_mensalidade.xhtml" />
+								<p:menuitem value="Exibir" url="/pages/receita/exibir_mensalidade.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Cadastrar livro" url="/pages/receita/cadastrar_livro.xhtml" />
-							<p:menuitem value="Exibir livro" url="/pages/receita/exibir_livro.xhtml" />
+							<p:submenu label="Livro">
+								<p:menuitem value="Cadastrar" url="/pages/receita/cadastrar_livro.xhtml" />
+								<p:menuitem value="Exibir" url="/pages/receita/exibir_livro.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Cadastrar extra" url="/pages/receita/cadastrar_extra.xhtml" />
-							<p:menuitem value="Exibir extra" url="/pages/receita/exibir_extra.xhtml" />
+					        <p:submenu label="Extra">
+								<p:menuitem value="Cadastrar" url="/pages/receita/cadastrar_extra.xhtml" />
+								<p:menuitem value="Exibir" url="/pages/receita/exibir_extra.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Exibir receita Total" url="/pages/receita/exibir_receita.xhtml" />
+							<p:menuitem value="Receita Total" url="/pages/receita/exibir_receita.xhtml" />
 						</p:submenu>
 						<p:submenu label="Despesa" icon="ui-icon-minus">
-							<p:menuitem value="Cadastrar despesa com funcionário" url="/pages/despesa/cadastrar_desp_funcionario.xhtml" />
-							<p:menuitem value="Exibir despesa com funcionário" url="/pages/despesa/exibir_desp_funcionario.xhtml" />
+							<p:submenu label="Funcionário">
+								<p:menuitem value="Cadastrar" url="/pages/despesa/cadastrar_desp_funcionario.xhtml" />
+								<p:menuitem value="Exibir" url="/pages/despesa/exibir_desp_funcionario.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Cadastrar água" url="/pages/despesa/cadastrar_agua.xhtml" />
-							<p:menuitem value="Exibir água" url="/pages/despesa/exibir_agua.xhtml" />
+							<p:submenu label="Água">
+								<p:menuitem value="Cadastrar" url="/pages/despesa/cadastrar_agua.xhtml" />
+								<p:menuitem value="Exibir" url="/pages/despesa/exibir_agua.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Cadastrar luz" url="/pages/despesa/cadastrar_luz.xhtml" />
-							<p:menuitem value="Exibir luz" url="/pages/despesa/exibir_luz.xhtml" />
+							<p:submenu label="Luz">
+								<p:menuitem value="Cadastrar" url="/pages/despesa/cadastrar_luz.xhtml" />
+								<p:menuitem value="Exibir" url="/pages/despesa/exibir_luz.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Cadastrar cartão" url="/pages/despesa/cadastrar_cartao.xhtml" />
-							<p:menuitem value="Exibir cartão" url="/pages/despesa/exibir_cartao.xhtml" />
+							<p:submenu label="Cartão">
+							<p:menuitem value="Cadastrar" url="/pages/despesa/cadastrar_cartao.xhtml" />
+							<p:menuitem value="Exibir" url="/pages/despesa/exibir_cartao.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Cadastrar extra" url="/pages/despesa/cadastrar_extra.xhtml" />
-							<p:menuitem value="Exibir extra" url="/pages/despesa/exibir_extra.xhtml" />
+							<p:submenu label="Extra">
+								<p:menuitem value="Cadastrar" url="/pages/despesa/cadastrar_extra.xhtml" />
+								<p:menuitem value="Exibir" url="/pages/despesa/exibir_extra.xhtml" />
+							</p:submenu>
 							<p:separator />
-							<p:menuitem value="Exibir despesa total" url="/pages/despesa/exibir_despesa.xhtml" />
+							<p:menuitem value="Despesa total" url="/pages/despesa/exibir_despesa.xhtml" />
 						</p:submenu>
 						<p:submenu label="Aluno" icon="ui-icon-note">
 							<p:menuitem value="Cadastrar" url="/pages/aluno/cadastrar_aluno.xhtml" />
