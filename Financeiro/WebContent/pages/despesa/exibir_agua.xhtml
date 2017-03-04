@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<ui:composition
-	template="/WEB-INF/templates/template.xhtml"
+<ui:composition template="/WEB-INF/templates/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -11,76 +10,109 @@
 		<p:panelGrid columns="3">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
-	    	<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()"/>
-		    </h:form>
-		    <h:form>
-		    	<p:commandButton value="Por mês" type="button" onclick="PF('dlgMes').show()"/>
-		    </h:form>  
-		</p:panelGrid>  
+				<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()" />
+			</h:form>
+			<h:form>
+				<p:commandButton value="Por mês" type="button" onclick="PF('dlgMes').show()" />
+			</h:form>
+		</p:panelGrid>
+		
 		<h:form id="formulario">
-			<p:growl />
-			<p:dataTable id="tabela" var="agua" value="#{despesaAguaBean.despesasAguas}" paginator="true" rows="10" style="margin-bottom:20px">
+			<p:growl autoUpdate="true" />
+			<p:dataTable id="tabela" var="agua"
+				value="#{despesaAguaBean.despesasAguas}" paginator="true" rows="10"
+				style="margin-bottom:20px">
 				<f:facet name="header">
 	            	Água
 	        	</f:facet>
-			    <p:column headerText="Mês">
-			        <h:outputText value="#{agua.mes.descricao}"  />	       
-			    </p:column>
-			    <p:column headerText="Ano">
-			        <h:outputText value="#{agua.ano}"  />	       
-			    </p:column>
-			    <p:column headerText="Valor">
-			        <h:outputText value="#{agua.valor}"  />
-			        <f:facet name="footer">
+				<p:column headerText="Mês">
+					<h:outputText value="#{agua.mes.descricao}" />
+				</p:column>
+				<p:column headerText="Ano">
+					<h:outputText value="#{agua.ano}" />
+				</p:column>
+				<p:column headerText="Valor">
+					<h:outputText value="#{agua.valor}" />
+					<f:facet name="footer">
 				    	Total:
 				    	<h:outputText value="#{despesaAguaBean.despesaTotal}" />
-			   		</f:facet>
-			     </p:column>  
-			     <p:column style="width:32px;text-align:center;">
-			      	<p:commandButton icon="ui-icon-trash" title="Excluir" update=":formulario" action="#{despesaAguaBean.excluir(agua)}">
-			      		<p:confirm header="Confirmar" message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
-			      	</p:commandButton>
-			     </p:column>	    
-		    </p:dataTable>
-		    
-		    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-		        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-		        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-		    </p:confirmDialog>
-		    
-		    <h:commandLink id="pdf">
-		        <p:graphicImage library="img" name="pdf-icon.png" />
-		        <p:dataExporter type="pdf" target=":formulario:tabela" fileName="Agua" encoding="iso-8859-1" />
-		    </h:commandLink>
-		    
+					</f:facet>
+				</p:column>
+				<p:column style="width:150px;text-align:center;" exportable="false">
+					<p:panelGrid columns="2">
+						<p:commandButton icon="ui-icon-pencil" update=":dlgEdit" title="Atualizar"
+							action="#{despesaAguaBean.selecionarParaAtualizar(agua)}" />
+						<p:commandButton icon="ui-icon-trash" title="Excluir"
+							update=":formulario" action="#{despesaAguaBean.excluir(agua)}">
+							<p:confirm header="Confirmar"
+								message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+						</p:commandButton>
+					</p:panelGrid>
+				</p:column>
+			</p:dataTable>
 
-		</h:form>   
-	    
-	    <p:dialog widgetVar="dlgAno" header="Pesquisa por ano" showEffect="fade">
-	    	<h:form>
-					<p:panelGrid columns="3">
-						<h:outputLabel value="Ano:" />
-						<p:inputText value="#{despesaAguaBean.ano}" />
-						<p:commandButton update=":formulario:tabela" value="Buscar" action="#{despesaAguaBean.buscarPorAno}" />					
-					</p:panelGrid>
-	    	</h:form>
-	    </p:dialog>
-	    
-	    <p:dialog widgetVar="dlgMes" header="Pesquisa por mês e ano" showEffect="fade">
-	    	 <h:form>
-					<p:panelGrid columns="5">
-						<h:outputLabel value="Mês:" />
-						<p:selectOneMenu value="#{despesaAguaBean.mes}">
-							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-				    	  <f:selectItems value="#{despesaAguaBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-				   		</p:selectOneMenu>
-						<h:outputLabel value="Ano:" />
-						<p:inputText value="#{despesaAguaBean.ano}" />
-						<p:commandButton update=":formulario:tabela" value="Buscar" action="#{despesaAguaBean.buscarPorMesAno}" />					
-					</p:panelGrid>
-	   		 </h:form>
-	    </p:dialog>
-	    	    
-    </ui:define>
-    
-</ui:composition>   
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+			<h:commandLink id="pdf">
+				<p:graphicImage library="img" name="pdf-icon.png" />
+				<p:dataExporter type="pdf" target=":formulario:tabela"
+					fileName="Agua" encoding="iso-8859-1" />
+			</h:commandLink>
+		</h:form>
+
+		<p:dialog id="dlgEdit" widgetVar="edit" header="Atualizar">
+			<h:form>
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{despesaAguaBean.despesaAgua.mes}">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{despesaAguaBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{despesaAguaBean.despesaAgua.ano}" />
+					<h:outputLabel value="Valor:" />
+					<p:inputText value="#{despesaAguaBean.despesaAgua.valor}" />
+					<p:commandButton value="Atualizar"
+						action="#{despesaAguaBean.atualizar}" update=":dlgEdit" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgAno" header="Pesquisa por ano"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{despesaAguaBean.ano}" />
+					<p:commandButton update=":formulario:tabela" value="Buscar"
+						action="#{despesaAguaBean.buscarPorAno}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgMes" header="Pesquisa por mês e ano"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="5">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{despesaAguaBean.mes}">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{despesaAguaBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{despesaAguaBean.ano}" />
+					<p:commandButton update=":formulario:tabela" value="Buscar"
+						action="#{despesaAguaBean.buscarPorMesAno}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
