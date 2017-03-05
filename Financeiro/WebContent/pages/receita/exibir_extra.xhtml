@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<ui:composition
-	template="/WEB-INF/templates/template.xhtml"
+<ui:composition template="/WEB-INF/templates/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -11,64 +10,110 @@
 		<p:panelGrid columns="3">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
-	    	<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()"/>
-		    </h:form>
-		    <h:form>
-		    	<p:commandButton value="Por mês" type="button" onclick="PF('dlgMes').show()"/>
-		    </h:form>  
-		</p:panelGrid>  
-		
+				<p:commandButton value="Por ano" type="button"
+					onclick="PF('dlgAno').show()" />
+			</h:form>
+			<h:form>
+				<p:commandButton value="Por mês" type="button"
+					onclick="PF('dlgMes').show()" />
+			</h:form>
+		</p:panelGrid>
+
 		<h:form id="formulario">
-			<p:dataTable id="tabela" var="extra" value="#{receitaExtraBean.extras}" paginator="true" rows="10" style="margin-bottom:20px">
+			<p:growl autoUpdate="true" />
+			<p:dataTable id="tabela" var="extra" emptyMessage="Nenhum extra encontrado!"
+				value="#{receitaExtraBean.extras}" paginator="true" rows="10"
+				style="margin-bottom:20px">
 				<f:facet name="header">
 	            	Extra
 	        	</f:facet>
-			    <p:column headerText="Mês">
-			        <h:outputText value="#{extra.mes.descricao}"  />	       
-			    </p:column>
-			    <p:column headerText="Ano">
-			        <h:outputText value="#{extra.ano}"  />	       
-			    </p:column>
-			    <p:column headerText="Descrição">
-			        <h:outputText value="#{extra.descricao}"  />
-			    </p:column>
-			    <p:column headerText="Valor">
-			        <h:outputText value="#{extra.valor}"  />
-			        <f:facet name="footer">
+				<p:column headerText="Mês">
+					<h:outputText value="#{extra.mes.descricao}" />
+				</p:column>
+				<p:column headerText="Ano">
+					<h:outputText value="#{extra.ano}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{extra.descricao}" />
+				</p:column>
+				<p:column headerText="Valor">
+					<h:outputText value="#{extra.valor}" />
+					<f:facet name="footer">
 				    	Total:
 				    	<h:outputText value="#{receitaExtraBean.receitaTotal}" />
-			   		</f:facet>
-			     </p:column> 	    
-		    </p:dataTable>
-	    </h:form>
-	    
-	   
-	    
-	    <p:dialog widgetVar="dlgAno" header="Pesquisa por ano" showEffect="fade">
-	    	<h:form>
-					<p:panelGrid columns="3">
-						<h:outputLabel value="Ano:" />
-						<p:inputText value="#{receitaExtraBean.ano}" />
-						<p:commandButton update=":formulario:tabela" value="Buscar" action="#{receitaExtraBean.buscarPorAno}" />					
-					</p:panelGrid>
-	    	</h:form>
-	    </p:dialog>
-	    
-	    <p:dialog widgetVar="dlgMes" header="Pesquisa por mês e ano" showEffect="fade">
-	    	 <h:form>
-					<p:panelGrid columns="5">
-						<h:outputLabel value="Mês:" />
-						<p:selectOneMenu value="#{receitaExtraBean.mes}">
-							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-				    	  <f:selectItems value="#{receitaExtraBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-				   		</p:selectOneMenu>
-						<h:outputLabel value="Ano:" />
-						<p:inputText value="#{receitaExtraBean.ano}" />
-						<p:commandButton update=":formulario:tabela" value="Buscar" action="#{receitaExtraBean.buscarPorMesAno}" />					
-					</p:panelGrid>
-	   		 </h:form>
-	    </p:dialog>
-	    	    
-    </ui:define>
-    
-</ui:composition>   
+					</f:facet>
+				</p:column>
+				<p:column style="text-align:center;" exportable="false">
+					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
+						action="#{receitaExtraBean.selecionarParaAtualizar(extra)}" />
+					<p:commandButton icon="ui-icon-trash" update=":formulario:tabela"
+						style="margin-left:15px;"
+						action="#{receitaExtraBean.excluir(extra)}" title="Excluir">
+						<p:confirm header="Confirmar"
+							message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+		<p:dialog id="dlgEdit" widgetVar="edit" header="Atualizar">
+			<h:form>
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Valor:" />
+					<p:inputText value="#{receitaExtraBean.extra.valor}" />
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaExtraBean.extra.mes}">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{receitaExtraBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaExtraBean.extra.ano}" />
+					<h:outputLabel value="Descrição:" />
+					<p:inputTextarea value="#{receitaExtraBean.extra.descricao}" />
+					<p:commandButton value="Atualizar" update=":dlgEdit :formulario"
+						action="#{receitaExtraBean.atualizar}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgAno" header="Pesquisa por ano"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaExtraBean.ano}" />
+					<p:commandButton update=":formulario:tabela" value="Buscar"
+						action="#{receitaExtraBean.buscarPorAno}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dlgMes" header="Pesquisa por mês e ano"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="5">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaExtraBean.mes}">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{receitaExtraBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaExtraBean.ano}" />
+					<p:commandButton update=":formulario:tabela" value="Buscar"
+						action="#{receitaExtraBean.buscarPorMesAno}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

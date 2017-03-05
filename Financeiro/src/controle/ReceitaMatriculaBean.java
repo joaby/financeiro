@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
 import dao.ReceitaMatriculaDAO;
@@ -50,14 +52,26 @@ public class ReceitaMatriculaBean extends AbstractBean implements Serializable{
 		}else{
 			displayErrorMessageToUser("Aluno não cadastrado! Cadastre o aluno e tente novamente.");
 			this.matricula = new ReceitaMatricula();
-		}	
-		
+		}		
 	}
 	
-	public void excluir(){
+	public void selecionarParaAtualizar(ReceitaMatricula rm){
+		this.matricula = rm;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+	
+	public void atualizar(){
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
-		rmDAO.delete(this.matricula);
+		rmDAO.save(this.matricula);
+		displayInfoMessageToUser("Atualizado com sucesso");
+		this.matricula = new ReceitaMatricula();
+	}
+	
+	public void excluir(ReceitaMatricula rm){
+		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
+		rmDAO.delete(rm);
 		displayInfoMessageToUser("Excluido com sucesso!");
+		this.matriculas.remove(rm);
 	}
 	
 	public void buscarTodos(){

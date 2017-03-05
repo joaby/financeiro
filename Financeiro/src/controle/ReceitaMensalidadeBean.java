@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
 import dao.ReceitaMatriculaDAO;
@@ -64,10 +66,23 @@ public class ReceitaMensalidadeBean extends AbstractBean implements Serializable
 		}	
 	}
 	
-	public void excluir(){
+	public void selecionarParaAtualizar(ReceitaMensalidade rm){
+		this.mensalidade = rm;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+	
+	public void atualizar(){
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
-		rmDAO.delete(this.mensalidade);
+		rmDAO.save(this.mensalidade);
+		displayInfoMessageToUser("Atualizado com sucesso");
+		this.mensalidade = new ReceitaMensalidade();
+	}
+	
+	public void excluir(ReceitaMensalidade rm){
+		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
+		rmDAO.delete(rm);
 		displayInfoMessageToUser("Excluido com sucesso!");
+		this.mensalidades.remove(rm);
 	}
 	
 	public void buscarTodos(){

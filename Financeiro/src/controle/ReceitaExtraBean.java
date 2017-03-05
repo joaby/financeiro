@@ -7,6 +7,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
 import dao.ReceitaExtraDAO;
 import dao.ReceitaExtraJPADAO;
 import modelo.Mes;
@@ -37,10 +39,23 @@ public class ReceitaExtraBean extends AbstractBean implements Serializable{
 		this.extra = new ReceitaExtra();
 	}
 	
-	public void excluir(){
+	public void selecionarParaAtualizar(ReceitaExtra re){
+		this.extra = re;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+	
+	public void atualizar(){
 		ReceitaExtraDAO reDAO = new ReceitaExtraJPADAO();
-		reDAO.delete(this.extra);
+		reDAO.save(this.extra);
+		displayInfoMessageToUser("Atualizado com sucesso!");
+		this.extra = new ReceitaExtra();
+	}
+	
+	public void excluir(ReceitaExtra re){
+		ReceitaExtraDAO reDAO = new ReceitaExtraJPADAO();
+		reDAO.delete(re);
 		displayInfoMessageToUser("Excluido com sucesso!");
+		this.extras.remove(re);
 	}
 	
 	public void buscarTodos(){

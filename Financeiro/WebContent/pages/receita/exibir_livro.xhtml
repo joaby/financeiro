@@ -1,73 +1,118 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<ui:composition
-	template="/WEB-INF/templates/template.xhtml"
+<ui:composition template="/WEB-INF/templates/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="conteudo">	
-	    
+	<ui:define name="conteudo">
+
 		<p:panelGrid columns="3">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
-	    	<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()"/>
-		    </h:form>
-		    <h:form>
-		    	<p:commandButton value="Por mês e ano" type="button" onclick="PF('dlgMes').show()"/>
-		    </h:form>  
-		</p:panelGrid>  
-	    
-		
-		<p:dataTable id="tabela" var="livro" value="#{receitaLivroBean.receitaLivros}" paginator="true" rows="10">
-			<f:facet name="header">
+				<p:commandButton value="Por ano" type="button"
+					onclick="PF('dlgAno').show()" />
+			</h:form>
+			<h:form>
+				<p:commandButton value="Por mês e ano" type="button"
+					onclick="PF('dlgMes').show()" />
+			</h:form>
+		</p:panelGrid>
+
+		<h:form id="formulario">
+			<p:growl autoUpdate="true" />
+			<p:dataTable id="tabela" var="livro" emptyMessage="Nenhum livro encontrado!"
+				value="#{receitaLivroBean.receitaLivros}" paginator="true" rows="10">
+				<f:facet name="header">
             	Livros
-        	</f:facet>
-		    <p:column headerText="Mês">
-		        <h:outputText value="#{livro.mes.descricao}"  />	       
-		    </p:column>
-		    <p:column headerText="Ano">
-		        <h:outputText value="#{livro.ano}"  />	       
-		    </p:column>
-		    <p:column headerText="Descrição">
-		        <h:outputText value="#{livro.descricao}"  />
-		    </p:column>
-		    <p:column headerText="Valor">
-		        <h:outputText value="#{livro.valor}"  />
-		        <f:facet name="footer">
+        		</f:facet>
+				<p:column headerText="Mês">
+					<h:outputText value="#{livro.mes.descricao}" />
+				</p:column>
+				<p:column headerText="Ano">
+					<h:outputText value="#{livro.ano}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{livro.descricao}" />
+				</p:column>
+				<p:column headerText="Valor">
+					<h:outputText value="#{livro.valor}" />
+					<f:facet name="footer">
 			    	Total:
 			    	<h:outputText value="#{receitaLivroBean.receitaTotal}" />
-		    	</f:facet>
-		    </p:column>  
-		    
-	    </p:dataTable>
-	    
-	    <p:dialog header="Pesquisa por ano" widgetVar="dlgAno" showEffect="fade">
-	    	<h:form>
+					</f:facet>
+				</p:column>
+				<p:column style="text-align:center;" exportable="false">
+					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
+						action="#{receitaLivroBean.selecionarParaAtualizar(livro)}" />
+					<p:commandButton icon="ui-icon-trash" update=":formulario:tabela"
+						style="margin-left:15px;"
+						action="#{receitaLivroBean.excluir(livro)}" title="Excluir">
+						<p:confirm header="Confirmar"
+							message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+		<p:dialog id="dlgEdit" widgetVar="edit" header="Atualizar">
+			<h:form>
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Valor:" />
+					<p:inputText value="#{receitaLivroBean.receitaLivro.valor}" />
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaLivroBean.receitaLivro.mes}">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{receitaLivroBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaLivroBean.receitaLivro.ano}" />
+					<h:outputLabel value="Descrição:" />
+					<p:inputTextarea value="#{receitaLivroBean.receitaLivro.descricao}" />
+					<p:commandButton value="Atualizar" update=":formulario :dlgEdit"
+						action="#{receitaLivroBean.atualizar}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Pesquisa por ano" widgetVar="dlgAno"
+			showEffect="fade">
+			<h:form>
 				<p:panelGrid columns="3">
 					<h:outputLabel value="Ano:" />
 					<p:inputText value="#{receitaLivroBean.ano}" />
-					<p:commandButton update=":tabela" value="Buscar" action="#{receitaLivroBean.buscarPorAno}" />					
+					<p:commandButton update=":formulario:tabela" value="Buscar"
+						action="#{receitaLivroBean.buscarPorAno}" />
 				</p:panelGrid>
-	    	</h:form> 
-	    </p:dialog>
-	    
-	    <p:dialog header="Pesquisa por mês e ano" widgetVar="dlgMes" showEffect="fade">
-	    	<h:form>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Pesquisa por mês e ano" widgetVar="dlgMes"
+			showEffect="fade">
+			<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
 					<p:selectOneMenu value="#{receitaLivroBean.mes}">
-			    	  <f:selectItems value="#{receitaLivroBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-			   		</p:selectOneMenu>
+						<f:selectItems value="#{receitaLivroBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
 					<p:inputText value="#{receitaLivroBean.ano}" />
-					<p:commandButton update=":tabela" value="Buscar" action="#{receitaLivroBean.buscarPorMesAno}" />					
+					<p:commandButton update=":formulario:tabela" value="Buscar"
+						action="#{receitaLivroBean.buscarPorMesAno}" />
 				</p:panelGrid>
-	    	</h:form> 
-	    </p:dialog>
-	   
-	    
-    </ui:define>
-    
-</ui:composition>   
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>

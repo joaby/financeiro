@@ -8,6 +8,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
 import dao.ReceitaLivroDAO;
 import dao.ReceitaLivroJPADAO;
 import modelo.Mes;
@@ -39,10 +41,23 @@ public class ReceitaLivroBean extends AbstractBean implements Serializable{
 		this.receitaLivro = new ReceitaLivro();
 	}
 	
-	public void excluir(){
+	public void selecionarParaAtualizar(ReceitaLivro rl){
+		this.receitaLivro = rl;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+	
+	public void atualizar(){
 		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
-		rlDAO.delete(this.receitaLivro);
+		rlDAO.save(this.receitaLivro);
+		displayInfoMessageToUser("Atualizado com sucesso!");
+		this.receitaLivro = new ReceitaLivro();
+	}
+	
+	public void excluir(ReceitaLivro rl){
+		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
+		rlDAO.delete(rl);
 		displayInfoMessageToUser("Excluido com sucesso!");
+		this.receitaLivros.remove(rl);
 	}
 	
 	public void buscarTodos(){
