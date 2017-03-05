@@ -38,16 +38,14 @@
 				    	<h:outputText value="#{despesaAguaBean.despesaTotal}" />
 					</f:facet>
 				</p:column>
-				<p:column style="width:150px;text-align:center;" exportable="false">
-					<p:panelGrid columns="2">
+				<p:column style="text-align:center;" exportable="false">
 						<p:commandButton icon="ui-icon-pencil" update=":dlgEdit" title="Atualizar"
 							action="#{despesaAguaBean.selecionarParaAtualizar(agua)}" />
-						<p:commandButton icon="ui-icon-trash" title="Excluir"
+						<p:commandButton icon="ui-icon-trash" title="Excluir" style="margin-left:15px;"
 							update=":formulario" action="#{despesaAguaBean.excluir(agua)}">
 							<p:confirm header="Confirmar"
 								message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
 						</p:commandButton>
-					</p:panelGrid>
 				</p:column>
 			</p:dataTable>
 
@@ -79,7 +77,7 @@
 					<h:outputLabel value="Valor:" />
 					<p:inputText value="#{despesaAguaBean.despesaAgua.valor}" />
 					<p:commandButton value="Atualizar"
-						action="#{despesaAguaBean.atualizar}" update=":dlgEdit :formulario:tabela"  />
+						action="#{despesaAguaBean.atualizar}" update=":dlgEdit :formulario:tabela" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

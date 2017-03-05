@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
+import org.primefaces.context.RequestContext;
+
 import dao.DespesaExtraDAO;
 import dao.DespesaExtraJPADAO;
 import modelo.DespesaExtra;
@@ -37,11 +40,23 @@ public class DespesaExtraBean extends AbstractBean implements Serializable{
 		this.despesaExtra = new DespesaExtra();
 	}
 	
-	public void excluir(){
+	public void selecionarParaAtualizar(DespesaExtra de){
+		this.despesaExtra = de;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+	
+	public void atualizar(){
 		DespesaExtraDAO dDAO = new DespesaExtraJPADAO();
-		dDAO.delete(this.despesaExtra);
-		displayInfoMessageToUser("Excluido com sucesso!");
+		dDAO.save(this.despesaExtra);
+		displayInfoMessageToUser("Atualizado com sucesso!");
 		this.despesaExtra = new DespesaExtra();
+	}
+	
+	public void excluir(DespesaExtra de){
+		DespesaExtraDAO dDAO = new DespesaExtraJPADAO();
+		dDAO.delete(de);
+		displayInfoMessageToUser("Excluido com sucesso!");
+		this.despesasExtras.remove(de);
 	}
 	
 	public void buscarPorAno(){

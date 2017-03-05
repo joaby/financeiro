@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
+import org.primefaces.context.RequestContext;
+
 import dao.DespesaFuncionarioDAO;
 import dao.DespesaFuncionarioJPADAO;
 import dao.FuncionarioDAO;
@@ -56,11 +59,23 @@ public class DespesaFuncionarioBean extends AbstractBean implements Serializable
 		displayInfoMessageToUser("Cadastrado com sucesso!");
 	}
 	
-	public void excluir(){
-		DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
-		dDAO.delete(this.despesaFuncionario);;
-		displayInfoMessageToUser("Excluido com sucesso!");
+	public void selecionarParaAtualizar(DespesaFuncionario df){
+		this.despesaFuncionario = df;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+	
+	public void atualizar(){
+		DespesaFuncionarioDAO dfDAO = new DespesaFuncionarioJPADAO();
+		dfDAO.save(this.despesaFuncionario);
+		displayInfoMessageToUser("Atualizado com sucesso!");
 		this.despesaFuncionario = new DespesaFuncionario();
+	}
+	
+	public void excluir(DespesaFuncionario df){
+		DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
+		dDAO.delete(df);
+		displayInfoMessageToUser("Excluido com sucesso!");
+		this.despesaFuncionarios.remove(df);
 	}
 	
 	public void buscarTodos(){

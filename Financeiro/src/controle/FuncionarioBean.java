@@ -8,76 +8,93 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.context.RequestContext;
+
+import dao.DespesaFuncionarioDAO;
+import dao.DespesaFuncionarioJPADAO;
 import dao.FuncionarioDAO;
 import dao.FuncionarioJPADAO;
+import modelo.DespesaFuncionario;
 import modelo.Funcionario;
 import modelo.TipoFuncionario;
 
 @ManagedBean
 @ViewScoped
-public class FuncionarioBean extends AbstractBean implements Serializable{
-	
+public class FuncionarioBean extends AbstractBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private Funcionario funcionario;
 	private List<Funcionario> funcionarios;
 	private List<TipoFuncionario> tipos;
 	private TipoFuncionario tipo;
 	private int salarioTotal;
-	
-	public FuncionarioBean(){
+
+	public FuncionarioBean() {
 		this.funcionario = new Funcionario();
 		this.funcionarios = new ArrayList<Funcionario>();
 		this.tipos = Arrays.asList(TipoFuncionario.values());
 	}
-	
-	public void cadastrar(){
+
+	public void cadastrar() {
 		FuncionarioDAO fDAO = new FuncionarioJPADAO();
 		fDAO.save(this.funcionario);
 		displayInfoMessageToUser("Cadastrado com sucesso!");
 		this.funcionario = new Funcionario();
 	}
-	
-	public void excluir(){
+
+	public void selecionarParaAtualizar(Funcionario f) {
+		this.funcionario = f;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+
+	public void atualizar() {
 		FuncionarioDAO fDAO = new FuncionarioJPADAO();
-		fDAO.delete(this.funcionario);
-		displayInfoMessageToUser("Excluido com sucesso!");
+		fDAO.save(this.funcionario);
+		displayInfoMessageToUser("Atualizado com sucesso!");
 		this.funcionario = new Funcionario();
 	}
-	
-	public void buscarTodos(){
+
+	public void excluir(Funcionario f) {
+		FuncionarioDAO fDAO = new FuncionarioJPADAO();
+		fDAO.delete(f);
+		displayInfoMessageToUser("Excluido com sucesso!");
+		this.funcionarios.remove(f);
+	}
+
+	public void buscarTodos() {
 		this.funcionarios = new ArrayList<Funcionario>();
 		FuncionarioDAO fDAO = new FuncionarioJPADAO();
 		this.funcionarios = fDAO.find();
 		this.salarioTotal = somaSalario(this.funcionarios);
 	}
-	
-	public void buscarPorTipo(){
+
+	public void buscarPorTipo() {
 		this.funcionarios = new ArrayList<Funcionario>();
 		FuncionarioDAO fDAO = new FuncionarioJPADAO();
 		this.funcionarios = fDAO.buscarPorTipo(this.tipo);
 		this.salarioTotal = somaSalario(this.funcionarios);
 	}
-	
-	public int somaSalario(List<Funcionario> f){
+
+	public int somaSalario(List<Funcionario> f) {
 		int total = 0;
-		for(int i = 0; i < f.size(); i++){
+		for (int i = 0; i < f.size(); i++) {
 			total += f.get(i).getSalario();
 		}
 		return total;
 	}
-	
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
-	
+
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
-	
+
 	public List<Funcionario> getFuncionarios() {
 		return funcionarios;
 	}
-	
+
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
@@ -105,7 +122,5 @@ public class FuncionarioBean extends AbstractBean implements Serializable{
 	public void setTipo(TipoFuncionario tipo) {
 		this.tipo = tipo;
 	}
-	
-	
 
 }

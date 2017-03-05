@@ -40,16 +40,14 @@
 				    	<h:outputText value="#{despesaCartaoBean.despesaTotal}" />
 					</f:facet>
 				</p:column>
-				<p:column style="width:150px;text-align:center;" exportable="false">
-					<p:panelGrid columns="2">
+				<p:column style="text-align:center;" exportable="false">
 						<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
 							action="#{despesaCartaoBean.selecionarParaAtualizar(cartao)}" />
-						<p:commandButton icon="ui-icon-trash" update=":formulario:tabela"
+						<p:commandButton icon="ui-icon-trash" update=":formulario:tabela" style="margin-left:15px;"
 							action="#{despesaCartaoBean.excluir(cartao)}" title="Excluir">
 							<p:confirm header="Confirmar"
 								message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
 						</p:commandButton>
-					</p:panelGrid>
 				</p:column>
 			</p:dataTable>
 

@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
+import org.primefaces.context.RequestContext;
+
 import dao.DespesaLuzDAO;
 import dao.DespesaLuzJPADAO;
 import modelo.DespesaLuz;
@@ -36,11 +39,23 @@ public class DespesaLuzBean extends AbstractBean implements Serializable{
 		this.despesaLuz = new DespesaLuz();
 	}
 	
-	public void excluir(){
+	public void selecionarParaAtualizar(DespesaLuz dl){
+		this.despesaLuz = dl;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
+	}
+	
+	public void atualizar(){
 		DespesaLuzDAO dDAO = new DespesaLuzJPADAO();
-		dDAO.delete(this.despesaLuz);
-		displayInfoMessageToUser("Deletado com sucesso!");
+		dDAO.save(this.despesaLuz);
+		displayInfoMessageToUser("Atualizado com sucesso!");
 		this.despesaLuz = new DespesaLuz();
+	}
+	
+	public void excluir(DespesaLuz dl){
+		DespesaLuzDAO dDAO = new DespesaLuzJPADAO();
+		dDAO.delete(dl);
+		displayInfoMessageToUser("Deletado com sucesso!");
+		this.despesasLuzes.remove(dl);
 	}
 	
 	
