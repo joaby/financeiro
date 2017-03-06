@@ -8,12 +8,12 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<h:form>
+		<h:form id="formulario">
 		<p:panel header="Cadastro de Funcionário" style="margin-bottom:10px; text-align: center;">
 			<p:messages autoUpdate="true" closable="true" />
 			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 			    <h:outputLabel value="Cpf:" />
-			    <p:inputText value="#{funcionarioBean.funcionario.cpf}" />
+			    <p:inputMask value="#{funcionarioBean.funcionario.cpf}" mask="999.999.999-99" rendered="true" />
 			    <h:outputLabel value="Nome:" />
 			    <p:inputText value="#{funcionarioBean.funcionario.nome}" />
 			    <h:outputLabel value="Tipo:" />
@@ -23,7 +23,7 @@
 			    </p:selectOneMenu>
 			    <h:outputLabel value="Salário:" />
 			    <p:inputText value="#{funcionarioBean.funcionario.salario}" />
-			    <p:commandButton value="Cadastrar" action="#{funcionarioBean.cadastrar}" />
+			    <p:commandButton value="Cadastrar" update="formulario" action="#{funcionarioBean.cadastrar}" />
 			    <p:commandButton value="Limpar" type="reset" />
 		    </p:panelGrid>
 	    </p:panel>

@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<ui:composition
-	template="/WEB-INF/templates/template.xhtml"
+<ui:composition template="/WEB-INF/templates/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -8,61 +7,81 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="5">
+		<p:panelGrid columns="4">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
-	    	<p:commandButton value="Todos" update=":formulario:tabela" action="#{despesaFuncionarioBean.buscarTodosFuncionarios}"/>
-		    </h:form> 
+				<p:commandButton value="Por tipo" type="button"
+					onclick="PF('dlgTipo').show()" />
+			</h:form>
 			<h:form>
-	    	<p:commandButton value="Por tipo" type="button" onclick="PF('dlgTipo').show()"/>
-		    </h:form>     
-		</p:panelGrid>	
-		
+				<p:commandButton value="Ativos" update=":formulario"
+					action="#{despesaFuncionarioBean.buscarFuncionariosAtivos}" />
+			</h:form>
+			
+			<h:form>
+				<p:commandButton value="Todos" update=":formulario"
+					action="#{despesaFuncionarioBean.buscarTodosFuncionarios}" />
+			</h:form>
+		</p:panelGrid>
+
 		<h:form id="formulario">
-			<p:dataTable id="tabela" var="funcionario" value="#{despesaFuncionarioBean.funcionarios}"
-						 selection="#{despesaFuncionarioBean.funcSelecionados}" rowKey="#{funcionario.cpf}" paginator="true" rows="10">
+			<p:growl autoUpdate="true" />
+			<p:dataTable id="tabela" var="funcionario" emptyMessage="Nenhum funcionário encontrado!"
+				value="#{despesaFuncionarioBean.funcionarios}" rowsPerPageTemplate="10,15,20"
+				selection="#{despesaFuncionarioBean.funcSelecionados}"
+				rowKey="#{funcionario.cpf}" paginator="true" rows="10">
 				<f:facet name="header">
-	            	Funcionários
+	            	Cadastro de despesa com funcionários
 	        	</f:facet>
-	        	<p:column selectionMode="multiple" style="width:16px;text-align:center" />
-			    <p:column headerText="Cpf">
-			        <h:outputText value="#{funcionario.cpf}" />	       
-			    </p:column>
-			    <p:column headerText="Nome">
-			        <h:outputText value="#{funcionario.nome}" />	       
-			    </p:column>
-			    <p:column headerText="Tipo">
-			        <h:outputText value="#{funcionario.tipo}" />
-			    </p:column>
-			    <p:column headerText="Salário">
-			        <h:outputText value="#{funcionario.salario}" />
-			    </p:column>    
-		    </p:dataTable>
-		    <p:panelGrid columns="2">
-		    	<h:outputLabel value="Mês:" />
-		    	<p:selectOneMenu value="#{despesaFuncionarioBean.despesaFuncionario.mes}">
-			    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-			    	  <f:selectItems value="#{despesaFuncionarioBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-			    </p:selectOneMenu>
-			    <h:outputLabel value="Ano:" />
-			    <p:inputText value="#{despesaFuncionarioBean.despesaFuncionario.ano}" />
-			    <p:commandButton value="Cadastrar" action="#{despesaFuncionarioBean.cadastrar}" />
-		    </p:panelGrid>
-		    <p:messages autoUpdate="true" closable="true" />
-	    </h:form>
-	    
-	    <p:dialog widgetVar="dlgTipo" header="Pesquisa por tipo" showEffect="fade">
-	    	 	<h:form>
-					<p:panelGrid columns="3">
-						<h:outputLabel value="Tipo:" />
-						<p:selectOneMenu value="#{despesaFuncionarioBean.tipoFuncionario}">
-							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-				    	  <f:selectItems value="#{despesaFuncionarioBean.tiposFuncionarios}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
-				   		</p:selectOneMenu>
-						<p:commandButton update=":formulario:tabela" value="Buscar" action="#{despesaFuncionarioBean.buscarFuncionariosPorTipo}" />					
-					</p:panelGrid>
-	   		 	</h:form>
-	    </p:dialog>
-    </ui:define>
-    
-</ui:composition>  
+				<p:column selectionMode="multiple"
+					style="width:16px;text-align:center" />
+				<p:column headerText="Cpf">
+					<h:outputText value="#{funcionario.cpf}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<h:outputText value="#{funcionario.nome}" />
+				</p:column>
+				<p:column headerText="Tipo">
+					<h:outputText value="#{funcionario.tipo}" />
+				</p:column>
+				<p:column headerText="Ativo">
+					<h:outputText value="#{funcionario.ativo}" />
+				</p:column>
+				<p:column headerText="Salário">
+					<h:outputText value="#{funcionario.salario}" />
+				</p:column>
+			</p:dataTable>
+			<p:panelGrid columns="2">
+				<h:outputLabel value="Mês:" />
+				<p:selectOneMenu
+					value="#{despesaFuncionarioBean.despesaFuncionario.mes}">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{despesaFuncionarioBean.meses}" var="mes"
+						itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+				</p:selectOneMenu>
+				<h:outputLabel value="Ano:" />
+				<p:inputText
+					value="#{despesaFuncionarioBean.despesaFuncionario.ano}" />
+				<p:commandButton value="Cadastrar" update=":formulario"
+					action="#{despesaFuncionarioBean.cadastrar}" />
+			</p:panelGrid>
+		</h:form>
+
+		<p:dialog widgetVar="dlgTipo" header="Pesquisa por tipo"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Tipo:" />
+					<p:selectOneMenu value="#{despesaFuncionarioBean.tipoFuncionario}">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{despesaFuncionarioBean.tiposFuncionarios}"
+							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+					</p:selectOneMenu>
+					<p:commandButton update=":formulario" value="Buscar"
+						action="#{despesaFuncionarioBean.buscarFuncionariosPorTipo}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

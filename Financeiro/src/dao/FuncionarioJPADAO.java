@@ -22,4 +22,16 @@ public class FuncionarioJPADAO extends GenericJPADAO<Funcionario> implements Fun
 		return query.getResultList();
 	}
 
+	@Override
+	public List<Funcionario> buscarAtivo() {
+		Query query = getEm().createNamedQuery("Funcionario.buscarAtivo");
+		return query.getResultList();
+	}
+
+	@Override
+	public List<Funcionario> buscarInativo() {
+		Query query = getEm().createNamedQuery("Funcionario.buscarInativo");
+		return query.getResultList();
+	}
+
 }

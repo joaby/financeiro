@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,7 +12,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Despesa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -20,11 +21,55 @@ public class Despesa {
 	@Enumerated(EnumType.STRING)
 	private Mes mes;
 	private int ano;
-	
+
+	public Despesa() {
+		this.mes = pegarMesAtual();
+		this.ano = pegarAnoAtual();
+	}
+
+	public int pegarAnoAtual() {
+		Calendar cal = Calendar.getInstance();
+		int ano = cal.get(Calendar.YEAR);
+		return ano;
+	}
+
+	public Mes pegarMesAtual() {
+		Calendar cal = Calendar.getInstance();
+		int mes = cal.get(Calendar.MONTH);
+		switch (mes) {
+		case 0:
+			return Mes.JANEIRO;
+		case 1:
+			return Mes.FEVEREIRO;
+		case 2:
+			return Mes.MARCO;
+		case 3:
+			return Mes.ABRIL;
+		case 4:
+			return Mes.MAIO;
+		case 5:
+			return Mes.JUNHO;
+		case 6:
+			return Mes.JULHO;
+		case 7:
+			return Mes.AGOSTO;
+		case 8:
+			return Mes.SETEMBRO;
+		case 9:
+			return Mes.OUTUBRO;
+		case 10:
+			return Mes.NOVEMBRO;
+		case 11:
+			return Mes.DEZEMBRO;
+		default:
+			return Mes.JANEIRO;
+		}
+	}
+
 	public float getValor() {
 		return valor;
 	}
-	
+
 	public void setValor(float valor) {
 		this.valor = valor;
 	}

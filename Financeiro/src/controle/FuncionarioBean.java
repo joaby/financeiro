@@ -74,6 +74,20 @@ public class FuncionarioBean extends AbstractBean implements Serializable {
 		this.funcionarios = fDAO.buscarPorTipo(this.tipo);
 		this.salarioTotal = somaSalario(this.funcionarios);
 	}
+	
+	public void buscarAtivo(){
+		this.funcionarios = new ArrayList<Funcionario>();
+		FuncionarioDAO fDAO = new FuncionarioJPADAO();
+		this.funcionarios = fDAO.buscarAtivo();
+		this.salarioTotal = somaSalario(this.funcionarios);
+	}
+	
+	public void buscarInativo(){
+		this.funcionarios = new ArrayList<Funcionario>();
+		FuncionarioDAO fDAO = new FuncionarioJPADAO();
+		this.funcionarios = fDAO.buscarInativo();
+		this.salarioTotal = somaSalario(this.funcionarios);
+	}
 
 	public int somaSalario(List<Funcionario> f) {
 		int total = 0;

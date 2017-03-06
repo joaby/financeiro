@@ -7,25 +7,36 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="3">
+		<p:panelGrid columns="6">
 			<h:outputLabel value="Pesquise:" />
-			<h:form>
-				<p:commandButton value="Todos" update=":formulario:tabela"
-					action="#{despesaFuncionarioBean.buscarTodos}" />
-			</h:form>
 			<h:form>
 				<p:commandButton value="Por mês e ano" type="button"
 					onclick="PF('dlgMes').show()" />
+			</h:form>
+			<h:form>
+				<p:commandButton value="Todas" update=":formulario"
+					action="#{despesaFuncionarioBean.buscarTodos}" />
+			</h:form>
+			<p:column styleClass="ui-widget-header">
+	            <p:spacer height="0"/>
+	        </p:column>
+			<h:outputLabel value="Gerar PDF:" />
+			<h:form>
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":formulario:tabela"
+						fileName="Despesa_com_funcionários" encoding="iso-8859-1" />
+				</h:commandLink>
 			</h:form>
 		</p:panelGrid>
 
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
-			<p:dataTable id="tabela" var="despFuncionario"
-				value="#{despesaFuncionarioBean.despesaFuncionarios}"
+			<p:dataTable id="tabela" var="despFuncionario" emptyMessage="Nenhuma despesa com funcionário encontrada!"
+				value="#{despesaFuncionarioBean.despesaFuncionarios}" rowsPerPageTemplate="10,15,20"
 				paginator="true" rows="10">
 				<f:facet name="header">
-	            	Funcionários
+	            	Despesa com funcionários
 	        	</f:facet>
 				<p:column headerText="Cpf">
 					<h:outputText value="#{despFuncionario.funcionario.cpf}" />
@@ -35,6 +46,9 @@
 				</p:column>
 				<p:column headerText="Tipo">
 					<h:outputText value="#{despFuncionario.funcionario.tipo.descricao}" />
+				</p:column>
+				<p:column headerText="Ativo">
+					<h:outputText value="#{despFuncionario.funcionario.ativo}" />
 				</p:column>
 				<p:column headerText="Mês">
 					<h:outputText value="#{despFuncionario.mes.descricao}" />
@@ -119,7 +133,7 @@
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
 					<p:inputText value="#{despesaFuncionarioBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:commandButton update=":formulario" value="Buscar"
 						action="#{despesaFuncionarioBean.buscarPorMesAno}" />
 				</p:panelGrid>
 			</h:form>
