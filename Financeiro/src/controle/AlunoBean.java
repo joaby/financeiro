@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
 import dao.ReceitaMensalidadeDAO;
@@ -18,37 +16,36 @@ import modelo.Serie;
 
 @ManagedBean
 @ViewScoped
-public class AlunoBean extends AbstractBean implements Serializable{
-	
+public class AlunoBean extends AbstractBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private Aluno aluno;
 	private List<Aluno> alunos;
 	private Mes mes;
 	private int ano;
 	private List<Mes> meses;
-	
-	public AlunoBean(){
+
+	public AlunoBean() {
 		this.meses = Arrays.asList(Mes.values());
 		this.aluno = new Aluno();
 		this.alunos = new ArrayList<Aluno>();
 	}
-	
-	public void buscarTodos(){
+
+	public void buscarTodos() {
 		this.alunos = new ArrayList<Aluno>();
 		AlunoDAO alunoDAO = new AlunoJPADAO();
 		this.alunos = alunoDAO.find();
 	}
-	
-	public void cadastrar(){
+
+	public void cadastrar() {
 		try {
 			AlunoDAO alunoDAO = new AlunoJPADAO();
 			Aluno a = alunoDAO.find(this.aluno.getNome());
-			if(a == null){
+			if (a == null) {
 				alunoDAO.save(this.aluno);
 				displayInfoMessageToUser("Cadastrado com sucesso!");
 				this.aluno = new Aluno();
-			}
-			else{
+			} else {
 				displayErrorMessageToUser("Aluno já cadastrado!");
 				this.aluno = new Aluno();
 			}
@@ -57,36 +54,32 @@ public class AlunoBean extends AbstractBean implements Serializable{
 			this.aluno = new Aluno();
 		}
 	}
-	
-	public void atualizar(){
+
+	public void atualizar() {
 		AlunoDAO alunoDAO = new AlunoJPADAO();
 		alunoDAO.save(this.aluno);
 		displayInfoMessageToUser("Atualizado com sucesso!");
 		this.aluno = new Aluno();
 	}
-	
-	public void excluir(){
-		try {
-			AlunoDAO alunoDAO = new AlunoJPADAO();
-			alunoDAO.delete(aluno);
-			displayInfoMessageToUser("Excluido com sucesso!");
-			this.aluno = new Aluno();
-		} catch (Exception e) {
-			displayErrorMessageToUser("Erro ao excluir!");
-		}
+
+	public void excluir(Aluno a) {
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		alunoDAO.delete(a);
+		displayInfoMessageToUser("Excluido com sucesso!");
+		this.alunos.remove(a);
 	}
-	
-	public void buscarPorNaoPagante(){
+
+	public void buscarPorNaoPagante() {
 		this.alunos = new ArrayList<Aluno>();
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 		this.alunos = rmDAO.buscarPorNaoPagante(this.mes, this.ano);
 	}
-	
-	public int sortBySerie(Serie a, Serie b){
+
+	public int sortBySerie(Serie a, Serie b) {
 		return a.compareTo(b);
 	}
-	
-	public int sortByNome(String n1, String n2){
+
+	public int sortByNome(String n1, String n2) {
 		return n1.compareTo(n2);
 	}
 
@@ -129,7 +122,5 @@ public class AlunoBean extends AbstractBean implements Serializable{
 	public void setMeses(List<Mes> meses) {
 		this.meses = meses;
 	}
-	
-	
 
 }

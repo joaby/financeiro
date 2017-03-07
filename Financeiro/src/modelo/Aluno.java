@@ -14,7 +14,7 @@ public class Aluno {
 	}
 	
     public void setNome(String nome) {
-		this.nome = nome;
+		this.nome = nome.toUpperCase();
 	}
 	
 }

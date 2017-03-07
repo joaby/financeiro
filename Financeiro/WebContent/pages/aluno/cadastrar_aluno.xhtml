@@ -8,14 +8,14 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 	<ui:define name="conteudo"> 
-		<h:form>
-		<p:panel header="Cadastro de Aluno">
+		<h:form id="formulario">
+		<p:panel header="Cadastro de Aluno" style="margin-bottom:10px; text-align: center;">
 			<p:messages autoUpdate="true" closable="true" />
-			<h:panelGrid>
+			<p:panelGrid columns="1" style="margin: 0 auto;text-align: left;">
 				<h:outputLabel value="Nome:" />
-			    <p:inputText value="#{alunoBean.aluno.nome}" />
-			    <p:commandButton value="Cadastrar" action="#{alunoBean.cadastrar()}" />
-		    </h:panelGrid>
+			    <p:inputText value="#{alunoBean.aluno.nome}" size="30" />
+			    <p:commandButton value="Cadastrar" update="formulario" action="#{alunoBean.cadastrar()}" />
+		    </p:panelGrid>
 	    </p:panel>
 		</h:form>
 	</ui:define> 

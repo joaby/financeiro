@@ -8,13 +8,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<h:form>
+		<h:form id="formulario">
 		<p:panel header="Cadastro de Matricula" style="margin-bottom:10px; text-align: center;">
 			<p:messages autoUpdate="true" closable="true" />
 			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 				<h:outputLabel value="Nome do aluno:" />
 				<p:row>
-				    <p:autoComplete id="nome" value="#{receitaMatriculaBean.matricula.aluno.nome}" 
+				    <p:autoComplete id="nome" value="#{receitaMatriculaBean.matricula.aluno.nome}"
 				    completeMethod="#{receitaMatriculaBean.buscarTodosAlunos}" title="Digite o nome e escolha uma opção!"
 				    minQueryLength="3" scrollHeight="200" />
 				    <p:tooltip for="nome" showEvent="focus" hideEvent="blur" />
@@ -35,7 +35,7 @@
 			    <p:inputText value="#{receitaMatriculaBean.matricula.ano}" />
 			    <h:outputLabel value="Descrição:" />
 			    <p:inputTextarea value="#{receitaMatriculaBean.matricula.descricao}" />
-			    <p:commandButton value="Cadastrar" action="#{receitaMatriculaBean.cadastrar}" />
+			    <p:commandButton value="Cadastrar" update="formulario" action="#{receitaMatriculaBean.cadastrar}" />
 			    <p:commandButton value="Limpar" type="reset" />
 		    </p:panelGrid>
 	    </p:panel>
