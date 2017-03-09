@@ -32,11 +32,11 @@
 
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
-			<p:dataTable id="tabela" var="despFuncionario" emptyMessage="Nenhuma despesa com funcionário encontrada!"
+			<p:dataTable id="tabela" var="despFuncionario" emptyMessage="Nenhuma despesa de funcionário encontrada!"
 				value="#{despesaFuncionarioBean.despesaFuncionarios}" rowsPerPageTemplate="10,15,20"
 				paginator="true" rows="10">
 				<f:facet name="header">
-	            	Despesa com funcionários
+	            Despesa de funcionários
 	        	</f:facet>
 				<p:column headerText="Cpf">
 					<h:outputText value="#{despFuncionario.funcionario.cpf}" />

@@ -8,25 +8,36 @@
 
 	<ui:define name="conteudo">
 
-		<p:panelGrid columns="3">
+		<p:panelGrid columns="6">
 			<h:outputLabel value="Pesquise:" />
+			<h:form>
+				<p:commandButton value="Por série" type="button"
+					onclick="PF('dlgSerie').show()" />
+			</h:form>
 			<h:form>
 				<p:commandButton value="Por ano" type="button"
 					onclick="PF('dlgAno').show()" />
 			</h:form>
+			<p:column styleClass="ui-widget-header">
+				<p:spacer height="0" />
+			</p:column>
+			<h:outputLabel value="Gerar PDF:" />
 			<h:form>
-				<p:commandButton value="Por série" type="button"
-					onclick="PF('dlgSerie').show()" />
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":formulario:tabela"
+						fileName="Receita_matrícula" encoding="iso-8859-1" />
+				</h:commandLink>
 			</h:form>
 		</p:panelGrid>
 
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
-			<p:dataTable id="tabela" var="matricula" emptyMessage="Nenhuma matrícula encontrada!"
+			<p:dataTable id="tabela" var="matricula" emptyMessage="Nenhuma receita de matrícula encontrada!"
 				value="#{receitaMatriculaBean.matriculas}" paginator="true"
-				rows="10" sortMode="multiple">
+				rows="10" sortMode="multiple" rowsPerPageTemplate="10,15,20">
 				<f:facet name="header">
-            	Matriculas
+            	Receita de matrículas
         		</f:facet>
 				<p:column headerText="Nome" sortBy="#{matricula.aluno.nome}"
 					sortFunction="#{receitaMatriculaBean.sortByNome}">
@@ -46,10 +57,14 @@
 					<h:outputText value="#{matricula.descricao}" />
 				</p:column>
 				<p:column headerText="Valor">
-					<h:outputText value="#{matricula.valor}" />
+					<h:outputText value="#{matricula.valor}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</h:outputText>
 					<f:facet name="footer">
 			    	Total:
-			    	<h:outputText value="#{receitaMatriculaBean.receitaTotal}" />
+			    	<h:outputText value="#{receitaMatriculaBean.receitaTotal}">
+			    		<f:convertNumber type="currency" />
+			    	</h:outputText>
 					</f:facet>
 				</p:column>
 				<p:column style="text-align:center;" exportable="false">
@@ -82,21 +97,21 @@
 						completeMethod="#{receitaMatriculaBean.buscarTodosAlunos}"
 						disabled="true" minQueryLength="3" scrollHeight="200" />
 					<h:outputLabel value="Série:" />
-					<p:selectOneMenu value="#{receitaMatriculaBean.matricula.serie}">
+					<p:selectOneMenu value="#{receitaMatriculaBean.matricula.serie}" required="true" label="Série" style="width:233px;">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{receitaMatriculaBean.series}" var="serie"
 							itemLabel="#{serie.curso}" itemValue="#{serie}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Valor:" />
-					<p:inputText value="#{receitaMatriculaBean.matricula.valor}" />
+					<p:inputText value="#{receitaMatriculaBean.matricula.valor}" required="true" label="Valor" />
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{receitaMatriculaBean.matricula.mes}">
+					<p:selectOneMenu value="#{receitaMatriculaBean.matricula.mes}" required="true" label="Mês" style="width:233px;">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{receitaMatriculaBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMatriculaBean.matricula.ano}" />
+					<p:inputText value="#{receitaMatriculaBean.matricula.ano}" required="true" label="Ano" />
 					<h:outputLabel value="Descrição:" />
 					<p:inputTextarea
 						value="#{receitaMatriculaBean.matricula.descricao}" />
@@ -106,30 +121,31 @@
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgAno" showEffect="fade"
+		<p:dialog id="ano" widgetVar="dlgAno" showEffect="fade"
 			header="Pesquisa por ano">
 			<h:form>
 				<p:panelGrid columns="3">
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMatriculaBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{receitaMatriculaBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":formulario:tabela :ano" value="Buscar"
 						action="#{receitaMatriculaBean.buscarPorAno}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgSerie" showEffect="fade"
+		<p:dialog id="serie" widgetVar="dlgSerie" showEffect="fade"
 			header="Pesquisa por série">
 			<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Série:" />
-					<p:selectOneMenu value="#{receitaMatriculaBean.serie}">
+					<p:selectOneMenu value="#{receitaMatriculaBean.serie}" required="true" label="Série" style="width:150px;">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{receitaMatriculaBean.series}" var="serie"
 							itemLabel="#{serie.curso}" itemValue="#{serie}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMatriculaBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{receitaMatriculaBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":formulario:tabela :serie" value="Buscar"
 						action="#{receitaMatriculaBean.buscarPorSerie}" />
 				</p:panelGrid>
 			</h:form>

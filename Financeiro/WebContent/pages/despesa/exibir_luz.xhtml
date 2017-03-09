@@ -34,9 +34,9 @@
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="luz"
 				value="#{despesaLuzBean.despesasLuzes}" paginator="true" rows="10"
-				rowsPerPageTemplate="10,15,20" emptyMessage="Nenhuma despesa com luz encontrada!">
+				rowsPerPageTemplate="10,15,20" emptyMessage="Nenhuma despesa de luz encontrada!">
 				<f:facet name="header">
-	            	Água
+	            Despesa de luz
 	        	</f:facet>
 				<p:column headerText="Mês">
 					<h:outputText value="#{luz.mes.descricao}" />

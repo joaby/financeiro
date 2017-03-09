@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<h:form>
+		<h:form id="formulario">
 		<p:panel header="Cadastro de Mensalidade" style="margin-bottom:10px; text-align: center;">
 			<p:messages autoUpdate="true" closable="true" />
 			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
@@ -16,21 +16,21 @@
 				<p:row>
 				    <p:autoComplete id="nome" value="#{receitaMensalidadeBean.mensalidade.aluno.nome}" 
 				    completeMethod="#{receitaMensalidadeBean.buscarTodosAlunos}" title="Digite o nome e escolha uma opção!"
-				    minQueryLength="3" scrollHeight="200" />
+				    minQueryLength="3" scrollHeight="200" required="true" label="Nome do aluno" />
 				    <p:tooltip for="nome" showEvent="focus" hideEvent="blur" />
 			    </p:row>
 			    <h:outputLabel value="Valor:" />
-			    <p:inputText value="#{receitaMensalidadeBean.mensalidade.valor}" />
+			    <p:inputText value="#{receitaMensalidadeBean.mensalidade.valor}" required="true" label="Valor" />
 			    <h:outputLabel value="Mês:" />
-			    <p:selectOneMenu value="#{receitaMensalidadeBean.mensalidade.mes}">
+			    <p:selectOneMenu value="#{receitaMensalidadeBean.mensalidade.mes}" required="true" label="Mês" style="width:233px;">
 			    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 			    	  <f:selectItems value="#{receitaMensalidadeBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 			    </p:selectOneMenu>
 			    <h:outputLabel value="Ano:" />
-			    <p:inputText value="#{receitaMensalidadeBean.mensalidade.ano}" />
+			    <p:inputText value="#{receitaMensalidadeBean.mensalidade.ano}" required="true" label="Ano" />
 			    <h:outputLabel value="Descrição:" />
 			    <p:inputTextarea value="#{receitaMensalidadeBean.mensalidade.descricao}" />
-			    <p:commandButton value="Cadastrar" action="#{receitaMensalidadeBean.cadastrar}" />
+			    <p:commandButton value="Salvar" update=":formulario" icon="ui-icon-disk" action="#{receitaMensalidadeBean.cadastrar}" />
 			    <p:commandButton value="Limpar" type="reset" />
 		    </p:panelGrid>
 	    </p:panel>

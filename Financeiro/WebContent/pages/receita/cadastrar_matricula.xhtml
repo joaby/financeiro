@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<ui:composition
-	template="/WEB-INF/templates/template.xhtml"
+<ui:composition template="/WEB-INF/templates/template.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -9,37 +8,48 @@
 
 	<ui:define name="conteudo">
 		<h:form id="formulario">
-		<p:panel header="Cadastro de Matricula" style="margin-bottom:10px; text-align: center;">
-			<p:messages autoUpdate="true" closable="true" />
-			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
-				<h:outputLabel value="Nome do aluno:" />
-				<p:row>
-				    <p:autoComplete id="nome" value="#{receitaMatriculaBean.matricula.aluno.nome}"
-				    completeMethod="#{receitaMatriculaBean.buscarTodosAlunos}" title="Digite o nome e escolha uma opção!"
-				    minQueryLength="3" scrollHeight="200" />
-				    <p:tooltip for="nome" showEvent="focus" hideEvent="blur" />
-			    </p:row>
-			    <h:outputLabel value="Série:" />
-			    <p:selectOneMenu value="#{receitaMatriculaBean.matricula.serie}">
-			    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-			    	  <f:selectItems value="#{receitaMatriculaBean.series}" var="serie" itemLabel="#{serie.curso}" itemValue="#{serie}" />
-			    </p:selectOneMenu>
-			    <h:outputLabel value="Valor:" />
-			    <p:inputText value="#{receitaMatriculaBean.matricula.valor}" />
-			    <h:outputLabel value="Mês:" />
-			    <p:selectOneMenu value="#{receitaMatriculaBean.matricula.mes}">
-			    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-			    	  <f:selectItems value="#{receitaMatriculaBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
-			    </p:selectOneMenu>
-			    <h:outputLabel value="Ano:" />
-			    <p:inputText value="#{receitaMatriculaBean.matricula.ano}" />
-			    <h:outputLabel value="Descrição:" />
-			    <p:inputTextarea value="#{receitaMatriculaBean.matricula.descricao}" />
-			    <p:commandButton value="Cadastrar" update="formulario" action="#{receitaMatriculaBean.cadastrar}" />
-			    <p:commandButton value="Limpar" type="reset" />
-		    </p:panelGrid>
-	    </p:panel>
+			<p:panel header="Cadastro de Matrícula"
+				style="margin-bottom:10px; text-align: center;">
+				<p:messages autoUpdate="true" closable="true" />
+				<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
+					<h:outputLabel value="Nome do aluno:" />
+					<p:row>
+						<p:autoComplete id="nome"
+							value="#{receitaMatriculaBean.matricula.aluno.nome}"
+							completeMethod="#{receitaMatriculaBean.buscarTodosAlunos}"
+							title="Digite o nome e escolha uma opção!" minQueryLength="3"
+							scrollHeight="200" required="true" label="Nome do aluno" />
+						<p:tooltip for="nome" showEvent="focus" hideEvent="blur" />
+					</p:row>
+					<h:outputLabel value="Série:" />
+					<p:selectOneMenu value="#{receitaMatriculaBean.matricula.serie}"
+						required="true" label="Série" style="width:233px;">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{receitaMatriculaBean.series}" var="serie"
+							itemLabel="#{serie.curso}" itemValue="#{serie}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Valor:" />
+					<p:inputText value="#{receitaMatriculaBean.matricula.valor}"
+						required="true" label="Valor" />
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaMatriculaBean.matricula.mes}"
+						required="true" label="Mês" style="width:233px;">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{receitaMatriculaBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaMatriculaBean.matricula.ano}"
+						required="true" label="Ano" />
+					<h:outputLabel value="Descrição:" />
+					<p:inputTextarea
+						value="#{receitaMatriculaBean.matricula.descricao}" />
+					<p:commandButton value="Salvar" icon="ui-icon-disk" update="formulario"
+						action="#{receitaMatriculaBean.cadastrar}" />
+					<p:commandButton value="Limpar" type="reset" />
+				</p:panelGrid>
+			</p:panel>
 		</h:form>
-    </ui:define>
-    
-</ui:composition>  
+	</ui:define>
+
+</ui:composition>

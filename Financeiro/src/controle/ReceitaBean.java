@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 import dao.ReceitaDAO;
 import dao.ReceitaExtraDAO;
 import dao.ReceitaExtraJPADAO;
@@ -20,6 +22,7 @@ import modelo.Receita;
 import modelo.ReceitaUnica;
 
 @ManagedBean
+@ViewScoped
 public class ReceitaBean extends AbstractBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -57,6 +60,7 @@ public class ReceitaBean extends AbstractBean implements Serializable{
 	}
 	
 	public void somaReceita(){
+		this.receitaUnica = new ArrayList<ReceitaUnica>();
 		ReceitaUnica ru = new ReceitaUnica();
 		ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 		Double somaMensa = rmDAO.soma(this.mes, this.ano);

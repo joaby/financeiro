@@ -12,11 +12,23 @@
 		<p:panelGrid columns="5">
 			<h:outputLabel value="Pesquise:" />
 		    <h:form>
-	    	<p:commandButton value="Por inadiplentes" type="button" onclick="PF('dlgIna').show()"/>
+	    	<p:commandButton value="Inadiplentes" type="button" onclick="PF('dlgIna').show()"/>
 		    </h:form>  
+		    <p:column styleClass="ui-widget-header">
+				<p:spacer height="0" />
+			</p:column>
+			<h:outputLabel value="Gerar PDF:" />
+			<h:form>
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":tab"
+						fileName="Receita_livro" encoding="iso-8859-1" />
+				</h:commandLink>
+			</h:form>
 		</p:panelGrid>
 		
-		<p:dataTable id="tab" var="aluno" value="#{alunoBean.alunos}" paginator="true" rows="10">
+		<p:dataTable id="tab" var="aluno" value="#{alunoBean.alunos}" paginator="true" rows="10"
+			emptyMessage="Nenhum inadiplente encontrado!" rowsPerPageTemplate="10,15,20">
 			<f:facet name="header">
             	Aluno
         	</f:facet>
@@ -25,16 +37,16 @@
 		    </p:column>
 	    </p:dataTable>
 	    
-	     <p:dialog widgetVar="dlgIna" showEffect="fade" header="Pesquisa por inadiplentes">
+	     <p:dialog id="mes" widgetVar="dlgIna" showEffect="fade" header="Pesquisa por inadiplentes">
 	    	<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{alunoBean.mes}">
+					<p:selectOneMenu value="#{alunoBean.mes}" required="true" label="Mês" style="width:150px;">
 			    	  <f:selectItems value="#{alunoBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 			   		</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{alunoBean.ano}" />
-					<p:commandButton update=":tab" value="Buscar" action="#{alunoBean.buscarPorNaoPagante}" />					
+					<p:inputText value="#{alunoBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":tab :mes" value="Buscar" action="#{alunoBean.buscarPorNaoPagante}" />					
 				</p:panelGrid>
 	   		 </h:form>
 	    </p:dialog> 

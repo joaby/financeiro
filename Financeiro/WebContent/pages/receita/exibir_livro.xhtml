@@ -8,25 +8,40 @@
 
 	<ui:define name="conteudo">
 
-		<p:panelGrid columns="3">
+		<p:panelGrid columns="6">
 			<h:outputLabel value="Pesquise:" />
+			<h:form>
+				<p:commandButton value="Por mês e ano" type="button"
+					onclick="PF('dlgMes').show()" />
+			</h:form>
 			<h:form>
 				<p:commandButton value="Por ano" type="button"
 					onclick="PF('dlgAno').show()" />
 			</h:form>
+			<p:column styleClass="ui-widget-header">
+				<p:spacer height="0" />
+			</p:column>
+			<h:outputLabel value="Gerar PDF:" />
 			<h:form>
-				<p:commandButton value="Por mês e ano" type="button"
-					onclick="PF('dlgMes').show()" />
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":formulario:tabela"
+						fileName="Receita_livro" encoding="iso-8859-1" />
+				</h:commandLink>
 			</h:form>
 		</p:panelGrid>
 
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
-			<p:dataTable id="tabela" var="livro" emptyMessage="Nenhum livro encontrado!"
-				value="#{receitaLivroBean.receitaLivros}" paginator="true" rows="10">
+			<p:dataTable id="tabela" var="livro" emptyMessage="Nenhuma receita de livro encontrada!"
+				value="#{receitaLivroBean.receitaLivros}" paginator="true" rows="10"
+				rowsPerPageTemplate="10,15,20">
 				<f:facet name="header">
-            	Livros
+            	Receita de livros
         		</f:facet>
+        		<p:column headerText="Aluno">
+        			<h:outputText value="#{livro.aluno.nome}" />
+        		</p:column>
 				<p:column headerText="Mês">
 					<h:outputText value="#{livro.mes.descricao}" />
 				</p:column>
@@ -37,10 +52,14 @@
 					<h:outputText value="#{livro.descricao}" />
 				</p:column>
 				<p:column headerText="Valor">
-					<h:outputText value="#{livro.valor}" />
+					<h:outputText value="#{livro.valor}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</h:outputText>
 					<f:facet name="footer">
 			    	Total:
-			    	<h:outputText value="#{receitaLivroBean.receitaTotal}" />
+			    	<h:outputText value="#{receitaLivroBean.receitaTotal}">
+			    		<f:convertNumber type="currency" />
+			    	</h:outputText>
 					</f:facet>
 				</p:column>
 				<p:column style="text-align:center;" exportable="false">
@@ -66,16 +85,18 @@
 		<p:dialog id="dlgEdit" widgetVar="edit" header="Atualizar">
 			<h:form>
 				<p:panelGrid columns="2">
+					<h:outputLabel value="Nome do aluno:" />
+					<p:inputText value="#{receitaLivroBean.receitaLivro.aluno.nome}" disabled="true" />
 					<h:outputLabel value="Valor:" />
-					<p:inputText value="#{receitaLivroBean.receitaLivro.valor}" />
+					<p:inputText value="#{receitaLivroBean.receitaLivro.valor}" required="true" label="Valor" />
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{receitaLivroBean.receitaLivro.mes}">
+					<p:selectOneMenu value="#{receitaLivroBean.receitaLivro.mes}" required="true" label="Mês" style="width:233px;">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{receitaLivroBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaLivroBean.receitaLivro.ano}" />
+					<p:inputText value="#{receitaLivroBean.receitaLivro.ano}" required="true" label="Ano" />
 					<h:outputLabel value="Descrição:" />
 					<p:inputTextarea value="#{receitaLivroBean.receitaLivro.descricao}" />
 					<p:commandButton value="Atualizar" update=":formulario :dlgEdit"
@@ -84,30 +105,31 @@
 			</h:form>
 		</p:dialog>
 
-		<p:dialog header="Pesquisa por ano" widgetVar="dlgAno"
+		<p:dialog id="ano" header="Pesquisa por ano" widgetVar="dlgAno"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="3">
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaLivroBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{receitaLivroBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":formulario:tabela :ano" value="Buscar"
 						action="#{receitaLivroBean.buscarPorAno}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog header="Pesquisa por mês e ano" widgetVar="dlgMes"
+		<p:dialog id="mes" header="Pesquisa por mês e ano" widgetVar="dlgMes"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{receitaLivroBean.mes}">
+					<p:selectOneMenu value="#{receitaLivroBean.mes}" required="true" label="Mês" style="width:150px;">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{receitaLivroBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaLivroBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{receitaLivroBean.ano}" style="width:150px;" required="true" label="Ano" />
+					<p:commandButton update=":formulario:tabela :mes" value="Buscar"
 						action="#{receitaLivroBean.buscarPorMesAno}" />
 				</p:panelGrid>
 			</h:form>

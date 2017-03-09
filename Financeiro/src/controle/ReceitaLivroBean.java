@@ -10,8 +10,11 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
 
+import dao.AlunoDAO;
+import dao.AlunoJPADAO;
 import dao.ReceitaLivroDAO;
 import dao.ReceitaLivroJPADAO;
+import modelo.Aluno;
 import modelo.Mes;
 import modelo.ReceitaLivro;
 
@@ -35,10 +38,14 @@ public class ReceitaLivroBean extends AbstractBean implements Serializable{
 	}
 	
 	public void cadastrar(){
-		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
-		rlDAO.save(this.receitaLivro);
-		displayInfoMessageToUser("Cadastrado com sucesso!");
-		this.receitaLivro = new ReceitaLivro();
+		try {
+			ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
+			rlDAO.save(this.receitaLivro);
+			displayInfoMessageToUser("Cadastrado com sucesso!");
+			this.receitaLivro = new ReceitaLivro();
+		} catch (javax.persistence.EntityNotFoundException e) {
+			displayErrorMessageToUser("Aluno não cadastrado! Cadastre o aluno e tente novamente.");
+		}	
 	}
 	
 	public void selecionarParaAtualizar(ReceitaLivro rl){
@@ -79,6 +86,18 @@ public class ReceitaLivroBean extends AbstractBean implements Serializable{
 		ReceitaLivroDAO rlDAO = new ReceitaLivroJPADAO();
 		this.receitaLivros = rlDAO.buscarPorMesAno(this.mes, this.ano);
 		this.receitaTotal = somaReceitaTotal(this.receitaLivros);
+	}
+	
+	public List<String> buscarTodosAlunos(String query){
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		List<Aluno> alunos =  alunoDAO.find();
+		List<String> nomes = new ArrayList<String>();
+		for(int i = 0; i< alunos.size(); i++){
+			if(alunos.get(i).getNome().startsWith(query.toUpperCase())){
+				nomes.add(alunos.get(i).getNome());
+			}	
+		}
+		return nomes;
 	}
 	
 	public float somaReceitaTotal(List<ReceitaLivro> rl){

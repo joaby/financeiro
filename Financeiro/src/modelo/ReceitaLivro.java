@@ -1,6 +1,7 @@
 package modelo;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -15,5 +16,19 @@ import javax.persistence.NamedQuery;
 })
 public class ReceitaLivro extends Receita{
 	
+	@ManyToOne
+	private Aluno aluno;
+	
+	public ReceitaLivro(){
+		this.aluno = new Aluno();
+	}
+
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
 	
 }

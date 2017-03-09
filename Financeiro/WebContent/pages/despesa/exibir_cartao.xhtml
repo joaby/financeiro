@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="3">
+		<p:panelGrid columns="6">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
 				<p:commandButton value="Por mês" type="button"
@@ -34,9 +34,9 @@
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="cartao"
 				value="#{despesaCartaoBean.despesasCartoes}" paginator="true"
-				rows="10" rowsPerPageTemplate="10,15,20" emptyMessage="Nenhuma despesa com cartão encontrada!">
+				rows="10" rowsPerPageTemplate="10,15,20" emptyMessage="Nenhuma despesa de cartão encontrada!">
 				<f:facet name="header">
-	            	Água
+	            Despesa de cartão
 	        	</f:facet>
 				<p:column headerText="Mês">
 					<h:outputText value="#{cartao.mes.descricao}" />
