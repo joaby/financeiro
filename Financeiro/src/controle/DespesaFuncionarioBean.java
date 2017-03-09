@@ -59,6 +59,7 @@ public class DespesaFuncionarioBean extends AbstractBean implements Serializable
 		displayInfoMessageToUser("Cadastrado com sucesso!");
 		this.despesaFuncionario = new DespesaFuncionario();
 		this.funcionarios = new ArrayList<Funcionario>();
+		this.funcSelecionados = new ArrayList<Funcionario>();
 	}
 	
 	public void selecionarParaAtualizar(DespesaFuncionario df){
@@ -91,6 +92,13 @@ public class DespesaFuncionarioBean extends AbstractBean implements Serializable
 		this.despesaFuncionarios = new ArrayList<DespesaFuncionario>();
 		DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
 		this.despesaFuncionarios = dDAO.buscarPorMesAno(this.mes, this.ano);
+		this.despesaTotal = somaDespesaTotal(this.despesaFuncionarios);
+	}
+	
+	public void buscarPorAno(){
+		this.despesaFuncionarios = new ArrayList<DespesaFuncionario>();
+		DespesaFuncionarioDAO dDAO = new DespesaFuncionarioJPADAO();
+		this.despesaFuncionarios = dDAO.buscarPorAno(this.ano);
 		this.despesaTotal = somaDespesaTotal(this.despesaFuncionarios);
 	}
 	

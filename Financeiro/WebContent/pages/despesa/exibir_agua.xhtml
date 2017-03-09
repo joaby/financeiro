@@ -7,21 +7,35 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="3">
+		<p:panelGrid columns="6">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
-				<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()" />
+				<p:commandButton value="Por mês" type="button"
+					onclick="PF('dlgMes').show()" />
 			</h:form>
 			<h:form>
-				<p:commandButton value="Por mês" type="button" onclick="PF('dlgMes').show()" />
+				<p:commandButton value="Por ano" type="button"
+					onclick="PF('dlgAno').show()" />
+			</h:form>
+			<p:column styleClass="ui-widget-header">
+				<p:spacer height="0" />
+			</p:column>
+			<h:outputLabel value="Gerar PDF:" />
+			<h:form>
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":formulario:tabela"
+						fileName="Agua" encoding="iso-8859-1" />
+				</h:commandLink>
 			</h:form>
 		</p:panelGrid>
-		
+
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="agua"
 				value="#{despesaAguaBean.despesasAguas}" paginator="true" rows="10"
-				style="margin-bottom:20px">
+				rowsPerPageTemplate="10,15,20"
+				emptyMessage="Nenhuma despesa de água encontrada!">
 				<f:facet name="header">
 	            	Água
 	        	</f:facet>
@@ -32,20 +46,26 @@
 					<h:outputText value="#{agua.ano}" />
 				</p:column>
 				<p:column headerText="Valor">
-					<h:outputText value="#{agua.valor}" />
+					<h:outputText value="#{agua.valor}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</h:outputText>
 					<f:facet name="footer">
 				    	Total:
-				    	<h:outputText value="#{despesaAguaBean.despesaTotal}" />
+				    	<h:outputText value="#{despesaAguaBean.despesaTotal}">
+				    		<f:convertNumber type="currency" />
+				    	</h:outputText>
 					</f:facet>
 				</p:column>
 				<p:column style="text-align:center;" exportable="false">
-						<p:commandButton icon="ui-icon-pencil" update=":dlgEdit" title="Atualizar"
-							action="#{despesaAguaBean.selecionarParaAtualizar(agua)}" />
-						<p:commandButton icon="ui-icon-trash" title="Excluir" style="margin-left:15px;"
-							update=":formulario" action="#{despesaAguaBean.excluir(agua)}">
-							<p:confirm header="Confirmar"
-								message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
-						</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
+						title="Atualizar"
+						action="#{despesaAguaBean.selecionarParaAtualizar(agua)}" />
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						style="margin-left:15px;" update=":formulario"
+						action="#{despesaAguaBean.excluir(agua)}">
+						<p:confirm header="Confirmar"
+							message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 
@@ -55,58 +75,59 @@
 				<p:commandButton value="No" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
-
-			<h:commandLink id="pdf">
-				<p:graphicImage library="img" name="pdf-icon.png" />
-				<p:dataExporter type="pdf" target=":formulario:tabela"
-					fileName="Agua" encoding="iso-8859-1" />
-			</h:commandLink>
 		</h:form>
 
 		<p:dialog id="dlgEdit" widgetVar="edit" header="Atualizar">
 			<h:form>
 				<p:panelGrid columns="2">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{despesaAguaBean.despesaAgua.mes}">
+					<p:selectOneMenu value="#{despesaAguaBean.despesaAgua.mes}"
+						required="true" label="Mês" style="width:233px;">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaAguaBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaAguaBean.despesaAgua.ano}" />
+					<p:inputText value="#{despesaAguaBean.despesaAgua.ano}"
+						required="true" label="Ano" />
 					<h:outputLabel value="Valor:" />
-					<p:inputText value="#{despesaAguaBean.despesaAgua.valor}" />
+					<p:inputText value="#{despesaAguaBean.despesaAgua.valor}"
+						required="true" label="Valor" />
 					<p:commandButton value="Atualizar"
-						action="#{despesaAguaBean.atualizar}" update=":dlgEdit :formulario:tabela" />
+						action="#{despesaAguaBean.atualizar}"
+						update=":dlgEdit :formulario:tabela" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgAno" header="Pesquisa por ano"
+		<p:dialog id="ano" widgetVar="dlgAno" header="Pesquisa por ano"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="3">
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaAguaBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<h:outputLabel value="Ano:" /> 
+					<p:inputText value="#{despesaAguaBean.ano}" style="width:150px;"
+						required="true" label="Ano" />
+					<p:commandButton update=":formulario:tabela :ano" value="Buscar"
 						action="#{despesaAguaBean.buscarPorAno}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgMes" header="Pesquisa por mês e ano"
+		<p:dialog id="mes" widgetVar="dlgMes" header="Pesquisa por mês e ano"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{despesaAguaBean.mes}">
+					<p:selectOneMenu value="#{despesaAguaBean.mes}"
+						style="width:150px;" required="true" label="Mês">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaAguaBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaAguaBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{despesaAguaBean.ano}" style="width:150px;"
+						required="true" label="Ano" />
+					<p:commandButton update=":formulario:tabela :mes" value="Buscar"
 						action="#{despesaAguaBean.buscarPorMesAno}" />
 				</p:panelGrid>
 			</h:form>

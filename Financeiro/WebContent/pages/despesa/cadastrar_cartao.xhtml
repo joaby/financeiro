@@ -14,14 +14,14 @@
 				<p:messages autoUpdate="true" closable="true" />
 			    <p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 			    	<h:outputLabel value="Mês:" />
-			    	<p:selectOneMenu value="#{despesaCartaoBean.despesaCartao.mes}">
+			    	<p:selectOneMenu value="#{despesaCartaoBean.despesaCartao.mes}" required="true" label="Mês">
 				    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 				    	  <f:selectItems value="#{despesaCartaoBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 				    </p:selectOneMenu>
 				    <h:outputLabel value="Ano:" />
-				    <p:inputText value="#{despesaCartaoBean.despesaCartao.ano}" />
+				    <p:inputText value="#{despesaCartaoBean.despesaCartao.ano}" required="true" label="Ano" />
 				    <h:outputLabel value="Valor:" />
-				    <p:inputText value="#{despesaCartaoBean.despesaCartao.valor}" />
+				    <p:inputText value="#{despesaCartaoBean.despesaCartao.valor}" required="true" label="Valor" />
 				    <p:commandButton update="formulario" value="Cadastrar" action="#{despesaCartaoBean.cadastrar}" />
 				     <p:commandButton value="Limpar" type="reset" />
 			    </p:panelGrid>

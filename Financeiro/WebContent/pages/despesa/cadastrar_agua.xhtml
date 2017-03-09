@@ -14,15 +14,15 @@
 				<p:messages autoUpdate="true" closable="true" />
 			    <p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 			    	<h:outputLabel value="Mês:" />
-			    	<p:selectOneMenu value="#{despesaAguaBean.despesaAgua.mes}">
+			    	<p:selectOneMenu value="#{despesaAguaBean.despesaAgua.mes}" style="width:233px;" required="true" label="Mês">
 				    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 				    	  <f:selectItems value="#{despesaAguaBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 				    </p:selectOneMenu>
 				    <h:outputLabel value="Ano:" />
-				    <p:inputText value="#{despesaAguaBean.despesaAgua.ano}" />
+				    <p:inputText value="#{despesaAguaBean.despesaAgua.ano}" required="true" label="Ano" />
 				    <h:outputLabel value="Valor:" />
-				    <p:inputText value="#{despesaAguaBean.despesaAgua.valor}" />
-				    <p:commandButton update="formulario" value="Cadastrar" action="#{despesaAguaBean.cadastrar}" />
+				    <p:inputText value="#{despesaAguaBean.despesaAgua.valor}" required="true" label="Valor" />
+				    <p:commandButton update="formulario" value="Salvar" icon="ui-icon-disk" action="#{despesaAguaBean.cadastrar}" />
 				     <p:commandButton value="Limpar" type="reset" />
 			    </p:panelGrid>
 		    </p:panel>	    

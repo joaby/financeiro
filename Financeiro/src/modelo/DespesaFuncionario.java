@@ -9,6 +9,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
 	@NamedQuery(name="DespesaFuncionario.buscarPorMesAno", 
 			query="SELECT df FROM DespesaFuncionario df WHERE df.mes = :mes AND df.ano = :ano"),
+	@NamedQuery(name="DespesaFuncionario.buscarPorAno", 
+		query="SELECT df FROM DespesaFuncionario df WHERE df.ano = :ano"),
 	@NamedQuery(name="DespesaFuncionario.soma", 
 			query="SELECT SUM(df.valor) FROM DespesaFuncionario df WHERE df.mes = :mes AND df.ano = :ano")
 })

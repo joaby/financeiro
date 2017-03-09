@@ -14,8 +14,8 @@
 					onclick="PF('dlgMes').show()" />
 			</h:form>
 			<h:form>
-				<p:commandButton value="Todas" update=":formulario"
-					action="#{despesaFuncionarioBean.buscarTodos}" />
+				<p:commandButton value="Por ano" type="button"
+					onclick="PF('dlgAno').show()" />
 			</h:form>
 			<p:column styleClass="ui-widget-header">
 	            <p:spacer height="0"/>
@@ -47,9 +47,6 @@
 				<p:column headerText="Tipo">
 					<h:outputText value="#{despFuncionario.funcionario.tipo.descricao}" />
 				</p:column>
-				<p:column headerText="Ativo">
-					<h:outputText value="#{despFuncionario.funcionario.ativo}" />
-				</p:column>
 				<p:column headerText="Mês">
 					<h:outputText value="#{despFuncionario.mes.descricao}" />
 				</p:column>
@@ -57,10 +54,14 @@
 					<h:outputText value="#{despFuncionario.ano}" />
 				</p:column>
 				<p:column headerText="Valor">
-					<h:outputText value="#{despFuncionario.valor}" />
+					<h:outputText value="#{despFuncionario.valor}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</h:outputText>
 					<f:facet name="footer">
-			        	Total:
-			        	<h:outputText value="#{despesaFuncionarioBean.despesaTotal}" />
+						<h:outputLabel value="Total:" />
+			        	<h:outputText value="#{despesaFuncionarioBean.despesaTotal}">
+			        		<f:convertNumber type="currency" />
+			        	</h:outputText>
 					</f:facet>
 				</p:column>
 				<p:column style="text-align:center;" exportable="false">
@@ -103,38 +104,51 @@
 							itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 					</p:selectOneMenu>	
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu
+					<p:selectOneMenu required="true" label="Mês"
 						value="#{despesaFuncionarioBean.despesaFuncionario.mes}">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaFuncionarioBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText
-						value="#{despesaFuncionarioBean.despesaFuncionario.ano}" />
+					<p:inputText value="#{despesaFuncionarioBean.despesaFuncionario.ano}"
+						required="true" label="Ano" />
 					<h:outputLabel value="Valor" />
-					<p:inputText
-						value="#{despesaFuncionarioBean.despesaFuncionario.valor}" />
+					<p:inputText value="#{despesaFuncionarioBean.despesaFuncionario.valor}"
+						required="true" label="Valor" />
 					<p:commandButton value="Atualizar"
 						action="#{despesaFuncionarioBean.atualizar}"
 						update=":dlgEdit :formulario:tabela" />
+					<p:commandButton value="Cancelar" update=":dlgEdit" />	
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog header="Pesquisa por mês e ano" widgetVar="dlgMes"
+		<p:dialog id="mes" header="Pesquisa por mês e ano" widgetVar="dlgMes"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{despesaFuncionarioBean.mes}">
+					<p:selectOneMenu value="#{despesaFuncionarioBean.mes}" style="width:150px;" required="true" label="Mês">
 						<f:selectItems value="#{despesaFuncionarioBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaFuncionarioBean.ano}" />
-					<p:commandButton update=":formulario" value="Buscar"
+					<p:inputText value="#{despesaFuncionarioBean.ano}" style="Width:150px;" required="true" label="Ano" />
+					<p:commandButton update=":formulario :mes" value="Buscar"
 						action="#{despesaFuncionarioBean.buscarPorMesAno}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog id="ano" header="Pesquisa por ano" widgetVar="dlgAno"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{despesaFuncionarioBean.ano}" style="width:150px;" required="true" label="Ano" />
+					<p:commandButton update=":formulario :ano" value="Buscar"
+						action="#{despesaFuncionarioBean.buscarPorAno}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

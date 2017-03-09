@@ -13,7 +13,7 @@
 			<p:messages autoUpdate="true" closable="true" />
 			<p:panelGrid columns="1" style="margin: 0 auto;text-align: left;">
 				<h:outputLabel value="Nome:" />
-			    <p:inputText value="#{alunoBean.aluno.nome}" size="30" />
+			    <p:inputText value="#{alunoBean.aluno.nome}" size="30" required="true" maxlength="30" label="Aluno" />
 			    <p:commandButton value="Cadastrar" update="formulario" action="#{alunoBean.cadastrar()}" />
 		    </p:panelGrid>
 	    </p:panel>

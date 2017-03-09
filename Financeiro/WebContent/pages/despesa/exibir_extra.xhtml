@@ -7,23 +7,34 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="3">
+		<p:panelGrid columns="6">
 			<h:outputLabel value="Pesquise:" />
+			<h:form>
+				<p:commandButton value="Por mês" type="button"
+					onclick="PF('dlgMes').show()" />
+			</h:form>
 			<h:form>
 				<p:commandButton value="Por ano" type="button"
 					onclick="PF('dlgAno').show()" />
 			</h:form>
+			<p:column styleClass="ui-widget-header">
+				<p:spacer height="0" />
+			</p:column>
+			<h:outputLabel value="Gerar PDF:" />
 			<h:form>
-				<p:commandButton value="Por mês" type="button"
-					onclick="PF('dlgMes').show()" />
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":formulario:tabela"
+						fileName="Despesa_extra" encoding="iso-8859-1" />
+				</h:commandLink>
 			</h:form>
 		</p:panelGrid>
 
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
-			<p:dataTable id="tabela" var="extra" emptyMessage="Nenhum extra encontrado!"
+			<p:dataTable id="tabela" var="extra" emptyMessage="Nenhuma despesa de extra encontrada!"
 				value="#{despesaExtraBean.despesasExtras}" paginator="true"
-				rows="10" style="margin-bottom:20px">
+				rows="10" rowsPerPageTemplate="10,15,20">
 				<f:facet name="header">
 	            	Extra
 	        	</f:facet>
@@ -37,10 +48,14 @@
 					<h:outputText value="#{extra.ano}" />
 				</p:column>
 				<p:column headerText="Valor">
-					<h:outputText value="#{extra.valor}" />
+					<h:outputText value="#{extra.valor}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</h:outputText>
 					<f:facet name="footer">
 				    	Total:
-				    	<h:outputText value="#{despesaExtraBean.despesaTotal}" />
+				    	<h:outputText value="#{despesaExtraBean.despesaTotal}">
+				    		<f:convertNumber type="currency" />
+				    	</h:outputText>
 					</f:facet>
 				</p:column>
 				<p:column style="text-align:center;" exportable="false">
@@ -68,48 +83,48 @@
 			<h:form>
 				<p:panelGrid columns="2">
 					<h:outputLabel value="Descrição:" />
-					<p:inputText value="#{despesaExtraBean.despesaExtra.descricao}" />
+					<p:inputText value="#{despesaExtraBean.despesaExtra.descricao}" required="true" label="Descrição" />
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{despesaExtraBean.despesaExtra.mes}">
+					<p:selectOneMenu value="#{despesaExtraBean.despesaExtra.mes}" required="true" label="Mês" style="width:233px;">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaExtraBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaExtraBean.despesaExtra.ano}" />
+					<p:inputText value="#{despesaExtraBean.despesaExtra.ano}" required="true" label="Ano" />
 					<h:outputLabel value="Valor:" />
-					<p:inputText value="#{despesaExtraBean.despesaExtra.valor}" />
+					<p:inputText value="#{despesaExtraBean.despesaExtra.valor}" required="true" label="Valor" />
 					<p:commandButton update=":dlgEdit :formulario:tabela" value="Atualizar"
 						action="#{despesaExtraBean.atualizar}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgAno" header="Pesquisa por ano"
+		<p:dialog id="ano" widgetVar="dlgAno" header="Pesquisa por ano"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="3">
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaExtraBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{despesaExtraBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":formulario:tabela :ano" value="Buscar"
 						action="#{despesaExtraBean.buscarPorAno}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgMes" header="Pesquisa por mês e ano"
+		<p:dialog id="mes" widgetVar="dlgMes" header="Pesquisa por mês e ano"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{despesaExtraBean.mes}">
+					<p:selectOneMenu value="#{despesaExtraBean.mes}" style="width:150px;" required="true" label="Mês">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaExtraBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaExtraBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{despesaExtraBean.ano}" style="width:150px;" required="true" label="Ano" />
+					<p:commandButton update=":formulario:tabela :mes" value="Buscar"
 						action="#{despesaExtraBean.buscarPorMesAno}" />
 				</p:panelGrid>
 			</h:form>

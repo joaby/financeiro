@@ -14,13 +14,8 @@
 					onclick="PF('dlgTipo').show()" />
 			</h:form>
 			<h:form>
-				<p:commandButton value="Ativos" update=":formulario"
-					action="#{despesaFuncionarioBean.buscarFuncionariosAtivos}" />
-			</h:form>
-			
-			<h:form>
 				<p:commandButton value="Todos" update=":formulario"
-					action="#{despesaFuncionarioBean.buscarTodosFuncionarios}" />
+					action="#{despesaFuncionarioBean.buscarFuncionariosAtivos}" />
 			</h:form>
 		</p:panelGrid>
 
@@ -42,42 +37,43 @@
 					<h:outputText value="#{funcionario.nome}" />
 				</p:column>
 				<p:column headerText="Tipo">
-					<h:outputText value="#{funcionario.tipo}" />
-				</p:column>
-				<p:column headerText="Ativo">
-					<h:outputText value="#{funcionario.ativo}" />
+					<h:outputText value="#{funcionario.tipo.descricao}" />
 				</p:column>
 				<p:column headerText="Salário">
-					<h:outputText value="#{funcionario.salario}" />
+					<h:outputText value="#{funcionario.salario}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</h:outputText>
 				</p:column>
 			</p:dataTable>
+			<p:panel header="Período">
 			<p:panelGrid columns="2">
 				<h:outputLabel value="Mês:" />
-				<p:selectOneMenu
+				<p:selectOneMenu style="width:233px;" required="true" label="Mês"
 					value="#{despesaFuncionarioBean.despesaFuncionario.mes}">
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 					<f:selectItems value="#{despesaFuncionarioBean.meses}" var="mes"
 						itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 				</p:selectOneMenu>
 				<h:outputLabel value="Ano:" />
-				<p:inputText
-					value="#{despesaFuncionarioBean.despesaFuncionario.ano}" />
-				<p:commandButton value="Cadastrar" update=":formulario"
+				<p:inputText value="#{despesaFuncionarioBean.despesaFuncionario.ano}"
+					required="true" label="Ano" />
+				<p:commandButton value="Salvar" update=":formulario" icon="ui-icon-disk"
 					action="#{despesaFuncionarioBean.cadastrar}" />
 			</p:panelGrid>
+			</p:panel>
 		</h:form>
 
-		<p:dialog widgetVar="dlgTipo" header="Pesquisa por tipo"
+		<p:dialog id="tipo" widgetVar="dlgTipo" header="Pesquisa por tipo"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="3">
 					<h:outputLabel value="Tipo:" />
-					<p:selectOneMenu value="#{despesaFuncionarioBean.tipoFuncionario}">
+					<p:selectOneMenu value="#{despesaFuncionarioBean.tipoFuncionario}" required="true" label="Tipo">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaFuncionarioBean.tiposFuncionarios}"
 							var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 					</p:selectOneMenu>
-					<p:commandButton update=":formulario" value="Buscar"
+					<p:commandButton update=":formulario :tipo" value="Buscar"
 						action="#{despesaFuncionarioBean.buscarFuncionariosPorTipo}" />
 				</p:panelGrid>
 			</h:form>

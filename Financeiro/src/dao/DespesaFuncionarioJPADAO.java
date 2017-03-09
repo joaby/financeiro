@@ -26,4 +26,11 @@ public class DespesaFuncionarioJPADAO extends GenericJPADAO<DespesaFuncionario> 
 		query.setParameter("ano", ano);
 		return (Double) query.getSingleResult();
 	}
+
+	@Override
+	public List<DespesaFuncionario> buscarPorAno(int ano) {
+		Query query = getEm().createNamedQuery("DespesaFuncionario.buscarPorAno");
+		query.setParameter("ano", ano);
+		return query.getResultList();
+	}
 }

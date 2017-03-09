@@ -5,28 +5,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-
+import javax.faces.bean.ViewScoped;
 import dao.DespesaAguaDAO;
 import dao.DespesaAguaJPADAO;
 import dao.DespesaCartaoDAO;
 import dao.DespesaCartaoJPADAO;
-import dao.DespesaDAO;
 import dao.DespesaExtraDAO;
 import dao.DespesaExtraJPADAO;
 import dao.DespesaFuncionarioDAO;
 import dao.DespesaFuncionarioJPADAO;
-import dao.DespesaJPADAO;
 import dao.DespesaLuzDAO;
 import dao.DespesaLuzJPADAO;
-import modelo.Despesa;
 import modelo.DespesaUnica;
 import modelo.Mes;
 
 @ManagedBean
+@ViewScoped
 public class DespesaBean extends AbstractBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	private List<Despesa> despesas;
 	private List<DespesaUnica> despesasUnicas;
 	private Mes mes;
 	private List<Mes> meses;
@@ -35,17 +32,12 @@ public class DespesaBean extends AbstractBean implements Serializable{
 	
 	public DespesaBean(){
 		this.setDespesasUnicas(new ArrayList<DespesaUnica>());
-		this.despesas = new ArrayList<Despesa>();
 		this.meses = Arrays.asList(Mes.values());
-	}
-	
-	public void buscarTodos(){
-		DespesaDAO dDAO = new DespesaJPADAO();
-		this.despesas = dDAO.find();
 	}
 	
 	public void somaDespesa(){
 		DespesaUnica du = new DespesaUnica();
+		this.despesasUnicas = new ArrayList<DespesaUnica>();
 		
 		DespesaFuncionarioDAO dfDAO = new DespesaFuncionarioJPADAO();
 		Double somaFunc = dfDAO.soma(this.mes, this.ano);
@@ -96,15 +88,6 @@ public class DespesaBean extends AbstractBean implements Serializable{
 			total = total + du.getTotal().doubleValue();
 		}
 		return total;
-	}
-	
-	
-	public List<Despesa> getDespesas() {
-		return despesas;
-	}
-	
-	public void setDespesas(List<Despesa> despesas) {
-		this.despesas = despesas;
 	}
 	
 	public Mes getMes() {

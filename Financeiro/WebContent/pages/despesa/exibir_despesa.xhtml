@@ -9,14 +9,25 @@
 
 	<ui:define name="conteudo">
 	
-	   <p:panelGrid columns="3">
+	   <p:panelGrid columns="5">
 			<h:outputLabel value="Pesquise:" />
 		    <h:form>
 		    	<p:commandButton value="Por mês e ano" type="button" onclick="PF('dlgMes').show()"/>
-		    </h:form>  
+		    </h:form> 
+		    <p:column styleClass="ui-widget-header">
+				<p:spacer height="0" />
+			</p:column>
+			<h:outputLabel value="Gerar PDF:" />
+			<h:form>
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":tabela"
+						fileName="Despesa_geral" encoding="iso-8859-1" />
+				</h:commandLink>
+			</h:form> 
 		</p:panelGrid>     
-		
-		<p:dataTable id="tabela" var="despesaUnica" value="#{despesaBean.despesasUnicas}">
+		<p:growl autoUpdate="true" />
+		<p:dataTable id="tabela" var="despesaUnica" value="#{despesaBean.despesasUnicas}" emptyMessage="Nenhuma despesa encontrada!">
 			<f:facet name="header">
             	Despesa Geral
         	</f:facet>
@@ -24,10 +35,14 @@
 		        <h:outputText value="#{despesaUnica.nome}" />	       
 		    </p:column>
 		    <p:column headerText="Valor">
-		        <h:outputText value="#{despesaUnica.total}" />	
+		        <h:outputText value="#{despesaUnica.total}">
+		        	<f:convertNumber currencySymbol="" type="currency" />
+		        </h:outputText>	
 		        <f:facet name="footer">
 			    	Total:
-			    	<h:outputText value="#{despesaBean.despesaTotal}" />
+			    	<h:outputText value="#{despesaBean.despesaTotal}">
+			    		<f:convertNumber type="currency" />
+			    	</h:outputText>
 		    	</f:facet>        
 		    </p:column>
 		    
@@ -40,16 +55,17 @@
 		     
 	    </p:dataTable>
 	   
-	   <p:dialog widgetVar="dlgMes" showEffect="fade" header="Pesquisa por mês e ano">
+	   <p:dialog id="mes" widgetVar="dlgMes" showEffect="fade" header="Pesquisa por mês e ano">
 	   		<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{despesaBean.mes}">
+					<p:selectOneMenu value="#{despesaBean.mes}" required="true" label="Mês" style="width:150px;">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 			    	  <f:selectItems value="#{despesaBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 			   		</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaBean.ano}" />
-					<p:commandButton update=":tabela" value="Buscar" action="#{despesaBean.somaDespesa}" />					
+					<p:inputText value="#{despesaBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":tabela :mes" value="Buscar" action="#{despesaBean.somaDespesa}" />					
 				</p:panelGrid>
 	   		 </h:form>
 	   </p:dialog>

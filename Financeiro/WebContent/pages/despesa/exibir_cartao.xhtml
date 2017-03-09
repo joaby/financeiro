@@ -10,12 +10,23 @@
 		<p:panelGrid columns="3">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
+				<p:commandButton value="Por mês" type="button"
+					onclick="PF('dlgMes').show()" />
+			</h:form>
+			<h:form>
 				<p:commandButton value="Por ano" type="button"
 					onclick="PF('dlgAno').show()" />
 			</h:form>
+			<p:column styleClass="ui-widget-header">
+				<p:spacer height="0" />
+			</p:column>
+			<h:outputLabel value="Gerar PDF:" />
 			<h:form>
-				<p:commandButton value="Por mês" type="button"
-					onclick="PF('dlgMes').show()" />
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":formulario:tabela"
+						fileName="Despesa_Cartão" encoding="iso-8859-1" />
+				</h:commandLink>
 			</h:form>
 		</p:panelGrid>
 
@@ -23,7 +34,7 @@
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="cartao"
 				value="#{despesaCartaoBean.despesasCartoes}" paginator="true"
-				rows="10" style="margin-bottom:20px">
+				rows="10" rowsPerPageTemplate="10,15,20" emptyMessage="Nenhuma despesa com cartão encontrada!">
 				<f:facet name="header">
 	            	Água
 	        	</f:facet>
@@ -34,10 +45,14 @@
 					<h:outputText value="#{cartao.ano}" />
 				</p:column>
 				<p:column headerText="Valor">
-					<h:outputText value="#{cartao.valor}" />
+					<h:outputText value="#{cartao.valor}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</h:outputText>
 					<f:facet name="footer">
 				    	Total:
-				    	<h:outputText value="#{despesaCartaoBean.despesaTotal}" />
+				    	<h:outputText value="#{despesaCartaoBean.despesaTotal}">
+				    		<f:convertNumber type="currency" />
+				    	</h:outputText>
 					</f:facet>
 				</p:column>
 				<p:column style="text-align:center;" exportable="false">
@@ -63,46 +78,46 @@
 			<h:form>
 				<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{despesaCartaoBean.despesaCartao.mes}">
+					<p:selectOneMenu value="#{despesaCartaoBean.despesaCartao.mes}" required="true" label="Mês" style="width:233px;">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaCartaoBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaCartaoBean.despesaCartao.ano}" />
+					<p:inputText value="#{despesaCartaoBean.despesaCartao.ano}" required="true" label="Ano" />
 					<h:outputLabel value="Valor:" />
-					<p:inputText value="#{despesaCartaoBean.despesaCartao.valor}" />
+					<p:inputText value="#{despesaCartaoBean.despesaCartao.valor}" required="true" label="Valor" />
 					<p:commandButton update=":dlgEdit :formulario:tabela"
 						value="Atualizar" action="#{despesaCartaoBean.atualizar}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgAno" header="Pesquisa por ano"
+		<p:dialog id="ano" widgetVar="dlgAno" header="Pesquisa por ano"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="3">
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaCartaoBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{despesaCartaoBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":formulario:tabela :ano" value="Buscar"
 						action="#{despesaCartaoBean.buscarPorAno}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog widgetVar="dlgMes" header="Pesquisa por mês e ano"
+		<p:dialog id="mes" widgetVar="dlgMes" header="Pesquisa por mês e ano"
 			showEffect="fade">
 			<h:form>
 				<p:panelGrid columns="5">
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu value="#{despesaCartaoBean.mes}">
+					<p:selectOneMenu value="#{despesaCartaoBean.mes}" required="true" label="Mês" style="width:150px;">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaCartaoBean.meses}" var="mes"
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{despesaCartaoBean.ano}" />
-					<p:commandButton update=":formulario:tabela" value="Buscar"
+					<p:inputText value="#{despesaCartaoBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":formulario:tabela :mes" value="Buscar"
 						action="#{despesaCartaoBean.buscarPorMesAno}" />
 				</p:panelGrid>
 			</h:form>
