@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+		<p:panelGrid columns="5">
+			<h:outputLabel value="Pesquise:" />
+			<h:form>
+				<p:commandButton update=":formulario" value="Todos"
+					action="#{usuarioBean.buscarTodos}" />
+			</h:form>
+			<p:column styleClass="ui-widget-header">
+	            <p:spacer height="0"/>
+	        </p:column>
+			<h:outputLabel value="Gerar PDF:" />
+			<h:form>
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":formulario:tabela"
+						fileName="Usuários" encoding="iso-8859-1" />
+				</h:commandLink>
+			</h:form>
+		</p:panelGrid>
+
+		<h:form id="formulario">
+			<p:growl autoUpdate="true" />
+			<p:dataTable id="tabela" var="usuario" value="#{usuarioBean.usuarios}"
+				paginator="true" rows="10" emptyMessage="Nenhum usuário encontrado!"
+				rowsPerPageTemplate="10,15,20">
+				<f:facet name="header">
+            		Usuários
+        		</f:facet>
+				<p:column headerText="Nome" sortBy="#{usuario.nome}"
+					sortFunction="#{usuarioBean.sortByNome}">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+				<p:column headerText="Email" sortBy="#{usuario.email}"
+					sortFunction="#{usuarioBean.sortByEmail}">
+					<h:outputText value="#{usuario.email}" />
+				</p:column>
+				<p:column headerText="Login" sortBy="#{usuario.login}"
+					sortFunction="#{usuarioBean.sortByLogin}">
+					<h:outputText value="#{usuario.login}" />
+				</p:column>
+				<p:column width="50px;" style="text-align:center;" exportable="false">
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+					    update=":formulario" action="#{usuarioBean.excluir(usuario)}">
+						<p:confirm header="Confirmar"
+							message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
