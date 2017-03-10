@@ -30,4 +30,12 @@ public class ReceitaJPADAO extends GenericJPADAO<Receita> implements ReceitaDAO{
 		return query.getResultList();
 	}
 
+	@Override
+	public Double soma(Mes mes, int ano) {
+		Query query = getEm().createNamedQuery("Receita.soma");
+		query.setParameter("ano", ano);
+		query.setParameter("mes", mes);
+		return (Double) query.getSingleResult();
+	}
+
 }

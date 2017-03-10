@@ -7,8 +7,50 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<ui:define name="conteudo"> 
-		Home
+	<ui:define name="conteudo">
+		<p:panel header="Seja bem vindo: #{homeBean.nomeUsuario}" style="margin-bottom:10px; text-align: center;">
+			<p:panelGrid style="margin: 0 auto;text-align: left;">
+				<f:facet name="header">
+			        <p:row>
+			            <p:column colspan="2">
+				            Mês: <h:outputText value="#{homeBean.mesAtual.descricao}" />
+				            / Ano: <h:outputText value="#{homeBean.anoAtual}" />
+			            </p:column>
+			        </p:row>
+			    </f:facet>
+			    <p:row>
+			    	<p:column>
+			    		<h:outputLabel value="Receitas:" />
+			    	</p:column>
+				    <p:column>
+						<h:outputText value="#{homeBean.receitaTotal}">
+							<f:convertNumber currencySymbol="" type="currency" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+			    <p:row>
+			    	<p:column>
+			    		<h:outputLabel value="Despesas:" />
+			    	</p:column>
+				    <p:column>
+						<h:outputText value="#{homeBean.despesaTotal}">
+							<f:convertNumber currencySymbol="" type="currency" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+			    	<p:column>
+			    		<h:outputLabel value="Saldo:" />
+			    	</p:column>
+				    <p:column>
+						<h:outputText value="#{homeBean.saldo}">
+							<f:convertNumber currencySymbol="" type="currency" />
+						</h:outputText>
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+		</p:panel>
 	</ui:define> 
 
 </ui:composition>

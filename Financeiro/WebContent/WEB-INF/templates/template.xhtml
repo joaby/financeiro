@@ -21,6 +21,7 @@
 				<h:form>
 					<p:growl id="messages" />
 					<p:menubar>
+						<p:menuitem value="Home" icon="ui-icon-home" url="/pages/home.xhtml" />
 						<p:submenu label="Receita" icon="ui-icon-plus">
 							<p:submenu label="Matrícula">
 								<p:menuitem value="Cadastrar" url="/pages/receita/cadastrar_matricula.xhtml" />
@@ -94,6 +95,12 @@
 							<p:menuitem value="Cadastrar" url="/pages/usuario/cadastrar_usuario.xhtml" />
 							<p:menuitem value="Exibir" url="/pages/usuario/exibir_usuario.xhtml" />
 						</p:submenu>
+						<p:submenu label="Gerenciar conta" icon="ui-icon-gear">
+						</p:submenu>
+						
+						 <f:facet name="options">
+				            <p:commandButton action="#{loginBean.sair}" value="Sair" icon="ui-icon-extlink" />
+				        </f:facet>
 					</p:menubar>
 				</h:form>
 			</div>

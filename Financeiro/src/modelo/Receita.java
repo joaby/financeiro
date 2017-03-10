@@ -19,7 +19,9 @@ import javax.persistence.NamedQuery;
 	@NamedQuery(name="Receita.buscarPorAno", 
 			query="SELECT r FROM Receita r WHERE r.ano = :ano"),
 	@NamedQuery(name="Receita.buscarPorMesAno", 
-			query="SELECT r FROM Receita r WHERE r.mes = :mes AND r.ano = :ano")
+			query="SELECT r FROM Receita r WHERE r.mes = :mes AND r.ano = :ano"),
+	@NamedQuery(name="Receita.soma", 
+			query="SELECT SUM(r.valor) FROM Receita r WHERE r.mes = :mes AND r.ano = :ano")
 })
 public class Receita {
 	

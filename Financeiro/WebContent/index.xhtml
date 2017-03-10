@@ -16,7 +16,7 @@
 			style="color: white; font-size: 38px; border-top: 1px solid white; border-bottom: 1px solid white; font-style: oblique; font-variant: small-caps;">Sistema
 			Financeiro - Escola Sonho Colorido</h1>
 	</h:panelGrid>
-	<p:messages autoUpdate="true" closable="true" />
+	<p:messages autoUpdate="true"  closable="true" />
 	<p:dialog header="Login" visible="true" closable="false"
 		draggable="false" resizable="false" width="420">
 
@@ -26,10 +26,10 @@
 		<h:form>
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputLabel value="Login: *" />
-				<h:inputText value="#{loginBean.usuario.login}" required="true" />
+				<p:inputText value="#{loginBean.usuario.login}" required="true" />
 				<h:outputLabel value="Senha: * " />
-				<h:inputSecret value="#{loginBean.usuario.senha}" required="true" />
-				<h:commandButton value="Entrar" action="#{loginBean.logar}" />
+				<p:password value="#{loginBean.usuario.senha}" required="true" />
+				<p:commandButton value="Entrar" action="#{loginBean.logar}" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

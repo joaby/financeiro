@@ -2,11 +2,9 @@ package controle;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
 import dao.UsuarioDAO;
 import dao.UsuarioJPADAO;
 import modelo.Usuario;
@@ -34,16 +32,25 @@ public class LoginBean extends AbstractBean implements Serializable{
 			displayErrorMessageToUser("Usuário não existente");
 			return "/index.xhtml?faces-redirect=true";
 		}
-		if(u != null && u.getSenha().equals(this.usuario.getSenha())){
+		else if(u != null && u.getSenha().equals(this.usuario.getSenha())){
 			HttpSession sessao = (HttpSession) FacesContext
 					.getCurrentInstance().getExternalContext()
 					.getSession(true);
-			sessao.setAttribute("login", this.usuario.getLogin());
+			sessao.setAttribute("login", u.getLogin());
+			sessao.setAttribute("nome", u.getNome());
 			return "/pages/home.xhtml?faces-redirect=true";
 		}else{
 			displayErrorMessageToUser("Senha inválida!");
 			return "/index.xhtml?faces-redirect=true";
 		}
+	}
+	
+	public String sair(){
+		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	    if(sessao != null){
+	    	sessao.invalidate();
+	    }
+		return "/index.xhtml?faces-redirect=true";
 	}
 	
 	public void addPadrao() {
