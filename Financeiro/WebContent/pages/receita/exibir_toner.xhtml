@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="conteudo">
+
+		<p:panelGrid columns="6">
+			<h:outputLabel value="Pesquise:" />
+			<h:form>
+				<p:commandButton value="Por mês e ano" type="button"
+					onclick="PF('dlgMes').show()" />
+			</h:form>
+			<h:form>
+				<p:commandButton value="Por ano" type="button"
+					onclick="PF('dlgAno').show()" />
+			</h:form>
+			<p:column styleClass="ui-widget-header">
+				<p:spacer height="0" />
+			</p:column>
+			<h:outputLabel value="Gerar PDF:" />
+			<h:form>
+				<h:commandLink id="pdf">
+					<p:graphicImage library="img" name="pdf-icon.png" />
+					<p:dataExporter type="pdf" target=":formulario:tabela"
+						fileName="Receita_toner" encoding="iso-8859-1" />
+				</h:commandLink>
+			</h:form>
+		</p:panelGrid>
+
+		<h:form id="formulario">
+			<p:growl autoUpdate="true" />
+			<p:dataTable id="tabela" var="toner" emptyMessage="Nenhuma receita de toner encontrada!"
+				value="#{receitaTonerBean.receitasTones}" paginator="true" rows="10"
+				rowsPerPageTemplate="10,15,20">
+				<f:facet name="header">
+            	Receita de toner
+        		</f:facet>
+        		<p:column headerText="Aluno">
+        			<h:outputText value="#{toner.aluno.nome}" />
+        		</p:column>
+				<p:column headerText="Mês">
+					<h:outputText value="#{toner.mes.descricao}" />
+				</p:column>
+				<p:column headerText="Ano">
+					<h:outputText value="#{toner.ano}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{toner.descricao}" />
+				</p:column>
+				<p:column headerText="Valor">
+					<h:outputText value="#{toner.valor}">
+						<f:convertNumber currencySymbol="" type="currency" />
+					</h:outputText>
+					<f:facet name="footer">
+			    	Total:
+			    	<h:outputText value="#{receitaTonerBean.receitaTotal}">
+			    		<f:convertNumber type="currency" />
+			    	</h:outputText>
+					</f:facet>
+				</p:column>
+				<p:column style="text-align:center;" exportable="false">
+					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
+						action="#{receitaTonerBean.selecionarParaAtualizar(toner)}" />
+					<p:commandButton icon="ui-icon-trash" update=":formulario:tabela"
+						style="margin-left:15px;"
+						action="#{receitaTonerBean.excluir(toner)}" title="Excluir">
+						<p:confirm header="Confirmar"
+							message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+
+		<p:dialog id="dlgEdit" widgetVar="edit" header="Atualizar">
+			<h:form>
+				<p:panelGrid columns="2">
+					<h:outputLabel value="Nome do aluno:" />
+					<p:inputText value="#{receitaTonerBean.receitaToner.aluno.nome}" disabled="true" />
+					<h:outputLabel value="Valor:" />
+					<p:inputText value="#{receitaTonerBean.receitaToner.valor}" required="true" label="Valor" />
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaTonerBean.receitaToner.mes}" required="true" label="Mês" style="width:233px;">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{receitaTonerBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaTonerBean.receitaToner.ano}" required="true" label="Ano" />
+					<h:outputLabel value="Descrição:" />
+					<p:inputTextarea value="#{receitaTonerBean.receitaToner.descricao}" />
+					<p:commandButton value="Atualizar" update=":formulario :dlgEdit"
+						action="#{receitaTonerBean.atualizar}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="ano" header="Pesquisa por ano" widgetVar="dlgAno"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaTonerBean.ano}" required="true" label="Ano" style="width:150px;" />
+					<p:commandButton update=":formulario:tabela :ano" value="Buscar"
+						action="#{receitaTonerBean.buscarPorAno}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="mes" header="Pesquisa por mês e ano" widgetVar="dlgMes"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="5">
+					<h:outputLabel value="Mês:" />
+					<p:selectOneMenu value="#{receitaTonerBean.mes}" required="true" label="Mês" style="width:150px;">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{receitaTonerBean.meses}" var="mes"
+							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
+					</p:selectOneMenu>
+					<h:outputLabel value="Ano:" />
+					<p:inputText value="#{receitaTonerBean.ano}" style="width:150px;" required="true" label="Ano" />
+					<p:commandButton update=":formulario:tabela :mes" value="Buscar"
+						action="#{receitaTonerBean.buscarPorMesAno}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+
+</ui:composition>
