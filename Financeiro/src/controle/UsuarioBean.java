@@ -87,10 +87,4 @@ public class UsuarioBean extends AbstractBean implements Serializable {
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	
 }

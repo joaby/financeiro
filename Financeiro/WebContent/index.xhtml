@@ -10,45 +10,29 @@
 </h:head>
 <h:body style="background-color:#b03060;">
 
-				<h:panelGrid width="100%" style="text-align:center; background-color:#b03060">
-					<h1 style="color:white; font-size: 38px; border-top: 1px solid white; border-bottom: 1px solid white; font-style: oblique; font-variant: small-caps;">Sistema Financeiro - Escola Sonho Colorido</h1>
-				</h:panelGrid> 
-			
-		
-				
-			
-			
-				<p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
-                
-                <div id="logo" align="center">
-					<img src="resources/img/logo_sonho.png" />
-				</div>
-                
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="name" value="Usuário: *" />
-                    <h:inputText id="name" required="true"/>
-                    <h:outputLabel for="name1" value="Senha: * " />
-                    <h:inputSecret id="name1" required="true"/>
-                    <h:commandButton value="Login"/>
-                </h:panelGrid>
-                </p:dialog>
-            
-	
-	        <p:panelGrid columns="1">
-				<p:link outcome="/pages/aluno/cadastrar_aluno.xhtml" value="Cadastrar aluno" />
-				<p:link outcome="/pages/aluno/exibir_aluno.xhtml" value="Exibir aluno" />
-				<p:link outcome="/pages/receita/cadastrar_mensalidade.xhtml" value="Cadastrar mensalidade" />
-				<p:link outcome="/pages/receita/exibir_mensalidade.xhtml" value="Exibir mensalidade" />
-				<p:link outcome="/pages/receita/cadastrar_matricula.xhtml" value="Cadastrar matricula" />
-				<p:link outcome="/pages/receita/exibir_matricula.xhtml" value="Exibir matricula" />
-				<p:link outcome="/pages/receita/cadastrar_livro.xhtml" value="Cadastrar livro" />
-				<p:link outcome="/pages/receita/exibir_livro.xhtml" value="Exibir livro" />
-				<p:link outcome="/pages/receita/cadastrar_extra.xhtml" value="Cadastrar extra" />
-				<p:link outcome="/pages/receita/exibir_extra.xhtml" value="Exibir extra" />
-				<p:link outcome="/pages/receita/exibir_receita.xhtml" value="Exibir receita" />
-				<p:link outcome="/pages/usuario/cadastrar_usuario.xhtml" value="Cadastrar usuário" />
-				<p:link outcome="/pages/usuario/exibir_usuario.xhtml" value="Exibir usuário" />
-			</p:panelGrid>
- 
+	<h:panelGrid width="100%"
+		style="text-align:center; background-color:#b03060">
+		<h1
+			style="color: white; font-size: 38px; border-top: 1px solid white; border-bottom: 1px solid white; font-style: oblique; font-variant: small-caps;">Sistema
+			Financeiro - Escola Sonho Colorido</h1>
+	</h:panelGrid>
+	<p:messages autoUpdate="true" closable="true" />
+	<p:dialog header="Login" visible="true" closable="false"
+		draggable="false" resizable="false" width="420">
+
+		<div id="logo" align="center">
+			<img src="resources/img/logo_sonho.png" />
+		</div>
+		<h:form>
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel value="Login: *" />
+				<h:inputText value="#{loginBean.usuario.login}" required="true" />
+				<h:outputLabel value="Senha: * " />
+				<h:inputSecret value="#{loginBean.usuario.senha}" required="true" />
+				<h:commandButton value="Entrar" action="#{loginBean.logar}" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+
 </h:body>
 </html>
