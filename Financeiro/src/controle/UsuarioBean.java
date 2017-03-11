@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+
 import dao.UsuarioDAO;
 import dao.UsuarioJPADAO;
 import modelo.Usuario;
@@ -16,6 +19,9 @@ public class UsuarioBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Usuario usuario;
 	private List<Usuario> usuarios;
+	private String senhaAtual;
+	private String novaSenha;
+	private String confirmacaoSenha;
 
 	public UsuarioBean() {
 		this.usuario = new Usuario();
@@ -56,8 +62,37 @@ public class UsuarioBean extends AbstractBean implements Serializable {
 	public void excluir(Usuario u) {
 		UsuarioDAO usuarioDAO = new UsuarioJPADAO();
 		usuarioDAO.delete(u);
-		displayInfoMessageToUser("Excluido com sucesso!");
+		displayErrorMessageToUser("Excluido com sucesso!");
 		this.usuarios.remove(u);
+	}
+	
+	public void selecionarPerfil(){
+		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		String login = (String) sessao.getAttribute("login");
+		UsuarioDAO uDAO = new UsuarioJPADAO();
+		this.usuario = uDAO.find(login);
+	}
+	
+	public void alterarSenha(){
+		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		String login = (String) sessao.getAttribute("login");
+		if(login != null){
+			UsuarioDAO uDAO = new UsuarioJPADAO();
+			Usuario u = uDAO.find(login);
+			if(u.getSenha().equals(this.senhaAtual)){
+				if(this.novaSenha.equals(this.confirmacaoSenha)){
+					u.setSenha(this.novaSenha);
+					uDAO.save(u);
+					displayInfoMessageToUser("Senha atualizada com sucesso!");
+				}else{
+					displayErrorMessageToUser("Senhas diferentes!");
+				}
+				
+			}else{
+				displayErrorMessageToUser("Senha atual errada!");
+			}
+		}
+		
 	}
 
 	public int sortByNome(String n1, String n2) {
@@ -86,5 +121,29 @@ public class UsuarioBean extends AbstractBean implements Serializable {
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	public String getSenhaAtual() {
+		return senhaAtual;
+	}
+
+	public void setSenhaAtual(String senhaAtual) {
+		this.senhaAtual = senhaAtual;
+	}
+
+	public String getNovaSenha() {
+		return novaSenha;
+	}
+
+	public void setNovaSenha(String novaSenha) {
+		this.novaSenha = novaSenha;
+	}
+
+	public String getConfirmacaoSenha() {
+		return confirmacaoSenha;
+	}
+
+	public void setConfirmacaoSenha(String confirmacaoSenha) {
+		this.confirmacaoSenha = confirmacaoSenha;
 	}
 }

@@ -28,8 +28,9 @@ public class LoginBean extends AbstractBean implements Serializable{
 	public String logar(){
 		UsuarioDAO uDAO = new UsuarioJPADAO();
 		Usuario u = uDAO.find(this.usuario.login);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		if(u == null){
-			displayErrorMessageToUser("Usuário não existente");
+			displayErrorMessageToUser("Usuário não existe!");
 			return "/index.xhtml?faces-redirect=true";
 		}
 		else if(u != null && u.getSenha().equals(this.usuario.getSenha())){
