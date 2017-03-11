@@ -2,17 +2,8 @@ package modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQueries({
-	@NamedQuery(name="Usuario.buscarAtivo", 
-			query="SELECT u FROM Usuario u WHERE u.ativo = true"),
-	@NamedQuery(name="Usuario.buscarInativo", 
-			query="SELECT u FROM Usuario u WHERE u.ativo = false")	
-})
-
 public class Usuario {
 
 	@Id
@@ -20,19 +11,6 @@ public class Usuario {
 	public String email;
 	public String nome;
 	public String senha;
-	private boolean ativo;
-	
-	public Usuario(){
-		this.ativo = true;
-	}
-	
-	public boolean isAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
 
 	public String getLogin() {
 		return login;

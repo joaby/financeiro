@@ -37,15 +37,9 @@ public class UsuarioBean extends AbstractBean implements Serializable {
 	public void cadastrar() {
 		try {
 			UsuarioDAO usuarioDAO = new UsuarioJPADAO();
-			Usuario u = usuarioDAO.find(this.usuario.getNome());
-			if (u == null) {
-				usuarioDAO.save(this.usuario);
-				displayInfoMessageToUser("Cadastrado com sucesso!");
-				this.usuario = new Usuario();
-			} else {
-				displayErrorMessageToUser("Usuário já cadastrado!");
-				this.usuario = new Usuario();
-			}
+			usuarioDAO.save(this.usuario);
+			displayInfoMessageToUser("Cadastrado com sucesso!");
+			this.usuario = new Usuario();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Erro no cadastramento!");
 			this.usuario = new Usuario();
@@ -65,48 +59,48 @@ public class UsuarioBean extends AbstractBean implements Serializable {
 		displayErrorMessageToUser("Excluido com sucesso!");
 		this.usuarios.remove(u);
 	}
-	
-	public void selecionarPerfil(){
+
+	public void selecionarPerfil() {
 		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		String login = (String) sessao.getAttribute("login");
 		UsuarioDAO uDAO = new UsuarioJPADAO();
 		this.usuario = uDAO.find(login);
 	}
-	
-	public void alterarSenha(){
+
+	public void alterarSenha() {
 		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		String login = (String) sessao.getAttribute("login");
-		if(login != null){
+		if (login != null) {
 			UsuarioDAO uDAO = new UsuarioJPADAO();
 			Usuario u = uDAO.find(login);
-			if(u.getSenha().equals(this.senhaAtual)){
-				if(this.novaSenha.equals(this.confirmacaoSenha)){
+			if (u.getSenha().equals(this.senhaAtual)) {
+				if (this.novaSenha.equals(this.confirmacaoSenha)) {
 					u.setSenha(this.novaSenha);
 					uDAO.save(u);
 					displayInfoMessageToUser("Senha atualizada com sucesso!");
-				}else{
+				} else {
 					displayErrorMessageToUser("Senhas diferentes!");
 				}
-				
-			}else{
+
+			} else {
 				displayErrorMessageToUser("Senha atual errada!");
 			}
 		}
-		
+
 	}
 
 	public int sortByNome(String n1, String n2) {
 		return n1.compareTo(n2);
 	}
-	
+
 	public int sortByEmail(String e1, String e2) {
 		return e1.compareTo(e2);
 	}
-	
+
 	public int sortByLogin(String l1, String l2) {
 		return l1.compareTo(l2);
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
