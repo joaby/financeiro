@@ -27,6 +27,9 @@ public class HomeBean implements Serializable{
 	private int anoAtual;
 	
 	public HomeBean(){
+		this.despesaTotal = new Double(0);
+		this.receitaTotal = new Double(0);
+		this.saldo = new Double(0);
 		buscarNomeUsuario();
 		this.setAnoAtual(pegarAnoAtual());
 		this.setMesAtual(pegarMesAtual());
@@ -42,10 +45,15 @@ public class HomeBean implements Serializable{
 		Mes mes  = pegarMesAtual();
 		int ano = pegarAnoAtual();
 		DespesaDAO dDAO = new DespesaJPADAO();
-		this.despesaTotal = dDAO.soma(mes, ano);
-		
+		Double d = dDAO.soma(mes, ano);
+		if(d != null){ 
+			this.despesaTotal = d;
+		}
 		ReceitaDAO rDAO = new ReceitaJPADAO();
-		this.receitaTotal = rDAO.soma(mes, ano);
+		Double r = rDAO.soma(mes, ano);
+		if(r != null){
+			this.receitaTotal = r;
+		}
 		
 		this.saldo = receitaTotal - despesaTotal;
 	}

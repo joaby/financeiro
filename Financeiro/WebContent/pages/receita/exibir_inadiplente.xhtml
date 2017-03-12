@@ -35,6 +35,14 @@
 		    <p:column headerText="Nome" sortBy="#{aluno.nome}" sortFunction="#{alunoBean.sortByNome}">
 		        <h:outputText value="#{aluno.nome}" />
 		    </p:column>
+		    <p:column headerText="Sexo">
+		    	<h:outputText value="#{aluno.sexo}" />
+		    </p:column>
+		    <p:column headerText="Data de nascimento">
+		    	<h:outputText value="#{aluno.dataNascimento}">
+		    		<f:convertDateTime pattern="dd/MM/yyyy" />
+		    	</h:outputText>
+		    </p:column>
 	    </p:dataTable>
 	    
 	     <p:dialog id="mes" widgetVar="dlgIna" showEffect="fade" header="Pesquisa por inadiplentes">

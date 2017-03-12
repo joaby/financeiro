@@ -7,11 +7,19 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="5">
+		<p:panelGrid columns="7">
 			<h:outputLabel value="Pesquise:" />
 			<h:form>
-				<p:commandButton update=":formulario" value="Todos"
-					action="#{alunoBean.buscarTodos}" />
+				<p:commandButton value="Por sexo" type="button"
+					onclick="PF('dlgSexo').show()" />
+			</h:form>
+			<h:form>
+				<p:commandButton update=":formulario" value="Ativos"
+					action="#{alunoBean.buscarAtivos}" />
+			</h:form>
+			<h:form>
+				<p:commandButton update=":formulario" value="Inativos"
+					action="#{alunoBean.buscarInativos}" />
 			</h:form>
 			<p:column styleClass="ui-widget-header">
 	            <p:spacer height="0"/>
@@ -38,7 +46,17 @@
 					sortFunction="#{alunoBean.sortByNome}">
 					<h:outputText value="#{aluno.nome}" />
 				</p:column>
-				<p:column width="50px;" style="text-align:center;" exportable="false">
+				<p:column headerText="Sexo">
+					<h:outputText value="#{aluno.sexo}" />
+				</p:column>
+				<p:column headerText="Data de nascimento">
+					<h:outputText value="#{aluno.dataNascimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column style="text-align:center;" exportable="false">
+					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
+						title="Atualizar" action="#{alunoBean.selecionarParaAtualizar(aluno)}" />
 					<p:commandButton icon="ui-icon-trash" title="Excluir"
 					    update=":formulario" action="#{alunoBean.excluir(aluno)}">
 						<p:confirm header="Confirmar"
@@ -54,6 +72,46 @@
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
+		
+		<p:dialog id="dlgEdit" widgetVar="edit" header="Atualizar">
+			<h:form>
+				<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
+					<h:outputLabel value="Nome:" />
+				    <p:inputText value="#{alunoBean.aluno.nome}" size="30" required="true" maxlength="40" label="Aluno" />
+				    <h:outputLabel value="Sexo:" />
+				    <p:selectOneRadio value="#{alunoBean.aluno.sexo}" required="true" label="Sexo">
+			            <f:selectItem itemLabel="Masculino" itemValue="M" />
+			            <f:selectItem itemLabel="Feminino" itemValue="F" />
+			        </p:selectOneRadio>
+			         <h:outputLabel value="Ativo:" />
+			         <p:selectOneMenu value="#{alunoBean.aluno.ativo}" required="true" label="Ativo">
+			         	<f:selectItem itemLabel="Sim" itemValue="true" />
+			         	<f:selectItem itemLabel="Não" itemValue="false" />
+			         </p:selectOneMenu>
+			        <h:outputLabel value="Data de nascimento:" />
+			        <p:calendar mask="true" pattern="dd/MM/yyyy" locale="pt" mode="popup" showOn="button" 
+		        		navigator="true" showButtonPanel="true" 
+		        		value="#{alunoBean.aluno.dataNascimento}" required="true" label="Data de nascimento" />
+				    <p:commandButton value="Atualizar" update=":formulario :dlgEdit" action="#{alunoBean.atualizar}" />
+				    <p:commandButton value="Cancelar" update=":dlgEdit" />
+			    </p:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog id="sexo" header="Pesquisa por sexo" widgetVar="dlgSexo"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Sexo:" />
+						<p:selectOneRadio value="#{alunoBean.sexo}" required="true" label="Sexo">
+				            <f:selectItem itemLabel="Masculino" itemValue="M" />
+				            <f:selectItem itemLabel="Feminino" itemValue="F" />
+				        </p:selectOneRadio>
+					<p:commandButton update=":formulario :sexo" value="Buscar"
+						action="#{alunoBean.buscarPorSexo}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
 
 	</ui:define>
 

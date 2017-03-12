@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+
+import org.primefaces.context.RequestContext;
+
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
 import dao.ReceitaMensalidadeDAO;
@@ -24,6 +27,8 @@ public class AlunoBean extends AbstractBean implements Serializable {
 	private Mes mes;
 	private int ano;
 	private List<Mes> meses;
+	private char sexo;
+	private int totalAlunos;
 
 	public AlunoBean() {
 		this.meses = Arrays.asList(Mes.values());
@@ -31,28 +36,39 @@ public class AlunoBean extends AbstractBean implements Serializable {
 		this.alunos = new ArrayList<Aluno>();
 	}
 
-	public void buscarTodos() {
+	public void buscarAtivos() {
 		this.alunos = new ArrayList<Aluno>();
 		AlunoDAO alunoDAO = new AlunoJPADAO();
-		this.alunos = alunoDAO.find();
+		this.alunos = alunoDAO.buscarPorAtivo();
+	}
+
+	public void buscarInativos() {
+		this.alunos = new ArrayList<Aluno>();
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		this.alunos = alunoDAO.buscarPorInativo();
+	}
+
+	public void buscarPorSexo() {
+		this.alunos = new ArrayList<Aluno>();
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		this.alunos = alunoDAO.buscarPorSexo(this.sexo);
+	}
+
+	public void somarAtivos() {
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		this.totalAlunos = alunoDAO.somar();
 	}
 
 	public void cadastrar() {
-		try {
-			AlunoDAO alunoDAO = new AlunoJPADAO();
-			Aluno a = alunoDAO.find(this.aluno.getNome());
-			if (a == null) {
-				alunoDAO.save(this.aluno);
-				displayInfoMessageToUser("Cadastrado com sucesso!");
-				this.aluno = new Aluno();
-			} else {
-				displayErrorMessageToUser("Aluno já cadastrado!");
-				this.aluno = new Aluno();
-			}
-		} catch (Exception e) {
-			displayErrorMessageToUser("Erro no cadastramento!");
-			this.aluno = new Aluno();
-		}
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		alunoDAO.save(this.aluno);
+		displayInfoMessageToUser("Cadastrado com sucesso!");
+		this.aluno = new Aluno();
+	}
+	
+	public void selecionarParaAtualizar(Aluno a){
+		this.aluno = a;
+		RequestContext.getCurrentInstance().execute("PF('edit').show()");
 	}
 
 	public void atualizar() {
@@ -121,6 +137,22 @@ public class AlunoBean extends AbstractBean implements Serializable {
 
 	public void setMeses(List<Mes> meses) {
 		this.meses = meses;
+	}
+
+	public char getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
+	}
+
+	public int getTotalAlunos() {
+		return totalAlunos;
+	}
+
+	public void setTotalAlunos(int totalAlunos) {
+		this.totalAlunos = totalAlunos;
 	}
 
 }

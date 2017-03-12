@@ -46,12 +46,13 @@ public class ReceitaMensalidadeBean extends AbstractBean implements Serializable
 
 	public void cadastrar(){
 		AlunoDAO alunoDAO = new AlunoJPADAO();
-		Aluno a = alunoDAO.find(this.mensalidade.getAluno().getNome());
+		Aluno a = alunoDAO.buscarPorNome(this.mensalidade.getAluno().getNome());
 		if(a != null){
 			try {
 				ReceitaMatriculaDAO mDAO = new ReceitaMatriculaJPADAO();
 				ReceitaMatricula rm = mDAO.buscarPorAluno(a, this.mensalidade.getAno());
 				this.mensalidade.setMatricula(rm);
+				this.mensalidade.setAluno(a);
 				ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
 				rmDAO.save(this.mensalidade);
 				displayInfoMessageToUser("Cadastrado com sucesso");
@@ -121,7 +122,7 @@ public class ReceitaMensalidadeBean extends AbstractBean implements Serializable
 	
 	public List<String> buscarTodosAlunos(String query){
 		AlunoDAO alunoDAO = new AlunoJPADAO();
-		List<Aluno> alunos =  alunoDAO.find();
+		List<Aluno> alunos =  alunoDAO.buscarPorAtivo();
 		List<String> nomes = new ArrayList<String>();
 		for(int i = 0; i< alunos.size(); i++){
 			if(alunos.get(i).getNome().startsWith(query.toUpperCase())){

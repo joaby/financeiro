@@ -35,6 +35,9 @@ public class ReceitaTonerBean extends AbstractBean implements Serializable {
 	
 	public void cadastrar(){
 		try {
+			AlunoDAO aDAO = new AlunoJPADAO();
+			Aluno a = aDAO.buscarPorNome(this.receitaToner.getAluno().getNome());
+			this.receitaToner.setAluno(a);
 			ReceitaTonerDAO rtDAO = new ReceitaTonerJPADAO();
 			rtDAO.save(this.receitaToner);
 			displayInfoMessageToUser("Cadastrado com sucesso!");
@@ -79,7 +82,7 @@ public class ReceitaTonerBean extends AbstractBean implements Serializable {
 	
 	public List<String> buscarTodosAlunos(String query){
 		AlunoDAO alunoDAO = new AlunoJPADAO();
-		List<Aluno> alunos =  alunoDAO.find();
+		List<Aluno> alunos =  alunoDAO.buscarPorAtivo();
 		List<String> nomes = new ArrayList<String>();
 		for(int i = 0; i< alunos.size(); i++){
 			if(alunos.get(i).getNome().startsWith(query.toUpperCase())){
