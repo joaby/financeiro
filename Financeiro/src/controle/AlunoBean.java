@@ -6,9 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
 import org.primefaces.context.RequestContext;
-
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
 import dao.ReceitaMensalidadeDAO;
@@ -28,7 +26,7 @@ public class AlunoBean extends AbstractBean implements Serializable {
 	private int ano;
 	private List<Mes> meses;
 	private char sexo;
-	private int totalAlunos;
+	private Integer totalAlunos;
 
 	public AlunoBean() {
 		this.meses = Arrays.asList(Mes.values());
@@ -60,10 +58,14 @@ public class AlunoBean extends AbstractBean implements Serializable {
 	}
 
 	public void cadastrar() {
-		AlunoDAO alunoDAO = new AlunoJPADAO();
-		alunoDAO.save(this.aluno);
-		displayInfoMessageToUser("Cadastrado com sucesso!");
-		this.aluno = new Aluno();
+		try {
+			AlunoDAO alunoDAO = new AlunoJPADAO();
+			alunoDAO.save(this.aluno);
+			displayInfoMessageToUser("Cadastrado com sucesso!");
+			this.aluno = new Aluno();
+		}catch (Exception e) {
+        	displayErrorMessageToUser("Aluno já existe");
+        }
 	}
 	
 	public void selecionarParaAtualizar(Aluno a){
@@ -147,11 +149,11 @@ public class AlunoBean extends AbstractBean implements Serializable {
 		this.sexo = sexo;
 	}
 
-	public int getTotalAlunos() {
+	public Integer getTotalAlunos() {
 		return totalAlunos;
 	}
 
-	public void setTotalAlunos(int totalAlunos) {
+	public void setTotalAlunos(Integer totalAlunos) {
 		this.totalAlunos = totalAlunos;
 	}
 

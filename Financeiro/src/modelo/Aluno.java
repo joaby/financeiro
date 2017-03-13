@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +23,9 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name="Aluno.buscarPorInativo", 
 			query="SELECT a FROM Aluno a WHERE a.ativo = false"),
 	@NamedQuery(name="Aluno.buscarPorNome", 
-			query="SELECT a FROM Aluno a WHERE a.nome = :nome")
+			query="SELECT a FROM Aluno a WHERE a.nome = :nome"),
+	@NamedQuery(name="Aluno.buscarPorNomeInicial", 
+			query="SELECT a.nome FROM Aluno a WHERE a.nome LIKE :nome")
 	
 })
 public class Aluno {
@@ -30,6 +33,7 @@ public class Aluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
+	@Column(unique=true)
 	private String nome;
 	private char sexo;
 	@Temporal(TemporalType.DATE)

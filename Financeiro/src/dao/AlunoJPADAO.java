@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import modelo.Aluno;
 
@@ -13,15 +14,14 @@ public class AlunoJPADAO extends GenericJPADAO<Aluno> implements AlunoDAO{
 	}
 
 	@Override
-	public int somar() {
+	public Integer somar() {
 		Query query = getEm().createNamedQuery("Aluno.somar");
 		return (Integer) query.getSingleResult();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Aluno> buscarPorSexo(char sexo) {
-		Query query = getEm().createNamedQuery("Aluno.buscarPorSexo");
+		TypedQuery<Aluno> query = getEm().createNamedQuery("Aluno.buscarPorSexo", Aluno.class);
 		query.setParameter("sexo", sexo);
 		return query.getResultList();
 	}
@@ -45,6 +45,14 @@ public class AlunoJPADAO extends GenericJPADAO<Aluno> implements AlunoDAO{
 		Query query = getEm().createNamedQuery("Aluno.buscarPorNome");
 		query.setParameter("nome", nome);
 		return (Aluno) query.getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> buscarPorNomeInicial(String nome) {
+		Query query = getEm().createNamedQuery("Aluno.buscarPorNomeInicial");
+		query.setParameter("nome","%"+nome+"%");
+		return query.getResultList();
 	}
 
 	

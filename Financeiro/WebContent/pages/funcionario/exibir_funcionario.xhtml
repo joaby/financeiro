@@ -6,38 +6,30 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="conteudo">
+	<ui:define name="conteudo">		
+		<p:toolbar id="tb" style="margin-bottom:10px;">
+			<f:facet name="left">
+		        <h:outputLabel style="display:inline;" value="Pesquise:" />
+				<h:form style="display:inline;">
+					<p:commandButton value="Por tipo" type="button" onclick="PF('dlgTipo').show()" />
+					<p:commandButton update=":formulario:tabela" value="Ativos" action="#{funcionarioBean.buscarAtivo}" />
+					<p:commandButton update=":formulario:tabela" value="Inativos" action="#{funcionarioBean.buscarInativo}" />
+					<p:commandButton update=":formulario:tabela" value="Todos" action="#{funcionarioBean.buscarTodos}" />
+				</h:form>
 
-		<p:panelGrid columns="8">
-			<h:outputLabel value="Pesquisar:" />
-			<h:form>
-				<p:commandButton value="Por tipo" type="button"
-					onclick="PF('dlgTipo').show()" />
-			</h:form>
-			<h:form>
-				<p:commandButton update=":formulario:tabela" value="Ativos"
-					action="#{funcionarioBean.buscarAtivo}" />
-			</h:form>
-			<h:form>
-				<p:commandButton update=":formulario:tabela" value="Inativos"
-					action="#{funcionarioBean.buscarInativo}" />
-			</h:form>
-			<h:form>
-				<p:commandButton update=":formulario:tabela" value="Todos"
-					action="#{funcionarioBean.buscarTodos}" />
-			</h:form>
-			<p:column styleClass="ui-widget-header">
-	            <p:spacer height="0"/>
-	        </p:column>
-			<h:outputLabel value="Gerar PDF:" />
-			<h:form>
-				<h:commandLink id="pdf">
-					<p:graphicImage library="img" name="pdf-icon.png" />
-					<p:dataExporter type="pdf" target=":formulario:tabela"
-						fileName="Funcionários" encoding="iso-8859-1" />
-				</h:commandLink>
-			</h:form>
-		</p:panelGrid>
+		    </f:facet>
+		    <f:facet name="right">
+		        <h:outputLabel style="display:inline;" value="PDF:" />
+				<h:form style="display:inline;">
+					<h:commandLink id="pdf">
+						<p:graphicImage library="img" name="pdf-icon.png" />
+						<p:dataExporter type="pdf" target=":formulario:tabela"
+							fileName="Funcionários" encoding="iso-8859-1" />
+					</h:commandLink>
+				</h:form>
+		    </f:facet>
+		</p:toolbar>
+		<p:sticky target="tb" />
 
 
 		<h:form id="formulario">

@@ -111,13 +111,7 @@ public class ReceitaMatriculaBean extends AbstractBean implements Serializable{
 	
 	public List<String> buscarTodosAlunos(String query){
 		AlunoDAO alunoDAO = new AlunoJPADAO();
-		List<Aluno> alunos =  alunoDAO.buscarPorAtivo();
-		List<String> nomes = new ArrayList<String>();
-		for(int i = 0; i< alunos.size(); i++){
-			if(alunos.get(i).getNome().startsWith(query.toUpperCase())){
-				nomes.add(alunos.get(i).getNome());
-			}	
-		}
+		List<String> nomes =  alunoDAO.buscarPorNomeInicial(query.toUpperCase());
 		return nomes;
 	}
 	

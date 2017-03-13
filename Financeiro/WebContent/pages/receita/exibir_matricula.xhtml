@@ -7,29 +7,26 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-
-		<p:panelGrid columns="6">
-			<h:outputLabel value="Pesquise:" />
-			<h:form>
-				<p:commandButton value="Por série" type="button"
-					onclick="PF('dlgSerie').show()" />
-			</h:form>
-			<h:form>
-				<p:commandButton value="Por ano" type="button"
-					onclick="PF('dlgAno').show()" />
-			</h:form>
-			<p:column styleClass="ui-widget-header">
-				<p:spacer height="0" />
-			</p:column>
-			<h:outputLabel value="Gerar PDF:" />
-			<h:form>
-				<h:commandLink id="pdf">
-					<p:graphicImage library="img" name="pdf-icon.png" />
-					<p:dataExporter type="pdf" target=":formulario:tabela"
-						fileName="Receita_matrícula" encoding="iso-8859-1" />
-				</h:commandLink>
-			</h:form>
-		</p:panelGrid>
+			<p:toolbar id="tb" style="margin-bottom:10px;">
+			<f:facet name="left">
+		        <h:outputLabel style="display:inline;" value="Pesquise:" />
+				<h:form style="display:inline;">
+					<p:commandButton value="Por série" type="button" onclick="PF('dlgSerie').show()" />
+					<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()" />
+				</h:form>
+		    </f:facet>
+		    <f:facet name="right">
+		        <h:outputLabel style="display:inline;" value="PDF:" />
+				<h:form style="display:inline;">
+					<h:commandLink id="pdf">
+						<p:graphicImage library="img" name="pdf-icon.png" />
+						<p:dataExporter type="pdf" target=":formulario:tabela"
+							fileName="Receita_matrícula" encoding="iso-8859-1" />
+					</h:commandLink>
+				</h:form>
+		    </f:facet>
+		</p:toolbar>
+		<p:sticky target="tb" />
 
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
@@ -39,7 +36,7 @@
 				<f:facet name="header">
             	Receita de matrículas
         		</f:facet>
-				<p:column headerText="Nome" sortBy="#{matricula.aluno.nome}"
+				<p:column headerText="Aluno" sortBy="#{matricula.aluno.nome}"
 					sortFunction="#{receitaMatriculaBean.sortByNome}">
 					<h:outputText value="#{matricula.aluno.nome}" />
 				</p:column>

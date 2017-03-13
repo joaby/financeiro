@@ -14,7 +14,7 @@
 				<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 					<h:outputLabel value="Nome do aluno:" />
 					<p:row>
-						<p:autoComplete id="nome"
+						<p:autoComplete id="nome" forceSelection="true"
 							value="#{receitaMatriculaBean.matricula.aluno.nome}"
 							completeMethod="#{receitaMatriculaBean.buscarTodosAlunos}" 
 							title="Digite o nome e escolha uma opção!" minQueryLength="3"

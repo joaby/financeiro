@@ -13,7 +13,7 @@
 			<p:messages autoUpdate="true" closable="true" />
 			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 				<h:outputLabel value="Nome do aluno:" />
-				<p:autoComplete id="nome" value="#{receitaLivroBean.receitaLivro.aluno.nome}" required="true" label="Nome do aluno"
+				<p:autoComplete id="nome" value="#{receitaLivroBean.receitaLivro.aluno.nome}" forceSelection="true" required="true" label="Nome do aluno"
 				    completeMethod="#{receitaLivroBean.buscarTodosAlunos}" title="Digite o nome e escolha uma opção!"
 				    minQueryLength="3" scrollHeight="200" />
 			    <h:outputLabel value="Valor:" />
