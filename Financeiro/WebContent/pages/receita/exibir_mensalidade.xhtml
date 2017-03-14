@@ -13,7 +13,6 @@
 				<h:form style="display:inline;">
 					<p:commandButton value="Por mês" type="button" onclick="PF('dlgMes').show()" />
 					<p:commandButton value="Por série" type="button" onclick="PF('dlgSerie').show()" />
-					<p:commandButton value="Por ano" type="button" onclick="PF('dlgAno').show()" />
 					<p:commandButton value="Por inadiplentes" action="exibir_inadiplente.xhtml?faces-redirect=true" />
 				</h:form>
 		    </f:facet>
@@ -131,18 +130,6 @@
 					<p:inputText value="#{receitaMensalidadeBean.ano}" required="true" label="Ano" style="width:150px;" />
 					<p:commandButton update=":formulario:tabela :mes" value="Buscar"
 						action="#{receitaMensalidadeBean.buscarPorMesAno}" />
-				</p:panelGrid>
-			</h:form>
-		</p:dialog>
-
-		<p:dialog id="ano" widgetVar="dlgAno" showEffect="fade"
-			header="Pesquisa por ano">
-			<h:form>
-				<p:panelGrid columns="3">
-					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMensalidadeBean.ano}" required="true" label="Ano" style="width:150px;" />
-					<p:commandButton update=":formulario:tabela :ano" value="Buscar"
-						action="#{receitaMensalidadeBean.buscarPorAno}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
