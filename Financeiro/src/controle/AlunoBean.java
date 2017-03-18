@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.persistence.PersistenceException;
+
 import org.primefaces.context.RequestContext;
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
@@ -63,9 +65,12 @@ public class AlunoBean extends AbstractBean implements Serializable {
 			alunoDAO.save(this.aluno);
 			displayInfoMessageToUser("Cadastrado com sucesso!");
 			this.aluno = new Aluno();
-		}catch (Exception e) {
-        	displayErrorMessageToUser("Aluno já existe");
-        }
+		}catch (PersistenceException pe){
+			displayErrorMessageToUser("Alunno já existe!" + pe.getMessage());
+		} catch (Exception e) {
+			displayErrorMessageToUser("Alunno já existe!" + e.getMessage());
+		}
+		
 	}
 	
 	public void selecionarParaAtualizar(Aluno a){

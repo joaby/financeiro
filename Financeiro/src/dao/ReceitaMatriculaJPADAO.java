@@ -2,8 +2,6 @@ package dao;
 
 import java.util.List;
 import javax.persistence.Query;
-
-import modelo.Aluno;
 import modelo.Mes;
 import modelo.ReceitaMatricula;
 import modelo.Serie;
@@ -32,9 +30,9 @@ public class ReceitaMatriculaJPADAO extends GenericJPADAO<ReceitaMatricula> impl
 	}
 
 	@Override
-	public ReceitaMatricula buscarPorAluno(Aluno aluno, int ano) {
+	public ReceitaMatricula buscarPorAluno(long idAluno, int ano) {
 		Query query = getEm().createNamedQuery("ReceitaMatricula.buscarPorAluno");
-		query.setParameter("aluno", aluno);
+		query.setParameter("idAluno", idAluno);
 		query.setParameter("ano", ano);
 		return (ReceitaMatricula) query.getSingleResult();
 	}

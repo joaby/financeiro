@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.persistence.NoResultException;
 
 import org.primefaces.context.RequestContext;
 
@@ -20,8 +21,8 @@ import modelo.Serie;
 
 @ManagedBean
 @ViewScoped
-public class ReceitaMatriculaBean extends AbstractBean implements Serializable{
-	
+public class ReceitaMatriculaBean extends AbstractBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private ReceitaMatricula matricula;
 	private List<ReceitaMatricula> matriculas;
@@ -33,96 +34,107 @@ public class ReceitaMatriculaBean extends AbstractBean implements Serializable{
 	private Aluno aluno;
 	private Mes mes;
 
-	public ReceitaMatriculaBean(){
+	public ReceitaMatriculaBean() {
 		this.matricula = new ReceitaMatricula();
 		this.aluno = new Aluno();
 		this.matriculas = new ArrayList<ReceitaMatricula>();
 		this.setMeses(Arrays.asList(Mes.values()));
 		this.setSeries(Arrays.asList(Serie.values()));
 	}
-	
-	public void cadastrar(){
+
+	public void cadastrar() {
 		AlunoDAO alunoDAO = new AlunoJPADAO();
 		Aluno a = alunoDAO.buscarPorNome(this.matricula.getAluno().getNome());
-		if(a != null){
+		if (a != null) {
 			ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
-			this.matricula.setAluno(a);
-			rmDAO.save(this.matricula);
-			displayInfoMessageToUser("Cadastrado com sucesso");
-			this.matricula = new ReceitaMatricula();
-		}else{
+			ReceitaMatricula r;
+			try {
+				r =  rmDAO.buscarPorAluno(a.getId(), this.matricula.getAno());
+			} catch (NoResultException e) {
+				r = null;
+			}
+			if(r == null){
+				this.matricula.setAluno(a);
+				rmDAO.save(this.matricula);
+				displayInfoMessageToUser("Cadastrado com sucesso");
+				this.matricula = new ReceitaMatricula();
+			}else{
+				displayErrorMessageToUser("Aluno já matriculado nesse ano!");
+				this.matricula = new ReceitaMatricula();
+			}
+		} else {
 			displayErrorMessageToUser("Aluno não cadastrado! Cadastre o aluno e tente novamente.");
 			this.matricula = new ReceitaMatricula();
-		}		
+		}
 	}
-	
-	public void selecionarParaAtualizar(ReceitaMatricula rm){
+
+	public void selecionarParaAtualizar(ReceitaMatricula rm) {
 		this.matricula = rm;
 		RequestContext.getCurrentInstance().execute("PF('edit').show()");
 	}
-	
-	public void atualizar(){
+
+	public void atualizar() {
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		rmDAO.save(this.matricula);
 		displayInfoMessageToUser("Atualizado com sucesso");
 		this.matricula = new ReceitaMatricula();
 	}
-	
-	public void excluir(ReceitaMatricula rm){
+
+	public void excluir(ReceitaMatricula rm) {
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		rmDAO.delete(rm);
 		displayInfoMessageToUser("Excluido com sucesso!");
 		this.matriculas.remove(rm);
 	}
-	
-	public void buscarTodos(){
+
+	public void buscarTodos() {
 		this.matriculas = new ArrayList<ReceitaMatricula>();
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		this.matriculas = rmDAO.find();
 		this.receitaTotal = somaReceitaTotal(this.matriculas);
 	}
-	
-	public void buscarPorAno(){
+
+	public void buscarPorAno() {
 		this.matriculas = new ArrayList<ReceitaMatricula>();
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		this.matriculas = rmDAO.buscarPorAno(this.ano);
 		this.receitaTotal = somaReceitaTotal(this.matriculas);
 	}
-	
-	public void buscarPorSerie(){
+
+	public void buscarPorSerie() {
 		this.matriculas = new ArrayList<ReceitaMatricula>();
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
 		this.matriculas = rmDAO.buscarPorSerie(this.serie, this.ano);
 		this.receitaTotal = somaReceitaTotal(this.matriculas);
 	}
-	
-	public ReceitaMatricula buscarPorAluno(){
+
+	public ReceitaMatricula buscarPorAluno() {
 		ReceitaMatriculaDAO rmDAO = new ReceitaMatriculaJPADAO();
-		return rmDAO.buscarPorAluno(this.aluno, this.ano);
+		return rmDAO.buscarPorAluno(this.aluno.getId(), this.ano);
 	}
-	
-	public int sortBySerie(Serie a, Serie b){
+
+	public int sortBySerie(Serie a, Serie b) {
 		return a.compareTo(b);
 	}
-	
-	public int sortByNome(String n1, String n2){
+
+	public int sortByNome(String n1, String n2) {
 		return n1.compareTo(n2);
 	}
-	
-	public List<String> buscarTodosAlunos(String query){
+
+	public List<String> buscarTodosAlunos(String query) {
 		AlunoDAO alunoDAO = new AlunoJPADAO();
-		List<String> nomes =  alunoDAO.buscarPorNomeInicial(query.toUpperCase());
+		List<String> nomes = alunoDAO.buscarPorNomeInicial(query.toUpperCase());
 		return nomes;
 	}
-	
-	public float somaReceitaTotal(List<ReceitaMatricula> matriculas){
+
+	public float somaReceitaTotal(List<ReceitaMatricula> matriculas) {
 		float total = 0;
-		for(ReceitaMatricula matricula : matriculas){
+		for (ReceitaMatricula matricula : matriculas) {
 			total += matricula.getValor();
 		}
 		return total;
 	}
-	
+
 	public ReceitaMatricula getMatricula() {
 		return matricula;
 	}
@@ -170,7 +182,7 @@ public class ReceitaMatriculaBean extends AbstractBean implements Serializable{
 	public void setSeries(List<Serie> series) {
 		this.series = series;
 	}
-	
+
 	public Serie getSerie() {
 		return serie;
 	}

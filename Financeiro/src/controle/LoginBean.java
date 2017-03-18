@@ -61,7 +61,7 @@ public class LoginBean extends AbstractBean implements Serializable{
 		if (usuarios.isEmpty()) {
 			a.setLogin("admin");
 			a.setSenha("admin");
-			a.setNome("admin");
+			a.setNome("Administrador");
 			uDAO.save(a);
 		}
 	}

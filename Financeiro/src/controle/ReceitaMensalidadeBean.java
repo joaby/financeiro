@@ -50,7 +50,7 @@ public class ReceitaMensalidadeBean extends AbstractBean implements Serializable
 		if(a != null){
 			try {
 				ReceitaMatriculaDAO mDAO = new ReceitaMatriculaJPADAO();
-				ReceitaMatricula rm = mDAO.buscarPorAluno(a, this.mensalidade.getAno());
+				ReceitaMatricula rm = mDAO.buscarPorAluno(a.getId(), this.mensalidade.getAno());
 				this.mensalidade.setMatricula(rm);
 				this.mensalidade.setAluno(a);
 				ReceitaMensalidadeDAO rmDAO = new ReceitaMensalidadeJPADAO();
