@@ -9,7 +9,7 @@ public abstract class GenericJPADAO<T> implements GenericDAO<T> {
 
   protected Class<T> persistentClass;
 
-	public void save(T entity) {
+	public void save(T entity){
 		getEm().merge(entity);
 	}
 

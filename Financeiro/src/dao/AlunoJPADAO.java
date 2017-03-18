@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-
 import modelo.Aluno;
 
 public class AlunoJPADAO extends GenericJPADAO<Aluno> implements AlunoDAO{
@@ -55,6 +54,11 @@ public class AlunoJPADAO extends GenericJPADAO<Aluno> implements AlunoDAO{
 		return query.getResultList();
 	}
 
-	
+	@Override
+	public List<Aluno> buscarPorNomeParcial(String nome) {
+		Query query = getEm().createNamedQuery("Aluno.buscarPorNomeParcial");
+		query.setParameter("nome","%"+nome+"%");
+		return query.getResultList();
+	}
 
 }

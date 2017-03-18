@@ -37,9 +37,9 @@
 				<f:facet name="header">
             	Receita de mensalidades
         		</f:facet>
-				<p:column headerText="Aluno" sortBy="#{mensalidade.aluno.nome}"
+				<p:column headerText="Aluno" sortBy="#{mensalidade.matricula.aluno.nome}"
 					sortFunction="#{receitaMensalidadeBean.sortByNome}">
-					<h:outputText value="#{mensalidade.aluno.nome}" />
+					<h:outputText value="#{mensalidade.matricula.aluno.nome}" />
 				</p:column>
 				<p:column headerText="Série" sortBy="#{mensalidade.matricula.serie}"
 					sortFunction="#{receitaMensalidadeBean.sortBySerie}">
@@ -91,7 +91,7 @@
 				<p:panelGrid columns="2">
 					<h:outputLabel value="Nome do aluno:" />
 					<p:autoComplete id="nome"
-						value="#{receitaMensalidadeBean.mensalidade.aluno.nome}"
+						value="#{receitaMensalidadeBean.mensalidade.matricula.aluno.nome}"
 						completeMethod="#{receitaMensalidadeBean.buscarTodosAlunos}"
 						minQueryLength="3" scrollHeight="200" disabled="true" />
 					<p:outputLabel value="Série" />

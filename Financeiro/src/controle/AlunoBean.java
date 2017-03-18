@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.persistence.PersistenceException;
-
 import org.primefaces.context.RequestContext;
 import dao.AlunoDAO;
 import dao.AlunoJPADAO;
@@ -29,6 +27,7 @@ public class AlunoBean extends AbstractBean implements Serializable {
 	private List<Mes> meses;
 	private char sexo;
 	private Integer totalAlunos;
+	private String nomeParcial;
 
 	public AlunoBean() {
 		this.meses = Arrays.asList(Mes.values());
@@ -54,26 +53,25 @@ public class AlunoBean extends AbstractBean implements Serializable {
 		this.alunos = alunoDAO.buscarPorSexo(this.sexo);
 	}
 
+	public void buscarPorNomeParcial() {
+		this.alunos = new ArrayList<Aluno>();
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		this.alunos = alunoDAO.buscarPorNomeParcial(this.nomeParcial.toUpperCase());
+	}
+
 	public void somarAtivos() {
 		AlunoDAO alunoDAO = new AlunoJPADAO();
 		this.totalAlunos = alunoDAO.somar();
 	}
 
 	public void cadastrar() {
-		try {
-			AlunoDAO alunoDAO = new AlunoJPADAO();
-			alunoDAO.save(this.aluno);
-			displayInfoMessageToUser("Cadastrado com sucesso!");
-			this.aluno = new Aluno();
-		}catch (PersistenceException pe){
-			displayErrorMessageToUser("Alunno já existe!" + pe.getMessage());
-		} catch (Exception e) {
-			displayErrorMessageToUser("Alunno já existe!" + e.getMessage());
-		}
-		
+		AlunoDAO alunoDAO = new AlunoJPADAO();
+		alunoDAO.save(this.aluno);
+		displayInfoMessageToUser("Cadastrado com sucesso!");
+		this.aluno = new Aluno();
 	}
-	
-	public void selecionarParaAtualizar(Aluno a){
+
+	public void selecionarParaAtualizar(Aluno a) {
 		this.aluno = a;
 		RequestContext.getCurrentInstance().execute("PF('edit').show()");
 	}
@@ -160,6 +158,14 @@ public class AlunoBean extends AbstractBean implements Serializable {
 
 	public void setTotalAlunos(Integer totalAlunos) {
 		this.totalAlunos = totalAlunos;
+	}
+
+	public String getNomeParcial() {
+		return nomeParcial;
+	}
+
+	public void setNomeParcial(String nomeParcial) {
+		this.nomeParcial = nomeParcial;
 	}
 
 }

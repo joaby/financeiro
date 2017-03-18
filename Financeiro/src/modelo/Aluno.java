@@ -25,7 +25,9 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name="Aluno.buscarPorNome", 
 			query="SELECT a FROM Aluno a WHERE a.nome = :nome"),
 	@NamedQuery(name="Aluno.buscarPorNomeInicial", 
-			query="SELECT a.nome FROM Aluno a WHERE a.nome LIKE :nome")
+			query="SELECT a.nome FROM Aluno a WHERE a.nome LIKE :nome"),
+	@NamedQuery(name="Aluno.buscarPorNomeParcial", 
+			query="SELECT a FROM Aluno a WHERE a.nome LIKE :nome")
 	
 })
 public class Aluno {
@@ -33,7 +35,7 @@ public class Aluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
-	@Column(unique=true)
+	@Column(unique=true, nullable = false)
 	private String nome;
 	private char sexo;
 	@Temporal(TemporalType.DATE)

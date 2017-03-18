@@ -11,6 +11,7 @@
 			<f:facet name="left">
 		        <h:outputLabel style="display:inline;" value="Pesquise:" />
 				<h:form style="display:inline;">
+					<p:commandButton value="Por nome" type="button" onclick="PF('dlgNome').show()" />
 					<p:commandButton value="Por sexo" type="button" onclick="PF('dlgSexo').show()" />
 					<p:commandButton update=":formulario" value="Ativos" action="#{alunoBean.buscarAtivos}" />
 					<p:commandButton update=":formulario" value="Inativos" action="#{alunoBean.buscarInativos}" />
@@ -105,6 +106,18 @@
 				        </p:selectOneRadio>
 					<p:commandButton update=":formulario :sexo" value="Buscar"
 						action="#{alunoBean.buscarPorSexo}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog id="nome" header="Pesquisa por nome" widgetVar="dlgNome"
+			showEffect="fade">
+			<h:form>
+				<p:panelGrid columns="3">
+					<h:outputLabel value="Nome:" />
+					<p:inputText value="#{alunoBean.nomeParcial}" />
+					<p:commandButton update=":formulario :nome" value="Buscar"
+						action="#{alunoBean.buscarPorNomeParcial}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

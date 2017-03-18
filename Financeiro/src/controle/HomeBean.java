@@ -42,6 +42,7 @@ public class HomeBean implements Serializable{
 	}
 	
 	public void buscarDespesaReceitaTotal(){
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
 		Mes mes  = pegarMesAtual();
 		int ano = pegarAnoAtual();
 		DespesaDAO dDAO = new DespesaJPADAO();
