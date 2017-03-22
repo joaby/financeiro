@@ -72,11 +72,15 @@ public class UsuarioBean extends AbstractBean implements Serializable {
 	}
 
 	public void excluir(Usuario u) {
-		if (isAdmin) {
-			UsuarioDAO usuarioDAO = new UsuarioJPADAO();
-			usuarioDAO.delete(u);
-			displayErrorMessageToUser("Excluido com sucesso!");
-			this.usuarios.remove(u);
+		if (isAdmin){
+			if(!u.login.equals("admin")){
+				UsuarioDAO usuarioDAO = new UsuarioJPADAO();
+				usuarioDAO.delete(u);
+				displayInfoMessageToUser("Excluido com sucesso!");
+				this.usuarios.remove(u);
+			}else{
+				displayErrorMessageToUser("Usuário admin não pode ser excluido");
+			}
 		} else {
 			displayErrorMessageToUser("Usuário não autorizado para fazer exclusão de usuário!");
 		}

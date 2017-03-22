@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name="Aluno.buscarPorNome", 
 			query="SELECT a FROM Aluno a WHERE a.nome = :nome"),
 	@NamedQuery(name="Aluno.buscarPorNomeInicial", 
-			query="SELECT a.nome FROM Aluno a WHERE a.nome LIKE :nome"),
+			query="SELECT a.nome FROM Aluno a WHERE a.nome LIKE :nome AND a.ativo = true"),
 	@NamedQuery(name="Aluno.buscarPorNomeParcial", 
 			query="SELECT a FROM Aluno a WHERE a.nome LIKE :nome")
 	

@@ -99,10 +99,10 @@
 							itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ativo" />
-					<p:selectOneMenu value="#{funcionarioBean.funcionario.ativo}" required="true">
+					<p:selectOneRadio value="#{funcionarioBean.funcionario.ativo}" required="true">
 						<f:selectItem itemLabel="Sim" itemValue="true" />
 						<f:selectItem itemLabel="Não" itemValue="false" />
-					</p:selectOneMenu>
+					</p:selectOneRadio>
 					<h:outputLabel value="Salário:" />
 					<p:inputText value="#{funcionarioBean.funcionario.salario}" required="true" />
 					<p:commandButton value="Atualizar" update=":dlgEdit :formulario"

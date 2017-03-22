@@ -81,10 +81,10 @@
 			            <f:selectItem itemLabel="Feminino" itemValue="F" />
 			        </p:selectOneRadio>
 			         <h:outputLabel value="Ativo:" />
-			         <p:selectOneMenu value="#{alunoBean.aluno.ativo}" required="true" label="Ativo">
+			         <p:selectOneRadio value="#{alunoBean.aluno.ativo}" required="true" label="Ativo">
 			         	<f:selectItem itemLabel="Sim" itemValue="true" />
 			         	<f:selectItem itemLabel="Não" itemValue="false" />
-			         </p:selectOneMenu>
+			         </p:selectOneRadio>
 			        <h:outputLabel value="Data de nascimento:" />
 			        <p:calendar mask="true" pattern="dd/MM/yyyy" locale="pt" mode="popup" showOn="button" 
 		        		navigator="true" showButtonPanel="true" 

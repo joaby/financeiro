@@ -1,13 +1,14 @@
 package controle;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
 import dao.DespesaDAO;
 import dao.DespesaJPADAO;
 import dao.ReceitaDAO;
@@ -23,16 +24,19 @@ public class HomeBean implements Serializable{
 	private Double despesaTotal;
 	private Double receitaTotal;
 	private Double saldo;
-	private Mes mesAtual;
-	private int anoAtual;
+	private List<Mes> meses;
+	private Mes mes;
+	private int ano;
+	private String cor;
 	
 	public HomeBean(){
 		this.despesaTotal = new Double(0);
 		this.receitaTotal = new Double(0);
 		this.saldo = new Double(0);
 		buscarNomeUsuario();
-		this.setAnoAtual(pegarAnoAtual());
-		this.setMesAtual(pegarMesAtual());
+		this.meses = Arrays.asList(Mes.values());
+		this.mes = pegarMesAtual();
+		this.ano = pegarAnoAtual();
 		buscarDespesaReceitaTotal();
 	}
 	
@@ -43,21 +47,30 @@ public class HomeBean implements Serializable{
 	
 	public void buscarDespesaReceitaTotal(){
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
-		Mes mes  = pegarMesAtual();
-		int ano = pegarAnoAtual();
 		DespesaDAO dDAO = new DespesaJPADAO();
-		Double d = dDAO.soma(mes, ano);
+		Double d = dDAO.soma(this.mes, this.ano);
 		if(d != null){ 
 			this.despesaTotal = d;
+		}else{
+			this.despesaTotal = new Double(0);
 		}
 		ReceitaDAO rDAO = new ReceitaJPADAO();
-		Double r = rDAO.soma(mes, ano);
+		Double r = rDAO.soma(this.mes, this.ano);
 		if(r != null){
 			this.receitaTotal = r;
+		}else{
+			this.receitaTotal = new Double(0);
 		}
-		
 		this.saldo = receitaTotal - despesaTotal;
+		if(this.saldo == 0){
+			this.cor = "black";
+		}else if(this.saldo > 0){
+			this.cor = "green";
+		}else{
+			this.cor = "red";
+		}
 	}
+	
 	
 	public int pegarAnoAtual() {
 		Calendar cal = Calendar.getInstance();
@@ -122,27 +135,43 @@ public class HomeBean implements Serializable{
 		this.receitaTotal = receitaTotal;
 	}
 
-	public int getAnoAtual() {
-		return anoAtual;
-	}
-
-	public void setAnoAtual(int anoAtual) {
-		this.anoAtual = anoAtual;
-	}
-
-	public Mes getMesAtual() {
-		return mesAtual;
-	}
-
-	public void setMesAtual(Mes mesAtual) {
-		this.mesAtual = mesAtual;
-	}
-
 	public Double getSaldo() {
 		return saldo;
 	}
 
 	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
+	}
+
+	public Mes getMes() {
+		return mes;
+	}
+
+	public void setMes(Mes mes) {
+		this.mes = mes;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+
+	public List<Mes> getMeses() {
+		return meses;
+	}
+
+	public void setMeses(List<Mes> meses) {
+		this.meses = meses;
+	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
 	}
 }
