@@ -7,24 +7,23 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="4">
-			<h:outputLabel value="Pesquise:" />
-			<h:form>
-				<p:commandButton value="Por tipo" type="button"
-					onclick="PF('dlgTipo').show()" />
-			</h:form>
-			<h:form>
-				<p:commandButton value="Todos" update=":formulario"
-					action="#{despesaFuncionarioBean.buscarFuncionariosAtivos}" />
-			</h:form>
-		</p:panelGrid>
+		<p:toolbar id="tb" style="margin-bottom:10px;">
+			<f:facet name="left">
+		        <h:outputLabel style="display:inline;" value="Pesquise:" />
+				<h:form style="display:inline;">
+					<p:commandButton value="Por tipo" type="button" onclick="PF('dlgTipo').show()" />
+					<p:commandButton value="Todos" update=":formulario" action="#{despesaFuncionarioBean.buscarFuncionariosAtivos}" />
+				</h:form>
+		    </f:facet>
+		</p:toolbar>
+		<p:sticky target="tb" />
 
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="funcionario" emptyMessage="Nenhum funcionário encontrado!"
 				value="#{despesaFuncionarioBean.funcionarios}" rowsPerPageTemplate="10,15,20"
 				selection="#{despesaFuncionarioBean.funcSelecionados}"
-				rowKey="#{funcionario.cpf}" paginator="true" rows="10">
+				rowKey="#{funcionario.cpf}" paginator="true" rows="10" paginatorAlwaysVisible="false">
 				<f:facet name="header">
 	            	Cadastro de despesa com funcionários
 	        	</f:facet>

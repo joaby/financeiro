@@ -32,7 +32,7 @@
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="despFuncionario" emptyMessage="Nenhuma despesa de funcionário encontrada!"
 				value="#{despesaFuncionarioBean.despesaFuncionarios}" rowsPerPageTemplate="10,15,20"
-				paginator="true" rows="10">
+				paginator="true" rows="10" paginatorAlwaysVisible="false">
 				<f:facet name="header">
 	            Despesa de funcionários
 	        	</f:facet>
@@ -62,12 +62,11 @@
 			        	</h:outputText>
 					</f:facet>
 				</p:column>
-				<p:column style="text-align:center;" exportable="false">
+				<p:column style="text-align:center; width:120px;" exportable="false">
 					<p:commandButton icon="ui-icon-pencil" title="Atualizar"
 						update=":dlgEdit"
 						action="#{despesaFuncionarioBean.selecionarParaAtualizar(despFuncionario)}" />
-					<p:commandButton icon="ui-icon-trash" title="Excluir"
-						update=":formulario" style="margin-left:15px;"
+					<p:commandButton icon="ui-icon-trash" title="Excluir" update=":formulario"
 						action="#{despesaFuncionarioBean.excluir(despFuncionario)}">
 						<p:confirm header="Confirmar"
 							message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
@@ -76,9 +75,9 @@
 			</p:dataTable>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Yes" type="button"
+				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
+				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
@@ -96,13 +95,13 @@
 						disabled="true" />
 					<p:outputLabel value="Tipo:" />
 					<p:selectOneMenu
-						value="#{despesaFuncionarioBean.despesaFuncionario.funcionario.tipo}" disabled="true">
+						value="#{despesaFuncionarioBean.despesaFuncionario.funcionario.tipo}" disabled="true" style="width:232px;">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaFuncionarioBean.tiposFuncionarios}" var="tipo"
 							itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 					</p:selectOneMenu>	
 					<h:outputLabel value="Mês:" />
-					<p:selectOneMenu required="true" label="Mês"
+					<p:selectOneMenu required="true" label="Mês" style="width:232px;"
 						value="#{despesaFuncionarioBean.despesaFuncionario.mes}">
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{despesaFuncionarioBean.meses}" var="mes"

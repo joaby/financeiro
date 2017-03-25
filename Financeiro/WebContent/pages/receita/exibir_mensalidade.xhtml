@@ -13,7 +13,7 @@
 				<h:form style="display:inline;">
 					<p:commandButton value="Por mês" type="button" onclick="PF('dlgMes').show()" />
 					<p:commandButton value="Por série" type="button" onclick="PF('dlgSerie').show()" />
-					<p:commandButton value="Por inadiplentes" action="exibir_inadiplente.xhtml?faces-redirect=true" />
+					<p:commandButton value="Inadimplentes" action="exibir_inadiplente.xhtml?faces-redirect=true" />
 				</h:form>
 		    </f:facet>
 		    <f:facet name="right">
@@ -33,7 +33,7 @@
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="mensalidade" emptyMessage="Nenhuma receita de mensalidade encontrada!"
 				value="#{receitaMensalidadeBean.mensalidades}" paginator="true"
-				rows="10" sortMode="multiple" rowsPerPageTemplate="10,15,20">
+				rows="10" sortMode="multiple" rowsPerPageTemplate="10,15,20" paginatorAlwaysVisible="false">
 				<f:facet name="header">
             	Receita de mensalidades
         		</f:facet>
@@ -65,11 +65,10 @@
 			    	</h:outputText>
 					</f:facet>
 				</p:column>
-				<p:column style="text-align:center;" exportable="false">
+				<p:column style="text-align:center; width:120px;" exportable="false">
 					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
 						action="#{receitaMensalidadeBean.selecionarParaAtualizar(mensalidade)}" />
 					<p:commandButton icon="ui-icon-trash" update=":formulario"
-						style="margin-left:15px;"
 						action="#{receitaMensalidadeBean.excluir(mensalidade)}"
 						title="Excluir">
 						<p:confirm header="Confirmar"
@@ -79,9 +78,9 @@
 			</p:dataTable>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Yes" type="button"
+				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
+				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
@@ -112,6 +111,7 @@
 						value="#{receitaMensalidadeBean.mensalidade.descricao}" />
 					<p:commandButton value="Atualizar" update=":dlgEdit :formulario"
 						action="#{receitaMensalidadeBean.atualizar}" />
+					<p:commandButton value="Cancelar" update=":dlgEdit" />	
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

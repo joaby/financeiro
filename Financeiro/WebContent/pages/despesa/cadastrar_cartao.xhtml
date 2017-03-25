@@ -14,7 +14,7 @@
 				<p:messages autoUpdate="true" closable="true" />
 			    <p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 			    	<h:outputLabel value="Mês:" />
-			    	<p:selectOneMenu value="#{despesaCartaoBean.despesaCartao.mes}" required="true" label="Mês">
+			    	<p:selectOneMenu value="#{despesaCartaoBean.despesaCartao.mes}" required="true" label="Mês" style="width:232px;">
 				    	  <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 				    	  <f:selectItems value="#{despesaCartaoBean.meses}" var="mes" itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 				    </p:selectOneMenu>

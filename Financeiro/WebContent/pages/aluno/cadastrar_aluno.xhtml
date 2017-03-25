@@ -13,13 +13,17 @@
 			<p:messages autoUpdate="true" closable="true" />
 			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 				<h:outputLabel value="Nome:" />
-			    <p:inputText value="#{alunoBean.aluno.nome}" size="30" required="true" maxlength="40" label="Aluno" />
+			    <p:inputText value="#{alunoBean.aluno.nome}" size="24" required="true" maxlength="40" label="Aluno" />
 			    <h:outputLabel value="Sexo:" />
 			    <p:selectOneRadio value="#{alunoBean.aluno.sexo}" required="true" label="Sexo">
 		            <f:selectItem itemLabel="Masculino" itemValue="M" />
 		            <f:selectItem itemLabel="Feminino" itemValue="F" />
 		        </p:selectOneRadio>
-		        <h:outputLabel value="Data de nascimento:" />
+		        <p:row>
+			        <h:outputLabel value="Data de" /> 
+			        <br></br>
+			        <h:outputLabel value="nascimento:" />
+		        </p:row>
 		        <p:calendar mask="true" pattern="dd/MM/yyyy" locale="pt" mode="popup" showOn="button" 
 		        	navigator="true" showButtonPanel="true" value="#{alunoBean.aluno.dataNascimento}"
 		        	required="true" label="Data de nascimento" />

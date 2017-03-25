@@ -31,7 +31,7 @@
 		<h:form id="formulario">
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="cartao"
-				value="#{despesaCartaoBean.despesasCartoes}" paginator="true"
+				value="#{despesaCartaoBean.despesasCartoes}" paginator="true" paginatorAlwaysVisible="false"
 				rows="10" rowsPerPageTemplate="10,15,20" emptyMessage="Nenhuma despesa de cartão encontrada!">
 				<f:facet name="header">
 	            Despesa de cartão
@@ -53,10 +53,10 @@
 				    	</h:outputText>
 					</f:facet>
 				</p:column>
-				<p:column style="text-align:center;" exportable="false">
+				<p:column style="text-align:center; width:120px;" exportable="false">
 						<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
 							action="#{despesaCartaoBean.selecionarParaAtualizar(cartao)}" />
-						<p:commandButton icon="ui-icon-trash" update=":formulario:tabela" style="margin-left:15px;"
+						<p:commandButton icon="ui-icon-trash" update=":formulario:tabela"
 							action="#{despesaCartaoBean.excluir(cartao)}" title="Excluir">
 							<p:confirm header="Confirmar"
 								message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
@@ -65,9 +65,9 @@
 			</p:dataTable>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Yes" type="button"
+				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
+				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
@@ -87,6 +87,7 @@
 					<p:inputText value="#{despesaCartaoBean.despesaCartao.valor}" required="true" label="Valor" />
 					<p:commandButton update=":dlgEdit :formulario:tabela"
 						value="Atualizar" action="#{despesaCartaoBean.atualizar}" />
+					<p:commandButton value="Cancelar" update=":dlgEdit" />	
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

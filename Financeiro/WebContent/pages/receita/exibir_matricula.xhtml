@@ -32,9 +32,9 @@
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="matricula" emptyMessage="Nenhuma receita de matrícula encontrada!"
 				value="#{receitaMatriculaBean.matriculas}" paginator="true"
-				rows="10" sortMode="multiple" rowsPerPageTemplate="10,15,20">
+				rows="10" sortMode="multiple" rowsPerPageTemplate="10,15,20" paginatorAlwaysVisible="false">
 				<f:facet name="header">
-            	Receita de matrículas
+            		Receita de matrículas
         		</f:facet>
 				<p:column headerText="Aluno" sortBy="#{matricula.aluno.nome}"
 					sortFunction="#{receitaMatriculaBean.sortByNome}">
@@ -64,11 +64,10 @@
 			    	</h:outputText>
 					</f:facet>
 				</p:column>
-				<p:column style="text-align:center;" exportable="false">
+				<p:column style="text-align:center; width:120px;" exportable="false">
 					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
 						action="#{receitaMatriculaBean.selecionarParaAtualizar(matricula)}" />
 					<p:commandButton icon="ui-icon-trash" update=":formulario"
-						style="margin-left:15px;"
 						action="#{receitaMatriculaBean.excluir(matricula)}"
 						title="Excluir">
 						<p:confirm header="Confirmar"
@@ -78,9 +77,9 @@
 			</p:dataTable>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Yes" type="button"
+				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
+				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
@@ -108,12 +107,13 @@
 							itemLabel="#{mes.descricao}" itemValue="#{mes}" />
 					</p:selectOneMenu>
 					<h:outputLabel value="Ano:" />
-					<p:inputText value="#{receitaMatriculaBean.matricula.ano}" required="true" label="Ano" />
+					<p:inputText value="#{receitaMatriculaBean.matricula.ano}" disabled="true" required="true" label="Ano" />
 					<h:outputLabel value="Descrição:" />
 					<p:inputTextarea
 						value="#{receitaMatriculaBean.matricula.descricao}" />
 					<p:commandButton value="Atualizar" update=":dlgEdit :formulario"
 						action="#{receitaMatriculaBean.atualizar}" />
+					<p:commandButton value="Cancelar" update=":dlgEdit" />	
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

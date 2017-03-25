@@ -32,7 +32,7 @@
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="agua"
 				value="#{despesaAguaBean.despesasAguas}" paginator="true" rows="10"
-				rowsPerPageTemplate="10,15,20"
+				rowsPerPageTemplate="10,15,20" paginatorAlwaysVisible="false"
 				emptyMessage="Nenhuma despesa de água encontrada!">
 				<f:facet name="header">
 	            	Água
@@ -54,12 +54,11 @@
 				    	</h:outputText>
 					</f:facet>
 				</p:column>
-				<p:column style="text-align:center;" exportable="false">
+				<p:column style="text-align:center; width:120px;" exportable="false">
 					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
 						title="Atualizar"
 						action="#{despesaAguaBean.selecionarParaAtualizar(agua)}" />
-					<p:commandButton icon="ui-icon-trash" title="Excluir"
-						style="margin-left:15px;" update=":formulario"
+					<p:commandButton icon="ui-icon-trash" title="Excluir" update=":formulario"
 						action="#{despesaAguaBean.excluir(agua)}">
 						<p:confirm header="Confirmar"
 							message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
@@ -68,9 +67,9 @@
 			</p:dataTable>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Yes" type="button"
+				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
+				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
@@ -94,6 +93,7 @@
 					<p:commandButton value="Atualizar"
 						action="#{despesaAguaBean.atualizar}"
 						update=":dlgEdit :formulario:tabela" />
+					<p:commandButton value="Cancelar" update=":dlgEdit" />	
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

@@ -32,7 +32,7 @@
 			<p:growl autoUpdate="true" />
 			<p:dataTable id="tabela" var="farda" emptyMessage="Nenhuma receita de farda encontrada!"
 				value="#{receitaFardaBean.receitasFardas}" paginator="true" rows="10"
-				rowsPerPageTemplate="10,15,20">
+				rowsPerPageTemplate="10,15,20" paginatorAlwaysVisible="false">
 				<f:facet name="header">
             	Receita de fardas
         		</f:facet>
@@ -59,11 +59,10 @@
 			    	</h:outputText>
 					</f:facet>
 				</p:column>
-				<p:column style="text-align:center;" exportable="false">
+				<p:column style="text-align:center; width:120px;" exportable="false">
 					<p:commandButton icon="ui-icon-pencil" update=":dlgEdit"
 						action="#{receitaFardaBean.selecionarParaAtualizar(farda)}" />
 					<p:commandButton icon="ui-icon-trash" update=":formulario:tabela"
-						style="margin-left:15px;"
 						action="#{receitaFardaBean.excluir(farda)}" title="Excluir">
 						<p:confirm header="Confirmar"
 							message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
@@ -72,9 +71,9 @@
 			</p:dataTable>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Yes" type="button"
+				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="No" type="button"
+				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
@@ -82,7 +81,7 @@
 		<p:dialog id="dlgEdit" widgetVar="edit" header="Atualizar">
 			<h:form>
 				<p:panelGrid columns="2">
-					<h:outputLabel value="Nome do aluno:" />
+					<h:outputLabel value="Aluno:" />
 					<p:inputText value="#{receitaFardaBean.receitaFarda.aluno.nome}" disabled="true" />
 					<h:outputLabel value="Valor:" />
 					<p:inputText value="#{receitaFardaBean.receitaFarda.valor}" required="true" label="Valor" />
@@ -98,6 +97,7 @@
 					<p:inputTextarea value="#{receitaFardaBean.receitaFarda.descricao}" />
 					<p:commandButton value="Atualizar" update=":formulario :dlgEdit"
 						action="#{receitaFardaBean.atualizar}" />
+					<p:commandButton value="Cancelar" update=":dlgEdit" />	
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>

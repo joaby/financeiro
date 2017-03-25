@@ -12,13 +12,13 @@
 				style="margin-bottom:10px; text-align: center;">
 				<p:messages autoUpdate="true" closable="true" />
 				<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
-					<h:outputLabel value="Nome do aluno:" />
+					<h:outputLabel value="Aluno:" />
 					<p:row>
 						<p:autoComplete id="nome" forceSelection="true"
 							value="#{receitaMatriculaBean.matricula.aluno.nome}"
 							completeMethod="#{receitaMatriculaBean.buscarTodosAlunos}" 
 							title="Digite o nome e escolha uma opção!" minQueryLength="3"
-							scrollHeight="200" required="true" label="Nome do aluno" />
+							scrollHeight="200" required="true" label="Aluno" />
 						<p:tooltip for="nome" showEvent="focus" hideEvent="blur" />
 					</p:row>
 					<h:outputLabel value="Série:" />

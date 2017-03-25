@@ -10,12 +10,10 @@
 </h:head>
 <h:body style="background-color:#b03060;">
 	<f:view locale="pt_BR">
-		<div id="pagina" style="width: 1000px; margin: 0 auto">
-			<div id="cabecalho">
-				<h:panelGrid width="100%" style="text-align:center; background-color:#b03060">
-					<h1 style="color:white; font-size: 38px; border-top: 1px solid white; border-bottom: 1px solid white; font-style: oblique; font-variant: small-caps;">Sistema Financeiro</h1>
-					<h3 style="color: white;">Escola Sonho C<span style="color:red;">o</span>l<span style="color:blue;">o</span>r<span style="color:green;">i</span>d<span style="color:yellow;">o</span></h3>
-				</h:panelGrid> 
+		<div id="pagina">
+			<div id="cabecalho" style="background-color:#b03060;padding:20px; margin-bottom:15px;">
+					<h1 style="color:white; padding-left:10px; display:inline; font-size: 38px; border-left:10px solid white; border-bottom:2px solid white;"><span style="color:green;">$</span>istema <span style="color:green;">F</span>inanceiro</h1>
+					<h3 style="color: white; float:right; clear:left;">Escola Sonho C<span style="color:red;">o</span>l<span style="color:black;">o</span>r<span style="color:green;">i</span>d<span style="color:yellow;">o</span></h3>	 
 			</div>
 			
 			<div id="menu">
@@ -96,7 +94,7 @@
 							<p:menuitem value="Cadastrar" url="/pages/usuario/cadastrar_usuario.xhtml" />
 							<p:menuitem value="Exibir" url="/pages/usuario/exibir_usuario.xhtml" />
 						</p:submenu>
-						<p:submenu label="Gerenciar conta" icon="ui-icon-gear">
+						<p:submenu label="Minha conta" icon="ui-icon-gear">
 							<p:menuitem value="Altera perfil" url="/pages/usuario/alterar_perfil.xhtml" />
 							<p:menuitem value="Altera senha" url="/pages/usuario/alterar_senha.xhtml" />
 						</p:submenu>

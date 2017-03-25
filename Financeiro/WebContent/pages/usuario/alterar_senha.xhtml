@@ -11,15 +11,15 @@
 		<h:form id="formulario">
 		<p:panel header="Alterar senha" style="margin-bottom:10px; text-align: center;">
 			<p:messages autoUpdate="true" closable="true" />
-			<p:panelGrid columns="1" style="margin: 0 auto;text-align: left;">
+			<p:panelGrid columns="2" style="margin: 0 auto;text-align: left;">
 				<h:outputLabel value="Senha atual:" />
-			    <p:password value="#{usuarioBean.senhaAtual}" size="30" required="true" maxlength="30" label="Senha atual" />
+			    <p:password value="#{usuarioBean.senhaAtual}" required="true" label="Senha atual" />
 			    <h:outputLabel value="Nova senha:" />
-			    <p:password value="#{usuarioBean.novaSenha}" size="30" required="true" maxlength="30" label="Nova senha" />
+			    <p:password value="#{usuarioBean.novaSenha}" required="true" label="Nova senha" />
 			    <h:outputLabel value="Confirmar senha:" />
-			    <p:password value="#{usuarioBean.confirmacaoSenha}" size="30" required="true" maxlength="30" label="Connfirmar senha" />
+			    <p:password value="#{usuarioBean.confirmacaoSenha}" required="true" label="Connfirmar senha" />
 			    <p:commandButton value="Alterar" update="formulario" action="#{usuarioBean.alterarSenha}" />
-			    
+			    <p:commandButton value="Limpar" type="reset" /> 
 		    </p:panelGrid>
 	    </p:panel>
 		</h:form>
