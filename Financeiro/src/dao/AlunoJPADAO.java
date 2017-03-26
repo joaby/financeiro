@@ -1,21 +1,15 @@
 package dao;
 
 import java.util.List;
-
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
 import modelo.Aluno;
 
 public class AlunoJPADAO extends GenericJPADAO<Aluno> implements AlunoDAO{
 	
 	public AlunoJPADAO(){
 		this.persistentClass = Aluno.class;
-	}
-
-	@Override
-	public Integer somar() {
-		Query query = getEm().createNamedQuery("Aluno.somar");
-		return (Integer) query.getSingleResult();
 	}
 
 	@Override
@@ -54,6 +48,7 @@ public class AlunoJPADAO extends GenericJPADAO<Aluno> implements AlunoDAO{
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Aluno> buscarPorNomeParcial(String nome) {
 		Query query = getEm().createNamedQuery("Aluno.buscarPorNomeParcial");

@@ -26,7 +26,6 @@ public class AlunoBean extends AbstractBean implements Serializable {
 	private int ano;
 	private List<Mes> meses;
 	private char sexo;
-	private Integer totalAlunos;
 	private String nomeParcial;
 
 	public AlunoBean() {
@@ -57,11 +56,6 @@ public class AlunoBean extends AbstractBean implements Serializable {
 		this.alunos = new ArrayList<Aluno>();
 		AlunoDAO alunoDAO = new AlunoJPADAO();
 		this.alunos = alunoDAO.buscarPorNomeParcial(this.nomeParcial.toUpperCase());
-	}
-
-	public void somarAtivos() {
-		AlunoDAO alunoDAO = new AlunoJPADAO();
-		this.totalAlunos = alunoDAO.somar();
 	}
 
 	public void cadastrar() {
@@ -150,14 +144,6 @@ public class AlunoBean extends AbstractBean implements Serializable {
 
 	public void setSexo(char sexo) {
 		this.sexo = sexo;
-	}
-
-	public Integer getTotalAlunos() {
-		return totalAlunos;
-	}
-
-	public void setTotalAlunos(Integer totalAlunos) {
-		this.totalAlunos = totalAlunos;
 	}
 
 	public String getNomeParcial() {

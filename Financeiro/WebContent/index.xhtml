@@ -7,6 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Sistema Financeiro</title>
+	<link rel="icon" href="resources/img/icon-16.png" type="image/png" />
 </h:head>
 <h:body style="background-color:#b03060;">
 	<f:view locale="pt_BR">
@@ -21,7 +22,7 @@
 				<h:panelGrid columns="1" cellpadding="10" style="height:200px; margin: 0 auto; margin-top:10px;">
 					<p:inputText placeholder="Usuário"  value="#{loginBean.usuario.login}" required="true" label="Usuário" />
 					<p:password placeholder="Senha" value="#{loginBean.usuario.senha}" required="true" label="Senha" />
-					<p:commandButton value="Entrar" action="#{loginBean.logar}" style="width:233px;" />
+					<p:commandButton id="saveBtn" value="Entrar" action="#{loginBean.logar}" style="width:233px;" />
 				</h:panelGrid>
 			</h:form>
 		</p:panel>

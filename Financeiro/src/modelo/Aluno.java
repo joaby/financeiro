@@ -14,8 +14,6 @@ import javax.persistence.TemporalType;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name="Aluno.somar", 
-			query="SELECT COUNT(a) FROM Aluno a WHERE a.ativo = true"),
 	@NamedQuery(name="Aluno.buscarPorSexo", 
 			query="SELECT a FROM Aluno a WHERE a.sexo = :sexo AND a.ativo = true"),
 	@NamedQuery(name="Aluno.buscarPorAtivo", 
